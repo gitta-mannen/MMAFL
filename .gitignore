@@ -59,6 +59,6 @@ local.properties
 #.project
 #.classpath
 
-# Eeception #
+# Exceptions #
 #############
 !libs/sqlite-jdbc-3.7.2.jar

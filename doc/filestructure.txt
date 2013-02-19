@@ -1,7 +1,5 @@
 Projekt strukturen ser ut enligt följande ('-' = map, '*' = fil):
 
-
-
 - eclipse workspace (ex 'e:\project')
 	- MMAFL : project root directory
 		* .gitignore
@@ -17,4 +15,4 @@ Projekt strukturen ser ut enligt följande ('-' = map, '*' = fil):
 Med andra ord, om du har en map där du har dina projekt så skapar du i den en sub-map som heter MMAFL.
 Den mappen innehåller i sin tur 4st Eclipse project, ett för klienten och ett för servern/scrapern, samt två test projekt som skuggar dessa.
 Java applicationen testas mha JUnit. Android appen måste dock använda en speciell android test suite.
-Git repot kommer alltså innehålla allt i MMAFL mappen, eclipse projekten, dokumentationen, .gitignore samt övrigt som tillkommer senare.
+Git repot kommer alltså innehålla allt som finns i MMAFL mappen, eclipse projekten, dokumentationen, .gitignore samt övrigt som tillkommer senare.

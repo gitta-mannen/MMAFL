@@ -8,3 +8,8 @@ http://www.sqlite.org
 https://code.google.com/p/sqlite4java/wiki/ComparisonToOtherWrappers (jämförelse av olika wrappers och drivers, de hostar även en egen wrapper)
 http://docs.oracle.com/javase/tutorial/jdbc/index.html (JDBC tutorial, det API vi använder för att prata med databasen, är databsoberoende)
 https://bitbucket.org/xerial/sqlite-jdbc/wiki/Home (Den driver jag tänk vi ska använda, innehåller exempelkod)
+
+Git
+http://marklodato.github.com/visual-git-guide/index-en.html (visar med bilder)
+http://git-scm.com/book (grundlig genomgång)
+http://mettadore.com/analysis/a-simple-git-rebase-workflow-explained/ (exempel på en bra workflow)
