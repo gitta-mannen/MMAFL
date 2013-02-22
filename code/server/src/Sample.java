@@ -14,15 +14,25 @@ public class Sample
     Connection connection = null;
     try
     {
-      // create a database connection
-      connection = DriverManager.getConnection("jdbc:sqlite:sample.db");
+      // create a database connection -- gör en gång
+      connection = DriverManager.getConnection("jdbc:sqlite:fightstats.db");
       Statement statement = connection.createStatement();
       statement.setQueryTimeout(30);  // set timeout to 30 sec.
 
-      statement.executeUpdate("drop table if exists person");
-      statement.executeUpdate("create table person (id integer, name string)");
-      statement.executeUpdate("insert into person values(1, 'bertil')");
-      statement.executeUpdate("insert into person values(2, 'rötivar')");
+      // en gång per scraper class
+      statement.executeUpdate("drop table if exists fighters");
+      statement.executeUpdate("create table fighters (id integer, name string, nickname string)");
+      
+      // här initierar du scrape klassen (fighter etc)
+      
+      //scarpe loop
+	      // Här scrapar du
+	      
+	      // en gång per scrape(fighter, event etc.)
+	      statement.executeUpdate("insert into fighters values(1, 'bertil', 'the nightmare')");
+	      statement.executeUpdate("insert into fighters values(2, 'rötivar', 'cripple')");
+      
+      // Gör servern inte scrapern
       ResultSet rs = statement.executeQuery("select * from person");
       while(rs.next())
       {
@@ -31,6 +41,8 @@ public class Sample
         System.out.println("id = " + rs.getInt("id"));
       }
     }
+    
+    // exception handeling och avslutning av connection
     catch(SQLException e)
     {
       // if the error message is "out of memory", 
