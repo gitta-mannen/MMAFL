@@ -6,15 +6,16 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.Arrays;
+//import java.util.List;
 
 public class EventScraper {
-	private String organization;
+	private String eventOrganization;
 	private String eventName;
 	private String eventLocation;
 	private String eventDate;
+	private String eventAttendence;
 	//private ArrayList<String> fightcardArray;
 
 	public EventScraper(URL url) throws MalformedURLException {
@@ -34,7 +35,7 @@ public class EventScraper {
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
 					inputLine = inputLine.replaceAll("Events > ", "");
-					organization = inputLine;
+					eventOrganization = inputLine;
 				}
 				//Scrape: Event Name
 				if (inputLine.contains("Events</a>")) {
@@ -59,6 +60,15 @@ public class EventScraper {
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
 					eventDate = inputLine;
+				}
+				//Scrape: event Attendence
+				if (inputLine.contains(">ATTENDANCE</td>")) {
+					inputLine = in.readLine();
+					inputLine = inputLine.replaceAll("\\<.*?>", "");
+					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
+					inputLine = inputLine.replaceAll("  ", " ");
+					//inputLine = inputLine.replaceAll("Events > ", "");
+					eventAttendence = inputLine;
 				}
 			}
 			in.close();
@@ -104,11 +114,11 @@ public class EventScraper {
 	}*/
 	
 	public String getEvent() {
-		return  getOrganization() + "\n" + getEventName() + "\n" + getEventLocation() + "\n" + getEventDate();
+		return  getOrganization() + "\n" + getEventName() + "\n" + getEventLocation() + "\n" + getEventDate() + "\n" + getAttendence();
 	}
 	
 	public String getOrganization() {
-		return organization;
+		return eventOrganization;
 	}
 	public String getEventName() {
 		return eventName;
@@ -118,6 +128,9 @@ public class EventScraper {
 	}
 	public String getEventDate() {
 		return eventDate;
+	}
+	public String getAttendence() {
+		return eventAttendence;
 	}
 
 }

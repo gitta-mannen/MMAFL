@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 public class FighterScraper {
 	
@@ -28,6 +28,7 @@ public class FighterScraper {
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
 					//fightcardArray.add(inputLine);
+					
 				}
 			
 

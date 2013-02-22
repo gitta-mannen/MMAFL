@@ -51,14 +51,6 @@ final String url = "http://hosteddb.fightmetric.com/events/details/122";
                 System.exit(-1);
             }
         });
-        
-        JMenuItem signinitem = new JMenuItem("Sign In");
-        quititem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(-1);
-            }
-        });
  
         JMenuItem FightCardItem = new JMenuItem("Event");
         FightCardItem.addActionListener(new ActionListener() {
