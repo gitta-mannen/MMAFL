@@ -16,12 +16,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import Scraper.EventScraper;
+import Scraper.FighterScraper;
 import Scraper.ResultScraper;
  
 @SuppressWarnings("serial")
 public class GUImenu extends JFrame {
  //   private BufferedImage image;
-final String url = "http://hosteddb.fightmetric.com/events/details/122";
+final String eventUrl = "http://hosteddb.fightmetric.com/events/details/122";
+final String fighterUrl = "http://hosteddb.fightmetric.com/fighters/details/372";
       
  
     public GUImenu() {
@@ -52,18 +54,32 @@ final String url = "http://hosteddb.fightmetric.com/events/details/122";
             }
         });
  
-        JMenuItem FightCardItem = new JMenuItem("Event");
-        FightCardItem.addActionListener(new ActionListener() {
+        JMenuItem EventItem = new JMenuItem("Event");
+        EventItem.addActionListener(new ActionListener() {
         EventScraper event;
         @Override
         public void actionPerformed(ActionEvent e) {
 			try {
-				event = new EventScraper(new URL(url));
+				event = new EventScraper(new URL(eventUrl));
 			} catch (MalformedURLException e1) {
 				System.out.println("Invalid url");
 				
 			}
 			JOptionPane.showMessageDialog(rootPane, event.getEvent());
+        }
+    });
+        JMenuItem FighterItem = new JMenuItem("Fighter");
+        FighterItem.addActionListener(new ActionListener() {
+        FighterScraper fighter;
+        @Override
+        public void actionPerformed(ActionEvent e) {
+			try {
+				fighter = new FighterScraper(new URL(fighterUrl));
+			} catch (MalformedURLException e1) {
+				System.out.println("Invalid url");
+				
+			}
+			JOptionPane.showMessageDialog(rootPane, fighter.getFighterinfo());
         }
     });
         
@@ -73,7 +89,7 @@ final String url = "http://hosteddb.fightmetric.com/events/details/122";
         @Override
         public void actionPerformed(ActionEvent e) {
 			try {
-				result = new ResultScraper(new URL(url));
+				result = new ResultScraper(new URL(eventUrl));
 			} catch (MalformedURLException e1) {
 				System.out.println("Invalid url");
 				
@@ -84,35 +100,18 @@ final String url = "http://hosteddb.fightmetric.com/events/details/122";
 
         //add the sub menu items to their respective menus
         filemenu.add(quititem);
-        cardsmenu.add(FightCardItem);
+        cardsmenu.add(EventItem);
+        cardsmenu.add(FighterItem);
         cardsmenu.add(ResultCardItem);
  
         //exit the program when the user clicks on the X in the window
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
- 
-        /*//Set awesome UFC-logo as background.
-        String separator = System.getProperty("file.separator");
-        String rootPath = System.getProperty("user.dir");
-        String imgPath = rootPath + separator + "img" + separator;
-        BufferedImage myPicture;
-        try {
-            //myPicture = ImageIO.read(new File(imgPath + "logo3.png"));
-            myPicture = ImageIO.read(new File("img\\logo3.png"));
-            JLabel picLabel = new JLabel(new ImageIcon( myPicture ));
-            this.getContentPane().add(picLabel);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }*/
-        
+
         //add title to main window
         this.setJMenuBar(menuBar); //set the Frames JMenuBar
         this.setTitle("UFC Fantasy League 2012"); //title of the frame
         this.setVisible(true); //show the Frame
        
     }
-    
- 
-//    public static void main(String[] args) {
-//        new GUImenu();
-//    }
+
 }
