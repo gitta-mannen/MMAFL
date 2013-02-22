@@ -70,23 +70,16 @@ public class EventScraper {
 			}
 			in.close();
 			eventToDb();
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		/*// used once for all scrapers
-		StatsHandler db = new StatsHandler();
-		// once per record (i.e once per event)
-		db.update(new Event(1, eventName, eventDate, eventLocation, eventOrganization, eventAttendance));
-		// once for all scrapers
-		db.close();*/
 	}
     public void eventToDb() {
     	// used once for all scrapers
 		StatsHandler db = new StatsHandler();
 		// once per record (i.e once per event)
-		db.update(new Event(1, "UFC the Tuna Sandwich", "2012-02-01", "Hålanda", "PENIS", "50000000"));
-		//db.update(new Event(1, eventName, eventDate, eventLocation, eventOrganization, eventAttendance));
+		//db.update(new Event(1, "UFC the Tuna Sandwich", "2012-02-01", "Hålanda", "PENIS", "50000000"));
+		db.update(new Event(2, "eventName", "eventDate", "eventLocation", "eventOrganization", "eventAttendance"));
 		// once for all scrapers
 		db.close();
 		System.out.println("Done");
