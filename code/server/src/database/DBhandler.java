@@ -6,11 +6,11 @@ public class DBhandler {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void updateRecord(Record record) {
+	public void update(Record record) {
 		
 	}
 	
-	public void closeConnection () {
+	public void close() {
 		
 	}
 
