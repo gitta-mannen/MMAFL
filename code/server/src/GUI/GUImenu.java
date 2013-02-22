@@ -6,15 +6,14 @@ package GUI;
 
 
 
+//import javax.imageio.ImageIO;
+//import java.awt.image.BufferedImage;
+//import java.io.File;
+//import java.io.IOException;
 import javax.swing.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-
-import javax.imageio.ImageIO;
 
 import Scraper.EventScraper;
 import Scraper.ResultScraper;
@@ -35,12 +34,10 @@ final String url = "http://hosteddb.fightmetric.com/events/details/122";
  
         //Build the first menu.
         JMenu filemenu = new JMenu("File");
-        JMenu usermenu = new JMenu("User");
         JMenu cardsmenu = new JMenu("Card");
  
         //add the submenu's to the menu bar (File, Edit, Color)
         menuBar.add(filemenu);
-        menuBar.add(usermenu);
         menuBar.add(cardsmenu);
  
 
@@ -63,18 +60,18 @@ final String url = "http://hosteddb.fightmetric.com/events/details/122";
             }
         });
  
-        JMenuItem FightCardItem = new JMenuItem("Fightcard");
+        JMenuItem FightCardItem = new JMenuItem("Event");
         FightCardItem.addActionListener(new ActionListener() {
-        EventScraper fightevent;
+        EventScraper event;
         @Override
         public void actionPerformed(ActionEvent e) {
 			try {
-				fightevent = new EventScraper(new URL(url));
+				event = new EventScraper(new URL(url));
 			} catch (MalformedURLException e1) {
 				System.out.println("Invalid url");
 				
 			}
-			JOptionPane.showMessageDialog(rootPane, fightevent.getFightcard());
+			JOptionPane.showMessageDialog(rootPane, event.getEvent());
         }
     });
         
@@ -95,14 +92,13 @@ final String url = "http://hosteddb.fightmetric.com/events/details/122";
 
         //add the sub menu items to their respective menus
         filemenu.add(quititem);
-        usermenu.add(signinitem);
         cardsmenu.add(FightCardItem);
         cardsmenu.add(ResultCardItem);
  
         //exit the program when the user clicks on the X in the window
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
  
-        //Set awesome UFC-logo as background.
+        /*//Set awesome UFC-logo as background.
         String separator = System.getProperty("file.separator");
         String rootPath = System.getProperty("user.dir");
         String imgPath = rootPath + separator + "img" + separator;
@@ -114,7 +110,7 @@ final String url = "http://hosteddb.fightmetric.com/events/details/122";
             this.getContentPane().add(picLabel);
         } catch (IOException ex) {
             ex.printStackTrace();
-        }
+        }*/
         
         //add title to main window
         this.setJMenuBar(menuBar); //set the Frames JMenuBar

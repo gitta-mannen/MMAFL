@@ -15,17 +15,17 @@ public class EventScraper {
 	private String eventName;
 	private String eventLocation;
 	private String eventDate;
-	private ArrayList<String> fightcardArray;
+	//private ArrayList<String> fightcardArray;
 
 	public EventScraper(URL url) throws MalformedURLException {
 
-		fightcardArray = new ArrayList<String>();
+		//fightcardArray = new ArrayList<String>();
 		try {
 			URLConnection yc = url.openConnection();
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					yc.getInputStream()));
 			String inputLine;
-			String fighterName = "";
+			//String fighterName = "";
 			while ((inputLine = in.readLine()) != null) {
 				//Scrape: Organization
 				if (inputLine.contains(">ORGANIZATION</td>")) {
@@ -34,7 +34,7 @@ public class EventScraper {
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
 					inputLine = inputLine.replaceAll("Events > ", "");
-					//organization = inputLine;
+					organization = inputLine;
 				}
 				//Scrape: Event Name
 				if (inputLine.contains("Events</a>")) {
@@ -67,7 +67,7 @@ public class EventScraper {
 		}
 	}
 
-	public ArrayList<String> getFightcardArray() {
+	/*public ArrayList<String> getFightcardArray() {
 		// Make arrayList to stringArray
 		String[] fighterArrayToString = fightcardArray.toArray(new String[fightcardArray.size()]);
 
@@ -81,9 +81,9 @@ public class EventScraper {
 		}
 
 		return  fightcardArray;
-	}
+	}*/
 
-	public String getFightcard() {
+	/*public String getFightcard() {
 		String fightcard = "";
 		String tempString = "";
 		int i = 0;
@@ -101,6 +101,10 @@ public class EventScraper {
 			return "FightcardArray seems to be empty.";
 		}
 		return  getEventName() + "\n" + getEventLocation() + "\n" + getEventDate() + "\n\n" + fightcard;
+	}*/
+	
+	public String getEvent() {
+		return  getOrganization() + "\n" + getEventName() + "\n" + getEventLocation() + "\n" + getEventDate();
 	}
 	
 	public String getOrganization() {
