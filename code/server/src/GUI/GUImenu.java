@@ -1,7 +1,9 @@
+package GUI;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 
 
 import javax.swing.*;
@@ -13,6 +15,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
+
+import Scraper.EventScraper;
+import Scraper.ResultScraper;
  
 @SuppressWarnings("serial")
 public class GUImenu extends JFrame {

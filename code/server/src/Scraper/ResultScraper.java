@@ -1,3 +1,4 @@
+package Scraper;
 
 
 import java.io.BufferedReader;
