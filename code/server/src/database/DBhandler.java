@@ -1,9 +1,8 @@
 package database;
 
-public class DBhandler {
+public class DbHandler {
 
-	public DBhandler(String dbName) {
-		// TODO Auto-generated constructor stub
+	public DbHandler() {
 	}
 	
 	public void update(Record record) {

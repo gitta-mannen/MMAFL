@@ -6,7 +6,17 @@ public class Event extends Record {
 	String name, date, location, organization, attendence;
 
 	public Event() {
-		// TODO Auto-generated constructor stub
+	}
+
+	public Event(int id, String name, String date, String location,
+			String organization, String attendence) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.date = date;
+		this.location = location;
+		this.organization = organization;
+		this.attendence = attendence;
 	}
 
 	public int getId() {
@@ -57,6 +67,10 @@ public class Event extends Record {
 		this.attendence = attendence;
 	}
 	
-	
+	// Returns a string string formated to be used in a SQL-insert statement
+	public String getInserFormat () {
+		return String.format("(%d, '%s', '%s', '%s', '%s', '%s')", id, name, date, location, organization, attendence);
+		
+	}
 
 }
