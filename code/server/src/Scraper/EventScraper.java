@@ -60,8 +60,6 @@ public class EventScraper {
 					inputLine = inputLine.replaceAll("  ", " ");
 					eventDate = inputLine;
 				}
-			
-
 			}
 			in.close();
 		} catch (Exception e) {
