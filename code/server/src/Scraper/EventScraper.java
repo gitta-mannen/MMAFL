@@ -6,6 +6,9 @@ import java.net.MalformedURLException;
 import java.net.URLConnection;
 import java.net.URL;
 
+import database.Event;
+import database.StatsHandler;
+
 public class EventScraper {
 	private String eventOrganization;
 	private String eventName;
@@ -14,12 +17,12 @@ public class EventScraper {
 	private String eventAttendance;
 
 	public EventScraper(URL url) throws MalformedURLException {
-
 		try {
 			URLConnection yc = url.openConnection();
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					yc.getInputStream()));
 			String inputLine;
+			
 			while ((inputLine = in.readLine()) != null) {
 				//Scrape: Organization
 				if (inputLine.contains(">ORGANIZATION</td>")) {
@@ -29,6 +32,7 @@ public class EventScraper {
 					inputLine = inputLine.replaceAll("  ", " ");
 					inputLine = inputLine.replaceAll("Events > ", "");
 					eventOrganization = inputLine;
+					
 				}
 				//Scrape: Event Name
 				if (inputLine.contains("Events</a>")) {
@@ -65,29 +69,28 @@ public class EventScraper {
 				}
 			}
 			in.close();
+			eventToDb();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		/*// used once for all scrapers
+		StatsHandler db = new StatsHandler();
+		// once per record (i.e once per event)
+		db.update(new Event(1, eventName, eventDate, eventLocation, eventOrganization, eventAttendance));
+		// once for all scrapers
+		db.close();*/
 	}
-
+    public void eventToDb() {
+    	// used once for all scrapers
+		StatsHandler db = new StatsHandler();
+		// once per record (i.e once per event)
+		db.update(new Event(1, eventName, eventDate, eventLocation, eventOrganization, eventAttendance));
+		// once for all scrapers
+		db.close();
+		System.out.println("Done");
+    }
 	public String getEvent() {
-		return  getOrganization() + "\n" + getEventName() + "\n" + getEventLocation() + "\n" + getEventDate() + "\n" + getAttendance();
+		return  eventOrganization + "\n" + eventName + "\n" + eventLocation + "\n" + eventDate + "\n" + eventAttendance;
 	}
-	
-	public String getOrganization() {
-		return eventOrganization;
-	}
-	public String getEventName() {
-		return eventName;
-	}
-	public String getEventLocation() {
-		return eventLocation;
-	}
-	public String getEventDate() {
-		return eventDate;
-	}
-	public String getAttendance() {
-		return eventAttendance;
-	}
-
 }
