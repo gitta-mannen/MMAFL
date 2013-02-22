@@ -1,3 +1,4 @@
+package Scraper;
 
 
 import java.io.BufferedReader;
@@ -33,7 +34,7 @@ public class EventScraper {
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
 					inputLine = inputLine.replaceAll("Events > ", "");
-					organization = inputLine;
+					//organization = inputLine;
 				}
 				//Scrape: Event Name
 				if (inputLine.contains("Events</a>")) {
@@ -59,14 +60,7 @@ public class EventScraper {
 					inputLine = inputLine.replaceAll("  ", " ");
 					eventDate = inputLine;
 				}
-				//Scrape: Fighter Names
-				if (inputLine.contains("/fighters/details/")
-						&& (fighterName.contains(""))) {
-					inputLine = inputLine.replaceAll("\\<.*?>", "");
-					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
-					inputLine = inputLine.replaceAll("  ", " ");
-					fightcardArray.add(inputLine);
-				}
+			
 
 			}
 			in.close();
