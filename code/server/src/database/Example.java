@@ -5,7 +5,7 @@ public class Example {
 		// used once for all scrapers
 		StatsHandler db = new StatsHandler();
 		// once per record (i.e once per event)
-		db.update(new Event(1, "UFC the Tuna Sandwich", "2012-02-01", "Hålanda", "UFC", "50000000"));
+		db.update(new Event(4, "UFC the Tuna Sandwich", "2012-02-02", "vegas", "UFC", "50000000"));
 		// once for all scrapers
 		db.close();
 	}
