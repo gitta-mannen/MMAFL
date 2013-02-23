@@ -32,7 +32,7 @@ public class EventScraper {
 					inputLine = inputLine.replaceAll("  ", " ");
 					inputLine = inputLine.replaceAll("Events > ", "");
 					eventOrganization = inputLine.trim();
-					eventOrganization = "Jan Pettersspon är en haxx0000r Elite Squad master";
+					//eventOrganization = "UFC";
 					
 				}
 				//Scrape: Event Name
@@ -65,7 +65,7 @@ public class EventScraper {
 					inputLine = inputLine.replaceAll("\\<.*?>", "");
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
-					//inputLine = inputLine.replaceAll("Events > ", "");
+					inputLine = inputLine.replaceAll("Events > ", "");
 					eventAttendance = inputLine.trim();
 				}
 			}
