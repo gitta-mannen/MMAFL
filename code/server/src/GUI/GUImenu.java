@@ -12,11 +12,14 @@ package GUI;
 //import java.io.IOException;
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import Scraper.EventScraper;
 import Scraper.FighterScraper;
+import Scraper.IterativeEventScraper;
+import Scraper.IterativeUrlFeeder;
 import Scraper.ResultScraper;
  
 @SuppressWarnings("serial")
@@ -68,6 +71,24 @@ final String fighterUrl = "http://hosteddb.fightmetric.com/fighters/details/372"
 			JOptionPane.showMessageDialog(rootPane, event.getEvent());
         }
     });
+        JMenuItem IterativeEventItem = new JMenuItem("Iterative Event");
+        IterativeEventItem.addActionListener(new ActionListener() {
+        IterativeUrlFeeder IterativeEvent;
+        @Override
+        public void actionPerformed(ActionEvent e) {
+			
+			IterativeEvent = new IterativeUrlFeeder();
+			String s0 = JOptionPane.showInputDialog("Enter \"Event\" or \"Fighter\" (w/o quotes):");
+			String s1 = JOptionPane.showInputDialog("Enter start value (min 122, max 616):");
+			String s2 = JOptionPane.showInputDialog("Enter start value (min " + (Integer.parseInt(s1)+1) + ", max 616):");
+			IterativeEvent.setInterval(s0, Integer.parseInt(s1),Integer.parseInt(s2));
+			JOptionPane.showMessageDialog(rootPane, IterativeEvent.getInterval());
+			if(s0.equals("Event")) {
+				IterativeEvent.setEventsToDb();
+			}
+			
+        }
+    });
         JMenuItem FighterItem = new JMenuItem("Fighter");
         FighterItem.addActionListener(new ActionListener() {
         FighterScraper fighter;
@@ -101,6 +122,7 @@ final String fighterUrl = "http://hosteddb.fightmetric.com/fighters/details/372"
         //add the sub menu items to their respective menus
         filemenu.add(quititem);
         cardsmenu.add(EventItem);
+        cardsmenu.add(IterativeEventItem);
         cardsmenu.add(FighterItem);
         cardsmenu.add(ResultCardItem);
  
