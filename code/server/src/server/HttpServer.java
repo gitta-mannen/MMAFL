@@ -10,78 +10,135 @@ import database.StatsHandler;
 /**
  * httpServer main class
  * @author Stugatz
+ * Accepts connections on server socket and then delegates them to request threads on dynamically assigned sockets.
  */
-public class HttpServer {    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) throws Exception {
-        int port = 999;
-        ServerSocket socket = new ServerSocket(port);
-        HttpRequest httpRequest;       
+public class HttpServer implements Runnable {
+    final static int port = 999;
+    private ServerSocket socket;
+    
+	@Override
+	public void run() {     
+		try {
+			socket = new ServerSocket(port);
+			
+		} catch (IOException e) {
+			System.out.println("Failed to initialize server socket, stopping server.");
+		} 
         
+		HttpRequest httpRequest;               
         while (true) {
-            httpRequest = new HttpRequest( socket.accept() );
-            Thread thread = new Thread( httpRequest );
-            thread.start();
+            try {
+				httpRequest = new HttpRequest( socket.accept() );
+	            Thread thread = new Thread( httpRequest );
+	            thread.start();
+			} catch (IOException e) {
+				System.out.println("Filed to accept connection, socket error.");
+			}
+
         }
-        
-    }
+              		
+	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		// Makes sure server socket is closed.
+		socket.close();
+		super.finalize();
+	}
 
 }
 
+/**
+ * @author Stugatz
+ *
+ */
 class HttpRequest implements Runnable{
-	StatsHandler db;
-    Socket socket;
-    		final static String CRLF = "\r\n";
-    		final static File webRoot = new File("E:\\code\\java\\httpServer\\www");
+	private StatsHandler db;
+    private Socket socket;
+    final static String CRLF = "\r\n";
+    final static File webRoot = new File("\\www\\");
+    final static long timeOut = 500;
+    private InputStreamReader is;
+	private DataOutputStream os;
     
+    // Receives socket from server thread
     public HttpRequest(Socket socket) {
         this.socket = socket;        
     }
 
     @Override
     final public void run() {
-        try {        	 
-        	 db = new StatsHandler();
-             processRequest();
-             db.close();
+    	 System.out.println("*** Server accepted new connection on port: " + socket.getPort() +
+                 " thread id: " + Thread.currentThread().getId() +  " ," + Thread.activeCount() + " active threads" + " ***");
+    
+    	long startTime;
+    	String requestLine;
+    	HashMap request;
+    	boolean entered;
+    	db = new StatsHandler();
+    	
+	    try {
+	    	// Each request thread starts it's on database connection which should be thread safe on normally compiled SqLite drivers.
+       	 	db = new StatsHandler();
+	        // Get a reference to the socket's input and output streams.
+			is = new InputStreamReader( socket.getInputStream() );
+			os = new DataOutputStream( socket.getOutputStream() );
+			// Set up input stream filters.
+			BufferedReader br = new BufferedReader (is);
+	        // Extract the request fields
+			int i = 0;
+			int o = 0;
+			StringTokenizer fields;
+			request = new HashMap();
+			startTime = System.currentTimeMillis();
+			
+			while (true) {								
+				System.out.println("	>> Outer: " + ++o);				
+				entered = false;
+		        while ((br.ready() && (requestLine = br.readLine()).length() != 0) ) {		        	
+		        	System.out.println("	>> Inner: " + ++i);
+		        	System.out.println(requestLine);
+		        	fields = new StringTokenizer(requestLine, ": ");
+		        	request.put(fields.nextToken(), fields.nextToken(""));		
+		        	entered = true;
+		        }
+		        
+		        if (startTime + timeOut < System.currentTimeMillis()) {
+		        	System.out.println("	>>> timed out, leaving");	
+		        	break;
+		        } else if (entered) {
+		        	// Data was read, call handle method and then reset timer
+		        	startTime = System.currentTimeMillis();
+		        	System.out.println("	>>>data read");
+		        	processRequest(request);
+		        	request.clear();
+		        }
+		          else {		        	  
+		        	  System.out.println("	>>>Waiting for: " + (System.currentTimeMillis() - startTime));
+		        	  Thread.sleep(100);
+		        }
+            		        
+			}
+			
+			// Close DB connection, sockets and streams
+			db.close();             
+			br.close();
+			socket.close();
+			System.out.println("Closing thread: " + Thread.currentThread().getId());	    
+			 
         } catch (Exception e) {
             System.out.println(e);
+            e.printStackTrace();
         }    
     }
     
-    private void processRequest() throws Exception
-    {
-        // Get a reference to the socket's input and output streams.
-		InputStreamReader is = new InputStreamReader( socket.getInputStream() );
-		DataOutputStream os = new DataOutputStream( socket.getOutputStream() );
-
-		// Set up input stream filters.
-		BufferedReader br = new BufferedReader (is);     
-        
-        // Get the request line of the HTTP request message.
-        String requestLine = br.readLine();
-
-        // Display the request line.
-        System.out.println();
-        System.out.println("*** Server accepted new connection on port: " + socket.getPort() +
-                " thread id: " + Thread.currentThread().getId() +  " ," + Thread.activeCount() + " active threads" + " ***");
-       
-        System.out.println(requestLine);        
-        
-        // Get and display the header lines.
-        String headerLine = null;
-        while ((headerLine = br.readLine()).length() != 0) {
-                System.out.println(headerLine);
-        }
-        
-        // Extract the filename from the request line.
-        StringTokenizer tokens = new StringTokenizer(requestLine);
-        tokens.nextToken();  // skip over the method, which should be "GET"
-        String fileName = tokens.nextToken();
-        System.out.println("Client sent request for: " + fileName);
-                        
+    
+    /**
+     * @throws Exception
+     * Handles the request
+     */
+    private void processRequest(HashMap request) throws Exception
+    {	           
         // Construct the response message.
         String statusLine = null;
         String contentTypeLine = null;
@@ -89,15 +146,14 @@ class HttpRequest implements Runnable{
        
         statusLine = "HTTP/1.0 200 OK";
         contentTypeLine = "Content-type: " + 
-                contentType( fileName ) + CRLF;     
+                contentType( request.get("Request URL").toString() ) + CRLF;     
         
         // build html body
         ArrayList<Event> events = db.get(new Event());
         for (Event event : events) {
         	entityBody.append(event.toHtmlString());
 		}
-				                  
-        
+				                         
         // Send the status line.
         os.writeBytes(statusLine);
 
@@ -112,12 +168,12 @@ class HttpRequest implements Runnable{
         os.writeBytes(entityBody.toString());
         os.writeBytes("</table> </BODY> </HTML>");
         
-        // Close streams and socket.
-        os.close();
-        br.close();
-        socket.close();    
+        // Close socket.
+        os.close();       
+           
     }
     
+    /* not used
     private static void sendBytes(FileInputStream fis, OutputStream os) throws Exception {
        // Construct a 1K buffer to hold bytes on their way to the socket.
        byte[] buffer = new byte[1024];
@@ -128,7 +184,7 @@ class HttpRequest implements Runnable{
           os.write(buffer, 0, bytes);
        }
     }
-    
+    */
     private static String contentType(String fileName)
     {
             if(fileName.endsWith(".htm") || fileName.endsWith(".html")) {

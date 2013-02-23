@@ -6,7 +6,7 @@ public class DbHandler {
 	}
 	
 	public void update(Record record) {
-		
+		//
 	}
 	
 	public void close() {
