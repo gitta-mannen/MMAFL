@@ -69,8 +69,10 @@ public class Event extends Record {
 	
 	// Returns a string string formated to be used in a SQL-insert statement
 	public String toSqlString () {
-		return String.format("(%d, '%s', '%s', '%s', '%s', '%s')", id, name, date, location, organization, attendence);
-		
+		return String.format("(%d, '%s', '%s', '%s', '%s', '%s')", id, name, date, location, organization, attendence);		
 	}
 
+	public String toHtmlString () {
+		return String.format("<tr> <td>%d</td> <td>%s</td> <td>%s</td> <td>%s</td> <td>%s</td> <td>%s</td> </tr>", id, name, date, location, organization, attendence);
+	}
 }

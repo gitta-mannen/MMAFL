@@ -4,20 +4,22 @@ import java.io.* ;
 import java.net.* ;
 import java.util.* ;
 
+import database.Event;
+import database.StatsHandler;
+
 /**
  * httpServer main class
  * @author Stugatz
  */
-public class HttpServer {
-
+public class HttpServer {    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception {
         int port = 999;
         ServerSocket socket = new ServerSocket(port);
-        HttpRequest httpRequest;
-  
+        HttpRequest httpRequest;       
+        
         while (true) {
             httpRequest = new HttpRequest( socket.accept() );
             Thread thread = new Thread( httpRequest );
@@ -25,24 +27,29 @@ public class HttpServer {
         }
         
     }
+
 }
 
 class HttpRequest implements Runnable{
+	StatsHandler db;
     Socket socket;
     		final static String CRLF = "\r\n";
     		final static File webRoot = new File("E:\\code\\java\\httpServer\\www");
     
     public HttpRequest(Socket socket) {
-        this.socket = socket;
+        this.socket = socket;        
     }
 
     @Override
     final public void run() {
         try {
-            processRequest();
+        	 System.out.println("-> run thread: " + Thread.currentThread().getId() + ", " + Thread.currentThread().getName());
+        	 db = new StatsHandler();
+             processRequest();
         } catch (Exception e) {
             System.out.println(e);
         }
+        db.close();
     }
     
     private void processRequest() throws Exception
@@ -60,7 +67,8 @@ class HttpRequest implements Runnable{
         // Display the request line.
         System.out.println();
         System.out.println("*** Server accepted new connection on port: " + socket.getPort() +
-                " thread id: " + Thread.currentThread().getId() + " ***");
+                " thread id: " + Thread.currentThread().getId() +  " ," + Thread.activeCount() + " active threads" + " ***");
+       
         System.out.println(requestLine);        
         
         // Get and display the header lines.
@@ -73,36 +81,23 @@ class HttpRequest implements Runnable{
         StringTokenizer tokens = new StringTokenizer(requestLine);
         tokens.nextToken();  // skip over the method, which should be "GET"
         String fileName = tokens.nextToken();
-
-        // Prepend a "." so that file request is within the current directory.
-                //fileName = "." + fileName;        
-        File file = new File(webRoot, fileName);
-        System.out.println("Client sent request for: " + file.getPath());
-                
-        // Open the requested file.
-        FileInputStream fis = null;
-        boolean fileExists = true;
-        try {
-                fis = new FileInputStream(file.getPath());
-        } catch (FileNotFoundException e) {
-                fileExists = false;
-        }
-        
+        System.out.println("Client sent request for: " + fileName);
+                        
         // Construct the response message.
         String statusLine = null;
         String contentTypeLine = null;
-        String entityBody = null;
-        if (fileExists) {
-                statusLine = "HTTP/1.0 200 OK";
-                contentTypeLine = "Content-type: " + 
-                        contentType( fileName ) + CRLF;
-        } else {
-                statusLine = "HTTP/1.0 404 Not Found";
-                contentTypeLine = "Content-type:  text/html" + CRLF;
-                entityBody = "<HTML>" + 
-                        "<HEAD><TITLE>Not Found</TITLE></HEAD>" +
-                        "<BODY>The requested file was not found on the server.</BODY></HTML>";
-        }
+        StringBuilder entityBody = new StringBuilder();
+       
+        statusLine = "HTTP/1.0 200 OK";
+        contentTypeLine = "Content-type: " + 
+                contentType( fileName ) + CRLF;     
+        
+        // build html body
+        ArrayList<Event> events = db.get(new Event());
+        for (Event event : events) {
+        	entityBody.append(event.toHtmlString());
+		}
+				                  
         
         // Send the status line.
         os.writeBytes(statusLine);
@@ -113,18 +108,15 @@ class HttpRequest implements Runnable{
         // Send a blank line to indicate the end of the header lines.
         os.writeBytes(CRLF);        
 
-        // Send the entity body.
-        if (fileExists)	{
-                sendBytes(fis, os);
-                fis.close();
-        } else {
-                os.writeBytes(entityBody);
-        }
+        os.writeBytes("<HTML> <HEAD> <TITLE> Events </TITLE> </HEAD> <BODY> <table border=''1''> ");
+        os.writeBytes("<tr> <th> id </th> <th> name </th> <th> date </th>  <th> location </th> <th> organization </th> <th> attendence </th> </tr>");
+        os.writeBytes(entityBody.toString());
+        os.writeBytes("</table> </BODY> </HTML>");
         
         // Close streams and socket.
         os.close();
         br.close();
-        socket.close();                
+        socket.close();    
     }
     
     private static void sendBytes(FileInputStream fis, OutputStream os) throws Exception {
