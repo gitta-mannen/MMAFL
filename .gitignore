@@ -55,9 +55,8 @@ local.properties
 
 # project files #
 #################
-# Not used at the moment
-#.project
-#.classpath
+.project
+.classpath
 
 # Exceptions #
 #############

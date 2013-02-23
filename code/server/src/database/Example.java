@@ -1,12 +1,21 @@
 package database;
 
+import java.util.ArrayList;
+
 public class Example {
 	public static void main(String[] args) {
-		// used once for all scrapers
 		StatsHandler db = new StatsHandler();
-		// once per record (i.e once per event)
-		db.update(new Event(1, "UFC the Tuna Sandwich", "2012-02-01", "Hålanda", "NEGER", "50000000"));
-		// once for all scrapers
-		db.close();
+		
+		//uppdatera databasen
+		db.update(new Event(7, "UFC the Tuna Sandwich", "2012-02-02", "tgregertg", "UFC", "50000000"));
+		
+		//hämta innehållet i databasen till en arraylist av events
+		ArrayList<Event> events = db.get(new Event());		
+		
+		for (Event event : events) {
+			System.out.println(event.toSqlString());
+		}
+		
+		db.close();	
 	}
 }
