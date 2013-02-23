@@ -42,14 +42,13 @@ class HttpRequest implements Runnable{
 
     @Override
     final public void run() {
-        try {
-        	 System.out.println("-> run thread: " + Thread.currentThread().getId() + ", " + Thread.currentThread().getName());
+        try {        	 
         	 db = new StatsHandler();
              processRequest();
+             db.close();
         } catch (Exception e) {
             System.out.println(e);
-        }
-        db.close();
+        }    
     }
     
     private void processRequest() throws Exception

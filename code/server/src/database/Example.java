@@ -7,7 +7,7 @@ public class Example {
 		StatsHandler db = new StatsHandler();
 		
 		//uppdatera databasen
-		db.update(new Event(7, "UFC the Tuna Sandwich", "2012-02-02", "veeeeeeeeerrrrrrrrryyyyyyy lllllllong naaaaaaaame", "UFC", "50000000"));
+		db.update(new Event(7, "UFC the Tuna Sandwich", "2012-02-02", "tgregertg", "UFC", "50000000"));
 		
 		//hämta innehållet i databasen till en arraylist av events
 		ArrayList<Event> events = db.get(new Event());		
