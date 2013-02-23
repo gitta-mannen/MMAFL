@@ -31,7 +31,8 @@ public class EventScraper {
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
 					inputLine = inputLine.replaceAll("Events > ", "");
-					eventOrganization = inputLine;
+					eventOrganization = inputLine.trim();
+					eventOrganization = "Jan Pettersspon är en haxx0000r Elite Squad master";
 					
 				}
 				//Scrape: Event Name
@@ -40,7 +41,7 @@ public class EventScraper {
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
 					inputLine = inputLine.replaceAll("Events > ", "");
-					eventName = inputLine;
+					eventName = inputLine.trim();
 				}
 				//Scrape: Event Location
 				if (inputLine.contains(">LOCATION</td>")) {
@@ -48,7 +49,7 @@ public class EventScraper {
 					inputLine = inputLine.replaceAll("\\<.*?>", "");
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
-					eventLocation = inputLine;
+					eventLocation = inputLine.trim();
 				}
 				//Scrape: Event Date
 				if (inputLine.contains("DATE</td>")) {
@@ -56,7 +57,7 @@ public class EventScraper {
 					inputLine = inputLine.replaceAll("\\<.*?>", "");
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
-					eventDate = inputLine;
+					eventDate = inputLine.trim();
 				}
 				//Scrape: event Attendance
 				if (inputLine.contains(">ATTENDANCE</td>")) {
@@ -65,13 +66,14 @@ public class EventScraper {
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
 					//inputLine = inputLine.replaceAll("Events > ", "");
-					eventAttendance = inputLine;
+					eventAttendance = inputLine.trim();
 				}
 			}
 			in.close();
 			eventToDb();
 		} catch (Exception e) {
 			e.printStackTrace();
+			
 		}
 	}
     public void eventToDb() {
@@ -79,7 +81,8 @@ public class EventScraper {
 		StatsHandler db = new StatsHandler();
 		// once per record (i.e once per event)
 		//db.update(new Event(1, "UFC the Tuna Sandwich", "2012-02-01", "Hålanda", "PENIS", "50000000"));
-		db.update(new Event(2, "eventName", "eventDate", "eventLocation", "eventOrganization", "eventAttendance"));
+		db.update(new Event(3, eventName, eventDate, eventLocation, eventOrganization, eventAttendance));
+		System.out.println(eventLocation+ "\n" + eventOrganization);
 		// once for all scrapers
 		db.close();
 		System.out.println("Done");
