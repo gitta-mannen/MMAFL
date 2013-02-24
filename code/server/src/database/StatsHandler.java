@@ -77,7 +77,7 @@ public class StatsHandler extends DbHandler {
 		// create statement and set timeout to 30 sec.
 		Statement statement = connection.createStatement();						
 		statement.setQueryTimeout(30);				
-		statement.executeUpdate("insert or replace into events values" + fighter.toSqlString());
+		statement.executeUpdate("insert or replace into fighters values" + fighter.toSqlString());
 		
 		} catch (SQLException e) {
 			// if the error message is "out of memory",

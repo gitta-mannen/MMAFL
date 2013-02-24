@@ -124,14 +124,14 @@ public class FighterScraper {
 						inputLine = inputLine.replaceAll("\\<.*?>", "");
 						inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 						inputLine = inputLine.replaceAll("  ", " ");
-						name = inputLine;
+						name = inputLine.trim();
 					}
 					// Scrape: Nickname OK
 					if (inputLine.contains("nickname\">")) {
 						inputLine = inputLine.replaceAll("\\<.*?>", "");
 						inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 						inputLine = inputLine.replaceAll("  ", " ");
-						nickname = inputLine;
+						nickname = inputLine.trim();
 					}
 					// Scrape: Height OK
 					if (inputLine.contains(">HEIGHT</td>")) {

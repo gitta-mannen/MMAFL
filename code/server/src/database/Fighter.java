@@ -198,7 +198,7 @@ public class Fighter extends Record {
 	}
 
 	public String toSqlString () {
-		return String.format("(%d, %d, %d, %d, %d, %d, %d, %d, %d, %d, '%s', '%s', '%s', '%s', '%s', '%s', %d, %d, %d, %d)", id, age, str_acc, str_def, td_acc, td_def, w, l, d, nc, name, nickname, height, weight, reach, stance, slpm, sapm, td_avg, sub_avg);		
+		return String.format("(%d, %d, %d, %d, %d, %d, %d, %d, %d, %d, '%s', '%s', '%s', '%s', '%s', '%s', %f, %f, %f, %f)", id, age, str_acc, str_def, td_acc, td_def, w, l, d, nc, name, nickname, height, weight, reach, stance, slpm, sapm, td_avg, sub_avg);		
 	}
 	/*int id, int age, int str_acc, int str_def, int td_acc,
 	int td_def, int w, int l, int d, int nc, String name,
