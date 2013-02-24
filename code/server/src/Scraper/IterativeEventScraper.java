@@ -10,17 +10,19 @@ import database.Event;
 import database.StatsHandler;
 
 public class IterativeEventScraper {
+	
+	private int id;
 	private String eventOrganization;
 	private String eventName;
 	private String eventLocation;
 	private String eventDate;
 	private String eventAttendance;
-	private int Id;
+	
 	private StatsHandler db = new StatsHandler();
 
 	public IterativeEventScraper(URL url, int Id) throws MalformedURLException {
 		try {
-			this.Id = Id;
+			this.id = Id;
 			URLConnection yc = url.openConnection();
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					yc.getInputStream()));
@@ -34,9 +36,7 @@ public class IterativeEventScraper {
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
 					inputLine = inputLine.replaceAll("Events > ", "");
-					eventOrganization = inputLine.trim();
-					//eventOrganization = "UFC";
-					
+					eventOrganization = inputLine.trim();	
 				}
 				//Scrape: Event Name
 				if (inputLine.contains("Events</a>")) {
@@ -83,12 +83,12 @@ public class IterativeEventScraper {
 	public String dateConverter(String date) {
 		String year = date.substring(date.length()-5).trim();
 		String month = date.substring(0,4).trim();
-		String day = date.substring(month.length()+1,month.length()+year.length()-2);
+		String day = 0 + date.substring(month.length()+1,month.length()+year.length()-2);
 		
-		if(day.contains(",")) {
+		/*if(day.contains(",")) {
 			day = 0 + day.substring(0,1);
 			day = day.trim();
-		}
+		}*/
 		
         switch (month) {
             case "Jan.":  month = "01";
@@ -124,9 +124,11 @@ public class IterativeEventScraper {
     	// used once for all scrapers
 		StatsHandler db = new StatsHandler();
 		// once per record (i.e once per event)
-		db.update(new Event(Id, eventName, eventDate, eventLocation, eventOrganization, eventAttendance));
-		System.out.println("Id: " + Id + " Event: " + eventName);
-		System.out.println("Done");
+		db.update(new Event(id, eventName, eventDate, eventLocation, eventOrganization, eventAttendance));
+		System.out.println("Id: " + id + "\n" + "Event: " + eventName);
+		System.out.println("------------------------------------");
+		System.out.println("Success.");
+		System.out.println("------------------------------------"+"\n");
     }
     public void closeEventToDb() {
     	db.close();
