@@ -60,7 +60,8 @@ public class IterativeEventScraper {
 					inputLine = inputLine.replaceAll("\\<.*?>", "");
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
-					eventDate = inputLine.trim();
+					inputLine = inputLine.trim();
+					eventDate = dateConverter(inputLine);
 				}
 				//Scrape: event Attendance
 				if (inputLine.contains(">ATTENDANCE</td>")) {
@@ -79,6 +80,46 @@ public class IterativeEventScraper {
 			
 		}
 	}
+	public String dateConverter(String date) {
+		String year = date.substring(date.length()-5).trim();
+		String month = date.substring(0,4).trim();
+		String day = date.substring(month.length()+1,month.length()+year.length()-2);
+		
+		if(day.contains(",")) {
+			day = 0 + day.substring(0,1);
+			day = day.trim();
+		}
+		
+        switch (month) {
+            case "Jan.":  month = "01";
+                     break;
+            case "Feb.":  month = "02";
+                     break;
+            case "Mar.":  month = "03";
+                     break;
+            case "Apr.":  month = "04";
+                     break;
+            case "May.":  month = "05";
+                     break;
+            case "Jun.":  month = "06";
+                     break;
+            case "Jul.":  month = "07";
+                     break;
+            case "Aug.":  month = "08";
+                     break;
+            case "Sep.":  month = "09";
+                     break;
+            case "Oct.":  month = "10";
+                     break;
+            case "Nov.":  month = "11";
+                     break;
+            case "Dec.":  month = "12";
+                     break;
+            default: month = "Invalid month";
+                     break;
+        }
+        return year+"-"+month+"-"+day;
+	}
     public void eventToDb() {
     	// used once for all scrapers
 		StatsHandler db = new StatsHandler();
@@ -89,7 +130,7 @@ public class IterativeEventScraper {
     }
     public void closeEventToDb() {
     	db.close();
-    	System.out.println("\n" + "Done writing to DB");
+    	System.out.println("\n" + "Done writing to DB.");
     }
 	public String getEvent() {
 		return  eventOrganization + "\n" + eventName + "\n" + eventLocation + "\n" + eventDate + "\n" + eventAttendance;

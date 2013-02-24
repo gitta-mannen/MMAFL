@@ -79,7 +79,7 @@ final String fighterUrl = "http://hosteddb.fightmetric.com/fighters/details/372"
 			
 			IterativeEvent = new IterativeUrlFeeder();
 			String s0 = JOptionPane.showInputDialog("Enter \"Event\" or \"Fighter\" (w/o quotes):");
-			String s1 = JOptionPane.showInputDialog("Enter start value (min 122, max 616):");
+			String s1 = JOptionPane.showInputDialog("Enter start value (min 121, max 616):");
 			String s2 = JOptionPane.showInputDialog("Enter start value (min " + (Integer.parseInt(s1)+1) + ", max 616):");
 			IterativeEvent.setInterval(s0, Integer.parseInt(s1),Integer.parseInt(s2));
 			JOptionPane.showMessageDialog(rootPane, IterativeEvent.getInterval());

@@ -16,7 +16,7 @@ public class HttpServer {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception {
-        int port = 997;
+        int port = 996;
         ServerSocket socket = new ServerSocket(port);
         HttpRequest httpRequest;       
         
