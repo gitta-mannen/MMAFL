@@ -91,11 +91,10 @@ class HttpRequest implements Runnable{
 			// Extract the request fields
 			StringTokenizer fields;
 			request = new HashMap<String, String>();	
-			boolean firstLine = true;
-			
+			boolean firstLine = true;			
 	        while (((requestLine = br.readLine()).length() != 0) ) {
 	        	fields = new StringTokenizer(requestLine, ": ");	     
-	        	
+	        	// Handle the method line 
 	        	if(firstLine && fields.countTokens() == 3) {
 	        		request.put("Request-Method", fields.nextToken());
 	        		request.put("Request-URL", fields.nextToken());
@@ -142,7 +141,7 @@ class HttpRequest implements Runnable{
         	if (request.get("Request-Method").toString().equals("GET")) {
         		String requestUrl = request.get("Request-URL").toString();
                 
-        		// Rewrite request
+        		// Rewrite URL
                 if (requestUrl.equals("/")) {
                 	requestUrl = "/index.html";                	
                 } else if (requestUrl.endsWith("/")) {
@@ -167,6 +166,7 @@ class HttpRequest implements Runnable{
                             "<BODY>The requested file was not found on the server.</BODY></HTML>" + CRLF);	 
                     os.writeBytes(page.toString());
                 } else if (dbObject) {
+                	// Build page from database
                 	System.out.println("<Server> Sending DB object, thread id: " + Thread.currentThread().getId());
             		page.append("HTTP/1.0 200 OK" + CRLF);
                     page.append("Content-type: text/html" + CRLF);
@@ -175,7 +175,7 @@ class HttpRequest implements Runnable{
                     page.append("<HTML><HEAD><TITLE>Events</TITLE></HEAD> <BODY><table border='1'>" + CRLF);
                     page.append("<tr><th> id </th><th> name </th><th> date </th><th> location </th><th> organization </th><th> attendence </th></tr>" + CRLF);
                     
-                    // Get table from db
+                    // Get table from DB
                     ArrayList<Event> events = db.get(new Event());
                     for (Event event : events) {
                     	page.append(event.toHtmlString());
@@ -185,16 +185,20 @@ class HttpRequest implements Runnable{
                     page.append("</table></BODY></HTML>" + CRLF);
                     os.writeBytes(page.toString());                    
                 } else {
+                	// Send static file
                 	System.out.println("<Server> Sending file, thread id: " + Thread.currentThread().getId());
             		page.append("HTTP/1.0 200 OK" + CRLF);
                     page.append("Content-type: " + contentType(requestUrl) + CRLF);
                     page.append(CRLF);
+                    
+                    // Send the fileStream directly to the socketStream
                     FileInputStream fis = null;
                     try {
                     	fis = new FileInputStream(file.getPath());
                     	sendBytes(fis, os);
                         fis.close();
                     } catch (FileNotFoundException e) {
+                    	// Should give 404
                     	System.out.println("<Server> IO error on serving static page, thread id: " + Thread.currentThread().getId());
                     }
                 }
@@ -226,7 +230,7 @@ class HttpRequest implements Runnable{
 
     private static String contentType(String fileName)
     {
-            if(fileName == "/" || fileName.endsWith(".htm") || fileName.endsWith(".html")) {
+            if(fileName.endsWith(".htm") || fileName.endsWith(".html")) {
                     return "text/html";
             }
             if( fileName.endsWith(".gif") ) {
