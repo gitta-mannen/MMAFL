@@ -20,9 +20,11 @@ public class HttpServer implements Runnable {
 	public void run() {     
 		try {
 			socket = new ServerSocket(port);
-			
+			System.out.println("<Server> Server started, accepting connections on port: " + port +
+                 " ,thread id: " + Thread.currentThread().getId());
 		} catch (IOException e) {
-			System.out.println("Failed to initialize server socket, stopping server.");
+			System.out.println("<Server> Failed to initialize server socket, stopping server."
+					+ " Thread id: " + Thread.currentThread().getId());
 		} 
         
 		HttpRequest httpRequest;               
@@ -32,7 +34,8 @@ public class HttpServer implements Runnable {
 	            Thread thread = new Thread( httpRequest );
 	            thread.start();
 			} catch (IOException e) {
-				System.out.println("Filed to accept connection, socket error.");
+				System.out.println("<Server> Filed to accept connection, socket error."
+						+ " Thread id: " + Thread.currentThread().getId());
 			}
 
         }
@@ -60,6 +63,7 @@ class HttpRequest implements Runnable{
     final static File webRoot = new File(System.getProperty("user.dir") + "\\www\\");
     private InputStreamReader is;
 	private DataOutputStream os;
+	private long requestTime = System.currentTimeMillis();
     
     // Receives socket from server thread
     public HttpRequest(Socket socket) {
@@ -68,11 +72,10 @@ class HttpRequest implements Runnable{
 
     @Override
     final public void run() {
-    	 System.out.println("*** Server accepted new connection on port: " + socket.getPort() +
-                 " thread id: " + Thread.currentThread().getId() +  " ***");
+    	 System.out.println("<Server> accepted new connection on port: " + socket.getPort() +
+                 " ,thread id: " + Thread.currentThread().getId());
     
-    	long startTime = System.currentTimeMillis();
-    	String requestLine;
+    	String requestLine = "empty";
     	HashMap<String, String> request;
     	db = new StatsHandler();
     	
@@ -84,13 +87,13 @@ class HttpRequest implements Runnable{
 			os = new DataOutputStream( socket.getOutputStream() );
 			// Set up input stream filters.
 			BufferedReader br = new BufferedReader (is);
-	        // Extract the request fields
+	        
+			// Extract the request fields
 			StringTokenizer fields;
 			request = new HashMap<String, String>();	
 			boolean firstLine = true;
 			
-	        while ((br.ready() && (requestLine = br.readLine()).length() != 0) ) {
-	        	System.out.println(requestLine);
+	        while (((requestLine = br.readLine()).length() != 0) ) {
 	        	fields = new StringTokenizer(requestLine, ": ");	     
 	        	
 	        	if(firstLine && fields.countTokens() == 3) {
@@ -103,9 +106,12 @@ class HttpRequest implements Runnable{
 	        	}
 	        }	        	       
 	        
+	        //process request
 	        if(!request.isEmpty()) {
-		        System.out.println(request.toString());
+	        	System.out.println("<Server> Processing request, thread id: " + Thread.currentThread().getId());
 	        	processRequest(request);
+	        } else {
+	        	System.out.println("<Server> No request recieved, requestLine " + requestLine +  " .Thread id: " + Thread.currentThread().getId());
 	        }
 
 			// Close DB connection, sockets and streams
@@ -113,7 +119,7 @@ class HttpRequest implements Runnable{
 			br.close();
 			os.close();
 			socket.close();
-			System.out.println("Thread: " + Thread.currentThread().getId() + " Closing thread");	    
+			System.out.println("<Server> Closing request thread, thread id: " + Thread.currentThread().getId());	    
 			 
         } catch (Exception e) {
             System.out.println(e);
@@ -126,92 +132,82 @@ class HttpRequest implements Runnable{
      * @throws Exception
      * Handles the request
      */
-    private void processRequest(HashMap request) throws Exception
+    private void processRequest(HashMap<String, String> request) throws Exception
     {	           
         // Construct the response message.
-        String statusLine = null;
-        String contentTypeLine = null;
-        String requestUrl = null;
-       
+        StringBuilder page = new StringBuilder();
+        
+        // Check for correct headers and methods
         if (request.containsKey("Request-URL") && request.containsKey("Request-Method")) {          
         	if (request.get("Request-Method").toString().equals("GET")) {
-        		requestUrl = request.get("Request-URL").toString();
-                                
+        		String requestUrl = request.get("Request-URL").toString();
+                
+        		// Rewrite request
                 if (requestUrl.equals("/")) {
                 	requestUrl = "/index.html";                	
+                } else if (requestUrl.endsWith("/")) {
+                	requestUrl = requestUrl.substring(0, requestUrl.length() - 1);
                 }
                 
-                File file = new File(webRoot, requestUrl);
-                System.out.println("Client sent request for: " + file.getPath());
+                // Check if object exists ** currently hack for database objects **            	                                
+                File file = new File(webRoot, requestUrl);                
+                boolean dbObject = (requestUrl.endsWith("events.html") ? true : false);
+                boolean objectExists = (dbObject || file.exists());
                 
-                if (requestUrl.endsWith("events.html") || requestUrl.endsWith("events.html/")) {
-                	System.out.println("sending events");
-                	StringBuilder page = new StringBuilder();
-                	
-            		page.append("HTTP/1.0 200 OK");
-            		page.append(CRLF);
-                    page.append("Content-type: text/html");
+                System.out.println("<Server> Client sent request for: " + file.getPath() +  " ,thread id: " + Thread.currentThread().getId());
+                
+                // Build page
+                if (!objectExists) {
+                	// Send 404 message        
+                	System.out.println("<Server> File not found, sending 404 message, thread id: " + Thread.currentThread().getId());
+                	page.append("HTTP/1.0 404 Not Found" + CRLF);
+                	page.append("Content-type: text/html" + CRLF);
+                	page.append(CRLF);
+                    page.append("<HTML><HEAD><TITLE>Not Found</TITLE></HEAD>" +
+                            "<BODY>The requested file was not found on the server.</BODY></HTML>" + CRLF);	 
+                    os.writeBytes(page.toString());
+                } else if (dbObject) {
+                	System.out.println("<Server> Sending DB object, thread id: " + Thread.currentThread().getId());
+            		page.append("HTTP/1.0 200 OK" + CRLF);
+                    page.append("Content-type: text/html" + CRLF);
                     page.append(CRLF);
-                    page.append(CRLF);
-                    // build html body
-                    page.append("<!DOCTYPE HTML PUBLIC &quot-//W3C//DTD HTML 4.01 Transitional//EN&quot &quothttp://www.w3.org/TR/html4/loose.dtd&quot>");
-                    page.append(CRLF);
-                    page.append("<HTML><HEAD><TITLE>Events</TITLE></HEAD> <BODY><table border='1'>");
-                    page.append(CRLF);
-                    page.append("<tr><th> id </th><th> name </th><th> date </th><th> location </th><th> organization </th><th> attendence </th></tr>");
-                    page.append(CRLF);
+                    page.append("<!DOCTYPE HTML PUBLIC &quot-//W3C//DTD HTML 4.01 Transitional//EN&quot &quothttp://www.w3.org/TR/html4/loose.dtd&quot>" + CRLF);                   
+                    page.append("<HTML><HEAD><TITLE>Events</TITLE></HEAD> <BODY><table border='1'>" + CRLF);
+                    page.append("<tr><th> id </th><th> name </th><th> date </th><th> location </th><th> organization </th><th> attendence </th></tr>" + CRLF);
                     
+                    // Get table from db
                     ArrayList<Event> events = db.get(new Event());
                     for (Event event : events) {
                     	page.append(event.toHtmlString());
                     	page.append(CRLF);
             		}                    
  
-                    page.append("</table></BODY></HTML>");
-                    page.append(CRLF);
-                    os.writeBytes(page.toString());
-                    
+                    page.append("</table></BODY></HTML>" + CRLF);
+                    os.writeBytes(page.toString());                    
                 } else {
-                	FileInputStream fis = null;
-                    boolean fileExists = true;
+                	System.out.println("<Server> Sending file, thread id: " + Thread.currentThread().getId());
+            		page.append("HTTP/1.0 200 OK" + CRLF);
+                    page.append("Content-type: " + contentType(requestUrl) + CRLF);
+                    page.append(CRLF);
+                    FileInputStream fis = null;
                     try {
                     	fis = new FileInputStream(file.getPath());
-                    } catch (FileNotFoundException e) {
-                        fileExists = false;
-                    }
-                    
-                    if (fileExists)	{
-                    	System.out.println(requestUrl);
-                        sendBytes(fis, os);
+                    	sendBytes(fis, os);
                         fis.close();
-                        os.writeBytes(CRLF);
-                        
-	                } else {
-	                	System.out.println("sending not found message");
-	                	
-	                	statusLine = "HTTP/1.0 404 Not Found";
-	                    contentTypeLine = "Content-type:  text/html" + CRLF;
-	                    String fileMissing = "<HTML>" + 
-	                            "<HEAD><TITLE>Not Found</TITLE></HEAD>" +
-	                            "<BODY>The requested file was not found on the server.</BODY></HTML>";	          
-	                    // Send the status line.
-	                    os.writeBytes(statusLine);
-	                    // Send the content type line.
-	                    os.writeBytes(contentTypeLine);
-	                    // Send a blank line to indicate the end of the header lines.
-	                    os.writeBytes(CRLF);      
-	                    os.writeBytes(fileMissing);
-	                    os.writeBytes(CRLF);
-	                    
-	                }
+                    } catch (FileNotFoundException e) {
+                    	System.out.println("<Server> IO error on serving static page, thread id: " + Thread.currentThread().getId());
+                    }
                 }
+
+                System.out.println("<Server> page served in " + (System.currentTimeMillis()-requestTime + " milliseconds, " 
+                		+ "thread id: " + Thread.currentThread().getId()));
         		
         	} else {
-        		System.out.println("Request method not recognized");
+        		System.out.println("<Server> Request method not recognized, dropping connection. Thread id: " + Thread.currentThread().getId());
         	}
             
         } else {
-        	System.out.println("Headers missing");
+        	System.out.println("<Server> Headers missing, dropping connection. Thread id: " + Thread.currentThread().getId());
         }
            
     }
