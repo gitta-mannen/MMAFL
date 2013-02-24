@@ -13,7 +13,7 @@ import database.StatsHandler;
  * Accepts connections on server socket and then delegates them to request threads on dynamically assigned sockets.
  */
 public class HttpServer implements Runnable {
-    final static int port = 999;
+    final static int port = 80;
     private ServerSocket socket;
     boolean stop = false;
     
@@ -25,6 +25,7 @@ public class HttpServer implements Runnable {
                  " ,thread id: " + Thread.currentThread().getId());
 		} catch (IOException e) {
 			System.out.println("<Server Error> Failed to initialize server socket, stopping server."
+					+ " Make sure that you aren't running another web server or a program such as skype that uses port 80."
 					+ " Thread id: " + Thread.currentThread().getId());
 			stop = true;
 		} 
@@ -235,7 +236,7 @@ class HttpRequest implements Runnable{
            
     }
     
-  
+    // Writes the fileStream directly to the socket. 
     private static void sendBytes(FileInputStream fis, OutputStream os) throws Exception {
        // Construct a 1K buffer to hold bytes on their way to the socket.
        byte[] buffer = new byte[1024];
@@ -247,6 +248,7 @@ class HttpRequest implements Runnable{
        }
     }
 
+    // Extracts the file type based on file ending.
     private static String contentType(String fileName)
     {
             if(fileName.endsWith(".htm") || fileName.endsWith(".html")) {
