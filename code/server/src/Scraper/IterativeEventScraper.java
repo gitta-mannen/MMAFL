@@ -9,22 +9,22 @@ import java.net.URL;
 import database.Event;
 import database.StatsHandler;
 
-public class EventScraper {
+public class IterativeEventScraper {
 	private String eventOrganization;
 	private String eventName;
 	private String eventLocation;
 	private String eventDate;
 	private String eventAttendance;
+	private int Id;
+	private StatsHandler db = new StatsHandler();
 
-	public EventScraper(URL url) throws MalformedURLException {
-		
+	public IterativeEventScraper(URL url, int Id) throws MalformedURLException {
 		try {
+			this.Id = Id;
 			URLConnection yc = url.openConnection();
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					yc.getInputStream()));
 			String inputLine;
-			
-			
 			
 			while ((inputLine = in.readLine()) != null) {
 				//Scrape: Organization
@@ -83,11 +83,13 @@ public class EventScraper {
     	// used once for all scrapers
 		StatsHandler db = new StatsHandler();
 		// once per record (i.e once per event)
-		//db.update(new Event(1, "UFC the Tuna Sandwich", "2012-02-01", "Hålanda", "PENIS", "50000000"));
-		db.update(new Event(3, eventName, eventDate, eventLocation, eventOrganization, eventAttendance));
-		System.out.println(eventLocation+ "\n" + eventOrganization);
-		// once for all scrapers
-		db.close();
+		db.update(new Event(Id, eventName, eventDate, eventLocation, eventOrganization, eventAttendance));
+		System.out.println("Id: " + Id + " Event: " + eventName);
+		System.out.println("Done");
+    }
+    public void closeEventToDb() {
+    	db.close();
+    	System.out.println("\n" + "Done writing to DB");
     }
 	public String getEvent() {
 		return  eventOrganization + "\n" + eventName + "\n" + eventLocation + "\n" + eventDate + "\n" + eventAttendance;
