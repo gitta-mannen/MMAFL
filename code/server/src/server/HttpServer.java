@@ -15,6 +15,7 @@ import database.StatsHandler;
 public class HttpServer implements Runnable {
     final static int port = 999;
     private ServerSocket socket;
+    boolean stop = false;
     
 	@Override
 	public void run() {     
@@ -23,18 +24,19 @@ public class HttpServer implements Runnable {
 			System.out.println("<Server> Server started, accepting connections on port: " + port +
                  " ,thread id: " + Thread.currentThread().getId());
 		} catch (IOException e) {
-			System.out.println("<Server> Failed to initialize server socket, stopping server."
+			System.out.println("<Server Error> Failed to initialize server socket, stopping server."
 					+ " Thread id: " + Thread.currentThread().getId());
+			stop = true;
 		} 
         
 		HttpRequest httpRequest;               
-        while (true) {
+        while (!stop) {
             try {
 				httpRequest = new HttpRequest( socket.accept() );
 	            Thread thread = new Thread( httpRequest );
 	            thread.start();
 			} catch (IOException e) {
-				System.out.println("<Server> Filed to accept connection, socket error."
+				System.out.println("<Server Error> Failed to accept connection, socket error."
 						+ " Thread id: " + Thread.currentThread().getId());
 			}
 
@@ -64,7 +66,8 @@ class HttpRequest implements Runnable{
     private InputStreamReader is;
 	private DataOutputStream os;
 	private long requestTime = System.currentTimeMillis();
-    
+	// How many times to retry before timeout. Tries every 5 MS.
+    private final int RETRIES = 100;
     // Receives socket from server thread
     public HttpRequest(Socket socket) {
         this.socket = socket;        
@@ -75,7 +78,6 @@ class HttpRequest implements Runnable{
     	 System.out.println("<Server> accepted new connection on port: " + socket.getPort() +
                  " ,thread id: " + Thread.currentThread().getId());
     
-    	String requestLine = "empty";
     	HashMap<String, String> request;
     	db = new StatsHandler();
     	
@@ -87,30 +89,47 @@ class HttpRequest implements Runnable{
 			os = new DataOutputStream( socket.getOutputStream() );
 			// Set up input stream filters.
 			BufferedReader br = new BufferedReader (is);
-	        
+	        		
+			// Wait for inputStream and time out if it takes too long. 
+			int i = 0; boolean stop = false;
+			while(!br.ready()) {
+				if (++i > RETRIES) {
+					stop = true;
+					break;
+				}
+				Thread.sleep(5);				
+			}
+			
 			// Extract the request fields
 			StringTokenizer fields;
 			request = new HashMap<String, String>();	
-			boolean firstLine = true;			
-	        while (((requestLine = br.readLine()).length() != 0) ) {
-	        	fields = new StringTokenizer(requestLine, ": ");	     
-	        	// Handle the method line 
-	        	if(firstLine && fields.countTokens() == 3) {
-	        		request.put("Request-Method", fields.nextToken());
-	        		request.put("Request-URL", fields.nextToken());
-	        		request.put("Http-Version", fields.nextToken());
-	        		firstLine = false;
-	        	} else {
-	        		request.put(fields.nextToken(), fields.nextToken("").substring(2));
-	        	}
-	        }	        	       
+			boolean firstLine = true;
+			String requestLine = null;
+			
+			if (!stop) {
+		        while ((requestLine = br.readLine()).length() != 0) {
+		        	fields = new StringTokenizer(requestLine, ": ");	     
+		        	// Handle the method line 
+		        	if(firstLine && fields.countTokens() == 3) {
+		        		request.put("Request-Method", fields.nextToken());
+		        		request.put("Request-URL", fields.nextToken());
+		        		request.put("Http-Version", fields.nextToken());
+		        		firstLine = false;
+		        	} else if (fields.countTokens() >= 2) {
+		        		request.put(fields.nextToken(), fields.nextToken("").substring(2));
+		        	} else {
+		        		System.out.println("<Server Error> Read error, missing fields " + requestLine 
+		        					+ " .Thread id: " + Thread.currentThread().getId());
+		        	}
+		        }	    
+			}
 	        
 	        //process request
 	        if(!request.isEmpty()) {
 	        	System.out.println("<Server> Processing request, thread id: " + Thread.currentThread().getId());
 	        	processRequest(request);
 	        } else {
-	        	System.out.println("<Server> No request recieved, requestLine " + requestLine +  " .Thread id: " + Thread.currentThread().getId());
+	        	System.out.println("<Server> No request recieved, timed out. Thread id: " + Thread.currentThread().getId());
 	        }
 
 			// Close DB connection, sockets and streams
@@ -199,7 +218,7 @@ class HttpRequest implements Runnable{
                         fis.close();
                     } catch (FileNotFoundException e) {
                     	// Should give 404
-                    	System.out.println("<Server> IO error on serving static page, thread id: " + Thread.currentThread().getId());
+                    	System.out.println("<Server Error> IO error on serving static page, thread id: " + Thread.currentThread().getId());
                     }
                 }
 
