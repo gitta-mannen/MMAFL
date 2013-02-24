@@ -8,14 +8,19 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
-public class ResultScraper {
+public class ResultScraper implements Runnable {
 
 	private ArrayList<String> fightcardArray;
 	private ArrayList<String> winnerArray;
 	private boolean resultFlag;
+	URL url;
+	
+	public ResultScraper(URL url)  throws MalformedURLException {
+		this.url = url;
+	}
 
-	public ResultScraper(URL url) throws MalformedURLException {
-
+	@Override
+	public void run() {
 		fightcardArray = new ArrayList<String>();
 		resultFlag = false;
 		try {
@@ -40,8 +45,9 @@ public class ResultScraper {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
-
+	
 	//public ArrayList<String> getWinnerArray() {
 	public String getWinnerArray() {
 		winnerArray = new ArrayList<String>();
