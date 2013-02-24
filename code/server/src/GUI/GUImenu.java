@@ -12,13 +12,11 @@ package GUI;
 //import java.io.IOException;
 import javax.swing.*;
 import java.awt.event.*;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import Scraper.EventScraper;
 import Scraper.FighterScraper;
-import Scraper.IterativeEventScraper;
 import Scraper.IterativeUrlFeeder;
 import Scraper.ResultScraper;
  
@@ -78,14 +76,25 @@ final String fighterUrl = "http://hosteddb.fightmetric.com/fighters/details/372"
         public void actionPerformed(ActionEvent e) {
 			
 			IterativeEvent = new IterativeUrlFeeder();
-			String s0 = JOptionPane.showInputDialog("Enter \"Event\" or \"Fighter\" (w/o quotes):");
-			String s1 = JOptionPane.showInputDialog("Enter start value (min 121, max 616):");
+			String s1 = JOptionPane.showInputDialog("Enter event-id start value (min 1, max 616):");
 			String s2 = JOptionPane.showInputDialog("Enter start value (min " + (Integer.parseInt(s1)+1) + ", max 616):");
-			IterativeEvent.setInterval(s0, Integer.parseInt(s1),Integer.parseInt(s2));
+			IterativeEvent.setInterval("Event" ,Integer.parseInt(s1),Integer.parseInt(s2));
 			JOptionPane.showMessageDialog(rootPane, IterativeEvent.getInterval());
-			if(s0.equals("Event")) {
-				IterativeEvent.setEventsToDb();
-			}
+			IterativeEvent.setEventsToDb();
+        }
+    });
+        JMenuItem IterativeFighterItem = new JMenuItem("Iterative Fighter");
+        IterativeFighterItem.addActionListener(new ActionListener() {
+        IterativeUrlFeeder IterativeFighter;
+        @Override
+        public void actionPerformed(ActionEvent e) {
+			
+			IterativeFighter = new IterativeUrlFeeder();
+			String ss1 = JOptionPane.showInputDialog("Enter fighter-id start value (min 1, max 2055):");
+			String ss2 = JOptionPane.showInputDialog("Enter start value (min " + (Integer.parseInt(ss1)+1) + ", max 2055):");
+			IterativeFighter.setInterval("Fighter", Integer.parseInt(ss1),Integer.parseInt(ss2));
+			JOptionPane.showMessageDialog(rootPane, IterativeFighter.getInterval());
+			IterativeFighter.setFightersToDb();
 			
         }
     });
@@ -123,6 +132,7 @@ final String fighterUrl = "http://hosteddb.fightmetric.com/fighters/details/372"
         filemenu.add(quititem);
         cardsmenu.add(EventItem);
         cardsmenu.add(IterativeEventItem);
+        cardsmenu.add(IterativeFighterItem);
         cardsmenu.add(FighterItem);
         cardsmenu.add(ResultCardItem);
  

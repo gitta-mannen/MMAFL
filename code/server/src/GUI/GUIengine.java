@@ -1,6 +1,5 @@
 package GUI;
 
-import java.io.IOException;
 import server.HttpServer;
 
 

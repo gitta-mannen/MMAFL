@@ -8,26 +8,34 @@ public class IterativeUrlFeeder {
 	
 	final String fighterUrl = "http://hosteddb.fightmetric.com/fighters/details/";
 	final String eventUrl = "http://hosteddb.fightmetric.com/events/details/";
-	//int fighterUrlOffset = 1518;
-	//int eventUrlOffset = 121;
 	private int start, stop;
 	private String type;
 
 	public void setInterval(String type, int start, int stop) {
 		this.type = type;
-		this.start = start-1;
+		this.start = start;
 		this.stop = stop;
 	}
 	
 	public void setFightersToDb() {
-		//IterativeEventScraper eventScraper = new IterativeEventScraper();
+		for( int i = start; i <= stop; i++ ) {
+			try {
+				IterativeFighterScraper fies = new IterativeFighterScraper(new URL((fighterUrl+i)), i);
+				//System.out.println(eventUrl+1);
+				if(i == stop) {fies.closeEventToDb();}
+			} catch (MalformedURLException e) {
+				System.out.println("Invalid URL, might be caused by the fighter-interval.");
+				e.printStackTrace();
+			}
+		}
+		
 	}
 	public void setEventsToDb() {
 		for( int i = start; i <= stop; i++ ) {
 			try {
-				IterativeEventScraper ies = new IterativeEventScraper(new URL((eventUrl+i)), i);
+				IterativeEventScraper eies = new IterativeEventScraper(new URL((eventUrl+i)), i);
 				//System.out.println(eventUrl+1);
-				if(i == stop) {ies.closeEventToDb();}
+				if(i == stop) {eies.closeEventToDb();}
 			} catch (MalformedURLException e) {
 				System.out.println("Invalid URL, might be caused by the event-interval.");
 				e.printStackTrace();

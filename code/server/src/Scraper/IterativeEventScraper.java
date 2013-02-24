@@ -125,14 +125,11 @@ public class IterativeEventScraper {
 		StatsHandler db = new StatsHandler();
 		// once per record (i.e once per event)
 		db.update(new Event(id, eventName, eventDate, eventLocation, eventOrganization, eventAttendance));
-		System.out.println("Id: " + id + "\n" + "Event: " + eventName);
-		System.out.println("------------------------------------");
-		System.out.println("Success.");
-		System.out.println("------------------------------------"+"\n");
+		System.out.println("Event: " + id + " - " + eventName);
     }
     public void closeEventToDb() {
     	db.close();
-    	System.out.println("\n" + "Done writing to DB.");
+    	System.out.println("---------------------------\nDone.");
     }
 	public String getEvent() {
 		return  eventOrganization + "\n" + eventName + "\n" + eventLocation + "\n" + eventDate + "\n" + eventAttendance;
