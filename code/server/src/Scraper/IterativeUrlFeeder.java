@@ -15,7 +15,7 @@ public class IterativeUrlFeeder {
 
 	public void setInterval(String type, int start, int stop) {
 		this.type = type;
-		this.start = start;
+		this.start = start-1;
 		this.stop = stop;
 	}
 	
