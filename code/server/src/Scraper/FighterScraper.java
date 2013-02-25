@@ -13,7 +13,7 @@ import database.StatsHandler;
 
 public class FighterScraper {
 
-	private int id=1;
+	private int id=2;
 	private int age;
 	private int str_acc;
 	private int str_def;

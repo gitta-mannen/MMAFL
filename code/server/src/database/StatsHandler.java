@@ -40,7 +40,7 @@ public class StatsHandler extends DbHandler {
 			Statement statement = connection.createStatement();						
 			statement.setQueryTimeout(30);			
 	
-			statement.executeUpdate("create table if not exists fighters (id integer primary key, age integer, str_acc integer, str_def integer, td_acc integer, td_def integer, w string, l string, d string, nc string, name string, nickname string, height string, weight string, reach string, stance string, slpm double, sapm double, td_avg double, sub_avg double)");
+			statement.executeUpdate("create table if not exists fighters (id integer primary key, age integer, str_acc integer, str_def integer, td_acc integer, td_def integer, w int, l int, d int, nc int, name string, nickname string, height string, weight string, reach string, stance string, slpm real, sapm real, td_avg real, sub_avg real)");
 			statement.executeUpdate("create table if not exists events (id integer primary key, name string, date string, location string, organization string, attendance string)");
 			statement.executeUpdate("create table if not exists fights (id integer primary key)");
 			statement.executeUpdate("create table if not exists rounds (id integer primary key)");
@@ -123,15 +123,11 @@ public class StatsHandler extends DbHandler {
 									rs.getString("weight"), rs.getString("reach"), rs.getString("stance"), rs.getDouble("slpm"), 
 									rs.getDouble("sapm"), rs.getDouble("td_avg"), rs.getDouble("sub_avg")));				
 			}
-					/*int id, int age, int str_acc, int str_def, int td_acc,
-	int td_def, int w, int l, int d, int nc, String name,
-	String nickname, String height, String weight, String reach,
-	String stance, double slpm, double sapm, double td_avg,
-	double sub_avg*/
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("BULLSHIT");
 		}		
 		
 		return fightersResult;

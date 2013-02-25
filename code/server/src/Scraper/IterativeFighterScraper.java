@@ -47,6 +47,7 @@ public class IterativeFighterScraper {
 					inputLine = inputLine.replaceAll("\\<.*?>", "");
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
+					System.out.println(inputLine);
 					age = Integer.parseInt(inputLine.trim());
 				}
 
@@ -176,6 +177,7 @@ public class IterativeFighterScraper {
 					inputLine = inputLine.replaceAll("  ", " ");
 					inputLine = inputLine.trim();
 					inputLine = inputLine.substring(0,inputLine.length());
+					System.out.println(inputLine);
 					slpm = Double.parseDouble(inputLine);
 				}
 				// Scrape: Strikes Absorbed Per minute
