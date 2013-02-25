@@ -59,6 +59,7 @@ public class HttpServer implements Runnable {
  *
  */
 class HttpRequest implements Runnable{
+	private HashMap<String, String> tables;	
 	private StatsHandler db;
     private Socket socket;
     final static String CRLF = "\r\n";
@@ -78,10 +79,15 @@ class HttpRequest implements Runnable{
     final public void run() {
     	 System.out.println("<Server> accepted new connection on port: " + socket.getPort() +
                  " ,thread id: " + Thread.currentThread().getId());
-    
+    	 
     	HashMap<String, String> request;
     	db = new StatsHandler();
     	
+    	// hackkkkkkkkkkkk...
+    	tables = new HashMap<String, String>();
+    	tables.put(".fighters", "fighters");
+    	tables.put(".events", "events");
+    	    	
 	    try {
 	    	// Each request thread starts it's on database connection which should be thread safe on normally compiled SqLite drivers.
        	 	db = new StatsHandler();
@@ -121,6 +127,7 @@ class HttpRequest implements Runnable{
 		        	} else {
 		        		System.out.println("<Server Error> Read error, missing fields " + requestLine 
 		        					+ " .Thread id: " + Thread.currentThread().getId());
+		        		break;
 		        	}
 		        }	    
 			}
@@ -152,7 +159,7 @@ class HttpRequest implements Runnable{
      * Handles the request
      */
     private void processRequest(HashMap<String, String> request) throws Exception
-    {	           
+    {	              	
         // Construct the response message.
         StringBuilder page = new StringBuilder();
         
@@ -171,7 +178,9 @@ class HttpRequest implements Runnable{
                 // Check if object exists ** currently hack for database objects **            	                                
                 File file = new File(webRoot, requestUrl);                
                 boolean dbObject = (requestUrl.endsWith("events.html") ? true : false);
+                dbObject = (requestUrl.endsWith("fighters.html") ? true : false);
                 boolean objectExists = (dbObject || file.exists());
+                
                 
                 System.out.println("<Server> Client sent request for: " + file.getPath() +  " ,thread id: " + Thread.currentThread().getId());
                 
@@ -192,6 +201,7 @@ class HttpRequest implements Runnable{
                     }
                     
                 } else if (dbObject) {
+                
                 	// Build page from database
                 	System.out.println("<Server> Sending DB object, thread id: " + Thread.currentThread().getId());
             		page.append("HTTP/1.0 200 OK" + CRLF);

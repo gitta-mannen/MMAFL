@@ -15,12 +15,10 @@ public class StatsHandler extends DbHandler {
 
 	public StatsHandler () {
 		try {
-			// load the sqlite-JDBC driver using the current class loader
+			// load the Sqlite-JDBC driver using the current class loader
 			Class.forName("org.sqlite.JDBC");						
 			// create a database connection
 			this.connection = DriverManager.getConnection("jdbc:sqlite:stats.db");
-
-			createTables();
 			
 		} catch (ClassNotFoundException e) {
 			System.err.println(e);
@@ -33,7 +31,7 @@ public class StatsHandler extends DbHandler {
 	
 	
 	/**
-	 * Creates the stats tables if they don't exist
+	 * Creates the stats-tables if they don't exist
 	 */
 	private void createTables () {
 		try {				
