@@ -13,9 +13,10 @@ public class ResultScraper {
 	private ArrayList<String> fightcardArray;
 	private ArrayList<String> winnerArray;
 	private boolean resultFlag;
-
-	public ResultScraper(URL url) throws MalformedURLException {
-
+	URL url;
+	
+	public ResultScraper(URL url)  throws MalformedURLException {
+		this.url = url;
 		fightcardArray = new ArrayList<String>();
 		resultFlag = false;
 		try {
@@ -40,8 +41,9 @@ public class ResultScraper {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
-
+	
 	//public ArrayList<String> getWinnerArray() {
 	public String getWinnerArray() {
 		winnerArray = new ArrayList<String>();

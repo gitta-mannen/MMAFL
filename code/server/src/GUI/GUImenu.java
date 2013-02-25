@@ -1,16 +1,7 @@
 package GUI;
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-
-
-//import javax.imageio.ImageIO;
-//import java.awt.image.BufferedImage;
-//import java.io.File;
-//import java.io.IOException;
 import javax.swing.*;
+
 import java.awt.event.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -18,16 +9,14 @@ import java.net.URL;
 import Scraper.EventScraper;
 import Scraper.FighterScraper;
 import Scraper.IterativeUrlFeeder;
-import Scraper.ResultScraper;
  
 @SuppressWarnings("serial")
 public class GUImenu extends JFrame {
  //   private BufferedImage image;
 final String eventUrl = "http://hosteddb.fightmetric.com/events/details/122";
 final String fighterUrl = "http://hosteddb.fightmetric.com/fighters/details/372";
-      
- 
-    public GUImenu() {
+
+public GUImenu() {
  
         //set the Frame size
         this.setSize(600, 600);
@@ -57,16 +46,34 @@ final String fighterUrl = "http://hosteddb.fightmetric.com/fighters/details/372"
  
         JMenuItem EventItem = new JMenuItem("Event");
         EventItem.addActionListener(new ActionListener() {
-        EventScraper event;
         @Override
         public void actionPerformed(ActionEvent e) {
-			try {
-				event = new EventScraper(new URL(eventUrl));
-			} catch (MalformedURLException e1) {
-				System.out.println("Invalid url");
-				
-			}
-			JOptionPane.showMessageDialog(rootPane, event.getEvent());
+        	SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
+        	    @Override
+        	    public String doInBackground() throws MalformedURLException {
+        	        final EventScraper result = new EventScraper(new URL(eventUrl));
+
+        	        return result.getEvent();
+        	    }
+
+        	    @Override
+        	    public void done() {
+        	        try {
+        	            JOptionPane.showMessageDialog(rootPane, get());
+        	        } catch (InterruptedException ignore) {}
+        	        catch (java.util.concurrent.ExecutionException e) {
+        	            String why = null;
+        	            Throwable cause = e.getCause();
+        	            if (cause != null) {
+        	                why = cause.getMessage();
+        	            } else {
+        	                why = e.getMessage();
+        	            }
+        	            System.out.println(why);
+        	        }
+        	    }
+        	};         	
+        	worker.execute();
         }
     });
         JMenuItem IterativeEventItem = new JMenuItem("Iterative Event");
@@ -115,17 +122,12 @@ final String fighterUrl = "http://hosteddb.fightmetric.com/fighters/details/372"
         
         JMenuItem ResultCardItem = new JMenuItem("Result");
         ResultCardItem.addActionListener(new ActionListener() {
-        ResultScraper result;
-        @Override
+    	@Override
         public void actionPerformed(ActionEvent e) {
-			try {
-				result = new ResultScraper(new URL(eventUrl));
-			} catch (MalformedURLException e1) {
-				System.out.println("Invalid url");
-				
-			}
-			JOptionPane.showMessageDialog(rootPane, result.getWinnerArray());
-        }
+    		//not implemented
+    	}
+			
+        
     });
 
         //add the sub menu items to their respective menus
@@ -145,5 +147,8 @@ final String fighterUrl = "http://hosteddb.fightmetric.com/fighters/details/372"
         this.setVisible(true); //show the Frame
        
     }
+    
+    
+
 
 }

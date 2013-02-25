@@ -183,8 +183,14 @@ class HttpRequest implements Runnable{
                 	page.append("Content-type: text/html" + CRLF);
                 	page.append(CRLF);
                     page.append("<HTML><HEAD><TITLE>Not Found</TITLE></HEAD>" +
-                            "<BODY>The requested file was not found on the server.</BODY></HTML>" + CRLF);	 
-                    os.writeBytes(page.toString());
+                            "<BODY>The requested file was not found on the server.</BODY></HTML>" + CRLF);	
+                    
+                    if (socket.isOutputShutdown()) {
+                    	System.out.println("<Server Error> Socket is shut down, can't write. Thread id: " + Thread.currentThread().getId());
+                    } else {
+                    	os.writeBytes(page.toString());
+                    }
+                    
                 } else if (dbObject) {
                 	// Build page from database
                 	System.out.println("<Server> Sending DB object, thread id: " + Thread.currentThread().getId());
