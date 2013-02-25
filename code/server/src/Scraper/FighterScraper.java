@@ -218,12 +218,13 @@ public class FighterScraper {
 		// used once for all scrapers
 		StatsHandler db = new StatsHandler();
 		// once per record (i.e once per event)
+		height="lang";
 		db.update(new Fighter(id, age, str_acc, str_def, td_acc, td_def, w, l,
 				d, nc, name, nickname, height, weight, reach, stance, slpm,
 				sapm, td_avg, sub_avg));
 
-		System.out.println("Id: " + id + " Fighter: " + name);
-		System.out.println("Done");
+		System.out.println("Id: " + id + " - " + name);
+		System.out.println("-------------------------------\nDone");
 		// once for all scrapers
 		db.close();
 	}

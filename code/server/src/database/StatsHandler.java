@@ -40,7 +40,7 @@ public class StatsHandler extends DbHandler {
 			Statement statement = connection.createStatement();						
 			statement.setQueryTimeout(30);			
 	
-			statement.executeUpdate("create table if not exists fighters (id integer primary key, age integer, str_acc integer, str_def integer, td_acc integer, td_def integer, w int, l int, d int, nc int, name string, nickname string, height string, weight string, reach string, stance string, slpm real, sapm real, td_avg real, sub_avg real)");
+			statement.executeUpdate("create table if not exists fighters (id integer primary key, age integer, str_acc integer, str_def integer, td_acc integer, td_def integer, w integer, l integer, d integer, nc integer, name string, nickname string, height string, weight string, reach string, stance string, slpm real, sapm real, td_avg real, sub_avg real)");
 			statement.executeUpdate("create table if not exists events (id integer primary key, name string, date string, location string, organization string, attendance string)");
 			statement.executeUpdate("create table if not exists fights (id integer primary key)");
 			statement.executeUpdate("create table if not exists rounds (id integer primary key)");
