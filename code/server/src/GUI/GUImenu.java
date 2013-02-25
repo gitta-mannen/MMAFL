@@ -1,16 +1,7 @@
 package GUI;
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-
-
-//import javax.imageio.ImageIO;
-//import java.awt.image.BufferedImage;
-//import java.io.File;
-//import java.io.IOException;
 import javax.swing.*;
+
 import java.awt.event.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -18,7 +9,6 @@ import java.net.URL;
 import Scraper.EventScraper;
 import Scraper.FighterScraper;
 import Scraper.IterativeUrlFeeder;
-import Scraper.ResultScraper;
  
 @SuppressWarnings("serial")
 public class GUImenu extends JFrame {
@@ -56,10 +46,9 @@ public GUImenu() {
  
         JMenuItem EventItem = new JMenuItem("Event");
         EventItem.addActionListener(new ActionListener() {
-        EventScraper event;
         @Override
         public void actionPerformed(ActionEvent e) {
-        	SwingWorker worker = new SwingWorker<String, Void>() {
+        	SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
         	    @Override
         	    public String doInBackground() throws MalformedURLException {
         	        final EventScraper result = new EventScraper(new URL(eventUrl));
@@ -80,7 +69,7 @@ public GUImenu() {
         	            } else {
         	                why = e.getMessage();
         	            }
-        	            
+        	            System.out.println(why);
         	        }
         	    }
         	};         	
@@ -135,7 +124,7 @@ public GUImenu() {
         ResultCardItem.addActionListener(new ActionListener() {
     	@Override
         public void actionPerformed(ActionEvent e) {
-    		//do nothing
+    		//not implemented
     	}
 			
         
