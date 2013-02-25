@@ -8,7 +8,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
-public class ResultScraper implements Runnable {
+public class ResultScraper {
 
 	private ArrayList<String> fightcardArray;
 	private ArrayList<String> winnerArray;
@@ -17,10 +17,6 @@ public class ResultScraper implements Runnable {
 	
 	public ResultScraper(URL url)  throws MalformedURLException {
 		this.url = url;
-	}
-
-	@Override
-	public void run() {
 		fightcardArray = new ArrayList<String>();
 		resultFlag = false;
 		try {
