@@ -41,194 +41,174 @@ public class IterativeFighterScraper {
 			String inputLine;
 			
 			while ((inputLine = in.readLine()) != null) {
-				//Scrape: Age
-				if (inputLine.contains(">AGE</td>")) {
+				// Scrape: Age
+				if (inputLine.contains("AGE</td>")) {
 					inputLine = in.readLine();
 					inputLine = inputLine.replaceAll("\\<.*?>", "");
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
-					inputLine = inputLine.replaceAll("   ", " ");
-					inputLine = inputLine.replaceAll("    ", " ");
-					age = Integer.parseInt(inputLine);
+					age = Integer.parseInt(inputLine.trim());
 				}
-					
-				//Scrape: Striking Accuracy
+
+				// Scrape: Striking Accuracy
 				if (inputLine.contains("Str. Acc.</td>")) {
 					inputLine = in.readLine();
 					inputLine = inputLine.replaceAll("\\<.*?>", "");
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
-					inputLine = inputLine.replaceAll("   ", " ");
-					inputLine = inputLine.replaceAll("    ", " ");
+					inputLine = inputLine.trim();
+					inputLine = inputLine.substring(0,inputLine.length()-1);
 					str_acc = Integer.parseInt(inputLine);
 				}
-					
-				//Scrape: Striking Defense
+
+				// Scrape: Striking Defense
 				if (inputLine.contains("Str. Def.</td>")) {
 					inputLine = in.readLine();
 					inputLine = inputLine.replaceAll("\\<.*?>", "");
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
-					inputLine = inputLine.replaceAll("   ", " ");
-					inputLine = inputLine.replaceAll("    ", " ");
+					inputLine = inputLine.trim();
+					inputLine = inputLine.substring(0,inputLine.length()-1);
 					str_def = Integer.parseInt(inputLine);
 				}
-				
-				//Scrape: Takedown Accuracy
+
+				// Scrape: Takedown Accuracy
 				if (inputLine.contains("TD Acc.</td>")) {
 					inputLine = in.readLine();
 					inputLine = inputLine.replaceAll("\\<.*?>", "");
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
-					inputLine = inputLine.replaceAll("   ", " ");
-					inputLine = inputLine.replaceAll("    ", " ");
+					inputLine = inputLine.trim();
+					inputLine = inputLine.substring(0,inputLine.length()-1);
 					td_acc = Integer.parseInt(inputLine);
 				}
-				
-				//Scrape: Takedown Defense
+
+				// Scrape: Takedown Defense
 				if (inputLine.contains("TD Def.</td>")) {
 					inputLine = in.readLine();
 					inputLine = inputLine.replaceAll("\\<.*?>", "");
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
-					inputLine = inputLine.replaceAll("   ", " ");
-					inputLine = inputLine.replaceAll("    ", " ");
+					inputLine = inputLine.trim();
+					inputLine = inputLine.substring(0,inputLine.length()-1);
 					td_def = Integer.parseInt(inputLine);
 				}
+
+				// Scrape: Wins/Loses/Draws/No Contests OK
+				if (inputLine.contains("RECORD</td>")) {
+					inputLine = in.readLine();
+					inputLine = inputLine.replaceAll("\\<.*?>", "");
+					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
+					inputLine = inputLine.replaceAll("  ", " ");
+					w = Integer.parseInt(inputLine.trim());
+					inputLine = in.readLine();
+					inputLine = in.readLine();
+					inputLine = inputLine.replaceAll("\\<.*?>", "");
+					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
+					inputLine = inputLine.replaceAll("  ", " ");
+					l = Integer.parseInt(inputLine.trim());
+					inputLine = in.readLine();
+					inputLine = in.readLine();
+					inputLine = inputLine.replaceAll("\\<.*?>", "");
+					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
+					inputLine = inputLine.replaceAll("  ", " ");
+					d = Integer.parseInt(inputLine.trim());
+					inputLine = in.readLine();
+					inputLine = in.readLine();
+					inputLine = inputLine.replaceAll("\\<.*?>", "");
+					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
+					inputLine = inputLine.replaceAll("  ", " ");
+					nc = Integer.parseInt(inputLine.trim());
+				}
 				
-				//Scrape: Wins/Loses/Draws/No Contests
-				if (inputLine.contains(">RECORD</td>")) {
-					inputLine = in.readLine();
-					inputLine = inputLine.replaceAll("\\<.*?>", "");
-					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
-					inputLine = inputLine.replaceAll("  ", " ");
-					inputLine = inputLine.replaceAll("   ", " ");
-					inputLine = inputLine.replaceAll("    ", " ");
-					w = Integer.parseInt(inputLine);
-					inputLine = in.readLine();
-					inputLine = in.readLine();
-					inputLine = inputLine.replaceAll("\\<.*?>", "");
-					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
-					inputLine = inputLine.replaceAll("  ", " ");
-					inputLine = inputLine.replaceAll("   ", " ");
-					inputLine = inputLine.replaceAll("    ", " ");
-					l = Integer.parseInt(inputLine);
-					inputLine = in.readLine();
-					inputLine = in.readLine();
-					inputLine = inputLine.replaceAll("\\<.*?>", "");
-					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
-					inputLine = inputLine.replaceAll("  ", " ");
-					inputLine = inputLine.replaceAll("   ", " ");
-					inputLine = inputLine.replaceAll("    ", " ");
-					d = Integer.parseInt(inputLine);
-					inputLine = in.readLine();
-					inputLine = in.readLine();
-					inputLine = inputLine.replaceAll("\\<.*?>", "");
-					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
-					inputLine = inputLine.replaceAll("  ", " ");
-					inputLine = inputLine.replaceAll("   ", " ");
-					inputLine = inputLine.replaceAll("    ", " ");
-					nc = Integer.parseInt(inputLine);
-				}	
-				// Scrape: Name
+				// Scrape: Name OK
 				if (inputLine.contains("fighter_details_h1")) {
 					inputLine = inputLine.replaceAll("\\<.*?>", "");
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
-					name = inputLine;
+					name = inputLine.trim();
 				}
-				//Scrape: Nickname
+				// Scrape: Nickname OK
 				if (inputLine.contains("nickname\">")) {
 					inputLine = inputLine.replaceAll("\\<.*?>", "");
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
-					nickname = inputLine;
+					nickname = inputLine.trim();
 				}
-				// Scrape: Height
+				// Scrape: Height OK
 				if (inputLine.contains(">HEIGHT</td>")) {
 					inputLine = in.readLine();
 					inputLine = inputLine.replaceAll("\\<.*?>", "");
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
-					inputLine = inputLine.replaceAll("   ", " ");
-					inputLine = inputLine.replaceAll("    ", " ");
-					height = inputLine;
+					height = inputLine.trim();
 				}
-				// Scrape: Weight
+				// Scrape: Weight OK
 				if (inputLine.contains(">WEIGHT</td>")) {
 					inputLine = in.readLine();
 					inputLine = inputLine.replaceAll("\\<.*?>", "");
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
-					inputLine = inputLine.replaceAll("   ", " ");
-					inputLine = inputLine.replaceAll("    ", " ");
-					// fightcardArray.add(inputLine);
-					weight = inputLine;
+					weight = inputLine.trim();
 				}
-				// Scrape: Reach
+				// Scrape: Reach OK
 				if (inputLine.contains(">REACH</td>")) {
 					inputLine = in.readLine();
 					inputLine = inputLine.replaceAll("\\<.*?>", "");
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
-					inputLine = inputLine.replaceAll("   ", " ");
-					inputLine = inputLine.replaceAll("    ", " ");
-					// fightcardArray.add(inputLine);
-					reach = inputLine;
+					reach = inputLine.trim();
 				}
-				
-				//Scrape: Stance
+
+				// Scrape: Stance OK
 				if (inputLine.contains(">STANCE</td>")) {
 					inputLine = in.readLine();
 					inputLine = inputLine.replaceAll("\\<.*?>", "");
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
-					inputLine = inputLine.replaceAll("   ", " ");
-					inputLine = inputLine.replaceAll("    ", " ");
-					// fightcardArray.add(inputLine);
-					stance = inputLine;
+					stance = inputLine.trim();
 				}
-				//Scrape: Strikes Landed Per minute
-				if (inputLine.contains(">STANCE</td>")) {
+				// Scrape: Strikes Landed Per minute
+				if (inputLine.contains("SLpM</td>")) {
 					inputLine = in.readLine();
 					inputLine = inputLine.replaceAll("\\<.*?>", "");
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
-					inputLine = inputLine.replaceAll("   ", " ");
-					inputLine = inputLine.replaceAll("    ", " ");
-					//slpm = inputLine;
+					inputLine = inputLine.trim();
+					inputLine = inputLine.substring(0,inputLine.length());
+					slpm = Double.parseDouble(inputLine);
 				}
-				//Scrape: Strikes Absorbed Per minute
-				if (inputLine.contains(">SLpM</td>")) {
+				// Scrape: Strikes Absorbed Per minute
+				if (inputLine.contains(">SApM</td>")) {
 					inputLine = in.readLine();
 					inputLine = inputLine.replaceAll("\\<.*?>", "");
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
-					inputLine = inputLine.replaceAll("   ", " ");
-					inputLine = inputLine.replaceAll("    ", " ");
+					inputLine = inputLine.trim();
+					inputLine = inputLine.substring(0,inputLine.length());
 					sapm = Double.parseDouble(inputLine);
 				}
-				//Scrape: Takedown Average 
+				// Scrape: Takedown Average
 				if (inputLine.contains("TD Avg.</td>")) {
 					inputLine = in.readLine();
 					inputLine = inputLine.replaceAll("\\<.*?>", "");
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
-					inputLine = inputLine.replaceAll("   ", " ");
-					inputLine = inputLine.replaceAll("    ", " ");
+					inputLine = inputLine.trim();
+					inputLine = inputLine.substring(0,inputLine.length());
 					td_avg = Double.parseDouble(inputLine);
 				}
-				//Scrape: Submission Average 
+				// Scrape: Submission Average
 				if (inputLine.contains("Sub. Avg.</td>")) {
 					inputLine = in.readLine();
 					inputLine = inputLine.replaceAll("\\<.*?>", "");
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
-					inputLine = inputLine.replaceAll("   ", " ");
-					inputLine = inputLine.replaceAll("    ", " ");
+					inputLine = inputLine.trim();
+					inputLine = inputLine.substring(0,inputLine.length());
 					sub_avg = Double.parseDouble(inputLine);
 				}
-				}
+			}
 				in.close();
 				eventToDb();
 			} catch (Exception e) {
