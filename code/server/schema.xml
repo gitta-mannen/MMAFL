@@ -1,159 +1,175 @@
-<?xml version="1.0">
+<?xml version="1.0"?>
+
+<!-- DTD is malformed, can't find the bug
+<!DOCTYPE database [
+
+<!ELEMENT database (table*)>
+<!ELEMENT table (column*)>
+<!ELEMENT column (attr*)>
+<!ELEMENT attr (#PCDATA)>
+
+<!ATTRLIST database name CDATA #REQUIRED>
+<!ATTRLIST column name CDATA #REQUIRED>
+<!ATTRLIST table name CDATA #REQUIRED>
+<!ATTRLIST attr name CDATA #REQUIRED>
+]>
+-->
+
 <database name="stats">
 	<type>sqlite</type>
 	<location>/stats.db</location>
 	<table name="events">
 		<column name="id">
-			<dbname>id</dbname>
-			<dbtype>primarykey</dbtype>
-			<apptype>integer</apptype>
+			<attr name="dbname">id</attr>
+			<attr name="dbtype">primarykey</attr>
+			<attr name="apptype">integer</attr>
 		</column>
 		<column name="name">
-			<dbname>name</dbname>
-			<dbtype>text</dbtype>
-			<apptype>string</apptype>
+			<attr name="dbname">name</attr>
+			<attr name="dbtype">text</attr>
+			<attr name="apptype">string</attr>
 		</column>
 		<column name="date">
-			<dbname>date</dbname>
-			<dbtype>text</dbtype>
-			<apptype>date</apptype>
-			<formatter>textdate</formatter>
+			<attr name="dbname">date</attr>
+			<attr name="dbtype">text</attr>
+			<attr name="apptype">date</attr>
+			<attr name="formatter">textdate</attr>
 		</column>
 		<column name="location">
-			<dbname>location</dbname>
-			<dbtype>text</dbtype>
-			<apptype>string</apptype>
+			<attr name="dbname">location</attr>
+			<attr name="dbtype">text</attr>
+			<attr name="apptype">string</attr>
 		</column>
 		<column name="organization">
-			<dbname>organization</dbname>
-			<dbtype>string</dbtype>
-			<apptype>string</apptype>
+			<attr name="dbname">organization</attr>
+			<attr name="dbtype">string</attr>
+			<attr name="apptype">string</attr>
 		</column>
 		<column name="attendance">
-			<dbname>attandance</dbname>
-			<dbtype>integer</dbtype>
-			<apptype>integer</apptype>
-			<formatter>thousand</formatter>
+			<attr name="dbname">attandance</attr>
+			<attr name="dbtype">integer</attr>
+			<attr name="apptype">integer</attr>
+			<attr name="formatter">thousand</attr>
 		</column>
 	</table>
 	<table name="fighters">
 		<column name="id">
-			<dbname>id</dbname>
-			<dbtype>primarykey</dbtype>
-			<apptype>integer</apptype>
+			<attr name="dbname">id</attr>
+			<attr name="dbtype">primarykey</attr>
+			<attr name="apptype">integer</attr>
 		</column>
 		<column name="name">
-			<dbname>name</dbname>
-			<dbtype>text</dbtype>
-			<apptype>string</apptype>
+			<attr name="dbname">name</attr>
+			<attr name="dbtype">text</attr>
+			<attr name="apptype">string</attr>
 		</column>
 		<column name="nickname">
-			<dbname>nickname</dbname>
-			<dbtype>text</dbtype>
-			<apptype>string</apptype>
+			<attr name="dbname">nickname</attr>
+			<attr name="dbtype">text</attr>
+			<attr name="apptype">string</attr>
 		</column>
 		<column name="height">
-			<dbname>height</dbname>
-			<dbtype>integer</dbtype>
-			<apptype>integer</apptype>
-			<unit>cm</unit>
-			<formatter>height</formatter>
+			<attr name="dbname">height</attr>
+			<attr name="dbtype">integer</attr>
+			<attr name="apptype">integer</attr>
+			<attr name="unit">cm</attr>
+			<attr name="formatter">height</attr>
 		</column>
 		<column name="weight">
-			<dbname>weight</dbname>
-			<dbtype>integer</dbtype>
-			<apptype>integer</apptype>
-			<unit>kg</unit>
-			<formatter>weight</formatter>
+			<attr name="dbname">weight</attr>
+			<attr name="dbtype">integer</attr>
+			<attr name="apptype">integer</attr>
+			<attr name="unit">kg</attr>
+			<attr name="formatter">weight</attr>
 		</column>
 		<column name="reach">
-			<dbname>reach</dbname>
-			<dbtype>integer</dbtype>
-			<apptype>integer</apptype>
-			<unit>cm</unit>
-			<formatter>reach</formatter>
+			<attr name="dbname">reach</attr>
+			<attr name="dbtype">integer</attr>
+			<attr name="apptype">integer</attr>
+			<attr name="unit">cm</attr>
+			<attr name="formatter">reach</attr>
 		</column>
 		<column name="stance">
-			<dbname>stance</dbname>
-			<dbtype>text</dbtype>
-			<apptype>string</apptype>
+			<attr name="dbname">stance</attr>
+			<attr name="dbtype">text</attr>
+			<attr name="apptype">string</attr>
 		</column>
 		<column name="age">
-			<dbname>age</dbname>
-			<dbtype>integer</dbtype>
-			<apptype>integer</apptype>
+			<attr name="dbname">age</attr>
+			<attr name="dbtype">integer</attr>
+			<attr name="apptype">integer</attr>
 		</column>
 		<column name="strikes landed">
-			<dbname>slpm</dbname>
-			<dbtype>real</dbtype>
-			<apptype>double</apptype>
-			<formatter>localenumbers</formatter>
+			<attr name="dbname">slpm</attr>
+			<attr name="dbtype">real</attr>
+			<attr name="apptype">double</attr>
+			<attr name="formatter">localenumbers</attr>
 		</column>
 		<column name="striking accuracy">
-			<dbname>str_acc</dbname>
-			<dbtype>integer</dbtype>
-			<apptype>integer</apptype>
-			<unit>%</unit>
-			<formatter>percent</formatter>
+			<attr name="dbname">str_acc</attr>
+			<attr name="dbtype">integer</attr>
+			<attr name="apptype">integer</attr>
+			<attr name="unit">%</attr>
+			<attr name="formatter">percent</attr>
 		</column>
 		<column name="strikes absorbed">
-			<dbname>sapm</dbname>
-			<dbtype>real</dbtype>
-			<apptype>double</apptype>
-			<formatter>localenumbers</formatter>
+			<attr name="dbname">sapm</attr>
+			<attr name="dbtype">real</attr>
+			<attr name="apptype">double</attr>
+			<attr name="formatter">localenumbers</attr>
 		</column>
 		<column name="strike defence">
-			<dbname>str_def</dbname>
-			<dbtype>integer</dbtype>
-			<apptype>integer</apptype>
-			<unit>%</unit>
-			<formatter>percent</formatter>
+			<attr name="dbname">str_def</attr>
+			<attr name="dbtype">integer</attr>
+			<attr name="apptype">integer</attr>
+			<attr name="unit">%</attr>
+			<attr name="formatter">percent</attr>
 		</column>
 		<column name="avarage takedowns">
-			<dbname>td_avg</dbname>
-			<dbtype>real</dbtype>
-			<apptype>double</apptype>
-			<formatter>localenumbers</formatter>
+			<attr name="dbname">td_avg</attr>
+			<attr name="dbtype">real</attr>
+			<attr name="apptype">double</attr>
+			<attr name="formatter">localenumbers</attr>
 		</column>
 		<column name="takedown accuracy">
-			<dbname>td_acc</dbname>
-			<dbtype>integer</dbtype>
-			<apptype>integer</apptype>
-			<unit>%</unit>
-			<formatter>percent</formatter>
+			<attr name="dbname">td_acc</attr>
+			<attr name="dbtype">integer</attr>
+			<attr name="apptype">integer</attr>
+			<attr name="unit">%</attr>
+			<attr name="formatter">percent</attr>
 		</column>
 		<column name="takedown defence">
-			<dbname>td_def</dbname>
-			<dbtype>integer</dbtype>
-			<apptype>integer</apptype>
-			<unit>%</unit>
-			<formatter>percent</formatter>
+			<attr name="dbname">td_def</attr>
+			<attr name="dbtype">integer</attr>
+			<attr name="apptype">integer</attr>
+			<attr name="unit">%</attr>
+			<attr name="formatter">percent</attr>
 		</column>
 		<column name="avarage submissions">
-			<dbname>sub_avg</dbname>
-			<dbtype>real</dbtype>
-			<apptype>double</apptype>
-			<formatter>localenumbers</formatter>
+			<attr name="dbname">sub_avg</attr>
+			<attr name="dbtype">real</attr>
+			<attr name="apptype">double</attr>
+			<attr name="formatter">localenumbers</attr>
 		</column>
 		<column name="wins">
-			<dbname>wins</dbname>
-			<dbtype>integer</dbtype>
-			<apptype>integer</apptype>
+			<attr name="dbname">wins</attr>
+			<attr name="dbtype">integer</attr>
+			<attr name="apptype">integer</attr>
 		</column>
 		<column name="losses">
-			<dbname>losses</dbname>
-			<dbtype>integer</dbtype>
-			<apptype>integer</apptype>
+			<attr name="dbname">losses</attr>
+			<attr name="dbtype">integer</attr>
+			<attr name="apptype">integer</attr>
 		</column>
 		<column name="draws">
-			<dbname>draws</dbname>
-			<dbtype>integer</dbtype>
-			<apptype>integer</apptype>
+			<attr name="dbname">draws</attr>
+			<attr name="dbtype">integer</attr>
+			<attr name="apptype">integer</attr>
 		</column>
 		<column name="no contest">
-			<dbname>nc</dbname>
-			<dbtype>integer</dbtype>
-			<apptype>integer</apptype>
+			<attr name="dbname">nc</attr>
+			<attr name="dbtype">integer</attr>
+			<attr name="apptype">integer</attr>
 		</column>
 	</table>
-</litedb>
+</database>
