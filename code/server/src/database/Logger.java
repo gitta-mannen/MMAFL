@@ -28,17 +28,18 @@ public class Logger {
 		long threadId = Thread.currentThread().getId();
 		String className = st.getClassName();
 		String MethodName = st.getMethodName();
+		String time;
 		
 		Calendar cal = Calendar.getInstance();
     	cal.getTime();
-    	SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
-    	System.out.println( );
+    	SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");    	
+    	time = sdf.format(cal.getTime());
     	
-		log.add(new Object[]{sdf.format(cal.getTime()), threadId, className, MethodName, message});
+		log.add(new Object[]{time, threadId, className, MethodName, message});
 		
 		if (printToConsole) {
-			System.out.println(" <logger> Class: '" + className + "' Method: '" + MethodName 
-					+ "' Thread: '" + threadId + "' message: '" + message + "'");	
+			System.out.println(" <logger [" + time + "]" + "> Class: '" + className
+					+ "' Method: '" + MethodName + "' Thread: '" + threadId + "' message: '" + message + "'");	
 		}
 		
 	}

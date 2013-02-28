@@ -42,20 +42,20 @@ public class StatsHandler extends DbHandler {
 			statement.setQueryTimeout(30);			
 			
 			statement.executeUpdate("drop table if exists schema");
-			statement.executeUpdate("create table schema (text table, text column, text attribute, text value)");
+			statement.executeUpdate("create table schema ('table' text, 'column' text, 'attribute' text, 'value' text)");
 			
 			Iterator<Entry<String[], String>> itr = schema.entrySet().iterator();
 			while(itr.hasNext()) {
 				Entry<String[], String> entry = itr.next();
 				String[] key = entry.getKey();
 				String value = entry.getValue();
-				System.out.println(key[0] + "-" + key[1] + "-" + key[2] + " : " + value.toString());
+				//System.out.println(key[0] + "-" + key[1] + "-" + key[2] + " : " + value.toString());
 				statement.executeUpdate("insert or replace into schema values" + 
-						 " (key[0], key[1], key[2], value)");
+						 " ('"+ key[0] + "','" + key[1] + "','" + key[2] + "','" + value + "')" );
 			}			
 			
 		} catch (SQLException e) {
-			System.err.println(e.getStackTrace()[3].getLineNumber());
+			System.err.println(e);
 		} catch (Exception e) {
 			System.err.println(e);
 		}			
@@ -85,10 +85,30 @@ public class StatsHandler extends DbHandler {
 	
 	public void update (String table, HashMap<String, String> columnValuePair) {
 		try {
-		// create statement and set timeout to 30 sec.
-		Statement statement = connection.createStatement();						
-		statement.setQueryTimeout(30);				
-		statement.executeUpdate("insert or replace into " + table);
+			// create statement and set timeout to 30 sec.
+			Statement statement = connection.createStatement();						
+			statement.setQueryTimeout(30);		
+			
+			StringBuilder vals = new StringBuilder("(");
+			StringBuilder cols = new StringBuilder("(");
+			Iterator<Entry<String, String>> itr = columnValuePair.entrySet().iterator();
+						
+			while(itr.hasNext()) {
+				Entry<String, String> entry = itr.next();
+				cols.append( entry.getKey() );
+				vals.append( entry.getValue() );
+				
+				if (itr.hasNext()) {
+					cols.append(",");
+					vals.append(",");
+				} else {
+					cols.append(")");
+					vals.append(")");
+				}
+			}
+			
+			statement.executeUpdate("insert or replace into " + table + " " +
+					cols.toString() + " " + vals.toString());						
 		
 		} catch (SQLException e) {
 			// if the error message is "out of memory",
