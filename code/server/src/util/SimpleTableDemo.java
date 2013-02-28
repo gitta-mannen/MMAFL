@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
  
+//http://docs.oracle.com/javase/tutorial/uiswing/components/table.html
 public class SimpleTableDemo extends JPanel {
     private boolean DEBUG = false;
  

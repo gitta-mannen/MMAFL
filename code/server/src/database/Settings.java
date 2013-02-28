@@ -85,7 +85,7 @@ public class Settings {
 							attribute = attrNode.getNodeValue();
 							value = elementNode.getTextContent();
 							schema.put(new String[]{table, column, attribute}, value);
-							Logger.log(table + " " + column + " " + attribute + " " + value, true);
+							//Logger.log(table + " " + column + " " + attribute + " " + value, true);
 						} else {
 							Logger.log("parsed schema object not regognized", true);
 						}
