@@ -5,6 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 /**
  * @author Stugatz
@@ -33,18 +36,28 @@ public class StatsHandler extends DbHandler {
 	/**
 	 * Creates the stats-tables if they don't exist
 	 */
-	private void createTables () {
-		try {				
+	public void resetSchema (HashMap<String[], String> schema) {
+		try {	
 			Statement statement = connection.createStatement();						
 			statement.setQueryTimeout(30);			
-	
-			statement.executeUpdate("create table if not exists fighters (id integer primary key, age integer, str_acc integer, str_def integer, td_acc integer, td_def integer, w integer, l integer, d integer, nc integer, name string, nickname string, height string, weight string, reach string, stance string, slpm real, sapm real, td_avg real, sub_avg real)");
-			statement.executeUpdate("create table if not exists events (id integer primary key, name string, date string, location string, organization string, attendance string)");
-			statement.executeUpdate("create table if not exists fights (id integer primary key)");
-			statement.executeUpdate("create table if not exists rounds (id integer primary key)");
+			
+			statement.executeUpdate("drop table if exists schema");
+			statement.executeUpdate("create table schema (text table, text column, text attribute, text value)");
+			
+			Iterator<Entry<String[], String>> itr = schema.entrySet().iterator();
+			while(itr.hasNext()) {
+				Entry<String[], String> entry = itr.next();
+				String[] key = entry.getKey();
+				String value = entry.getValue();
+				System.out.println(key[0] + "-" + key[1] + "-" + key[2] + " : " + value.toString());
+				statement.executeUpdate("insert or replace into schema values" + 
+						 " (key[0], key[1], key[2], value)");
+			}			
+			
 		} catch (SQLException e) {
+			System.err.println(e.getStackTrace()[3].getLineNumber());
+		} catch (Exception e) {
 			System.err.println(e);
-			System.err.println(e.getMessage());
 		}			
 	}
 	
@@ -67,40 +80,20 @@ public class StatsHandler extends DbHandler {
 			System.err.println(e.getMessage());
 		}	
 		
-		createTables();
+		//createTables();
 	}
 	
-	public void update (Fighter fighter) {
+	public void update (String table, HashMap<String, String> columnValuePair) {
 		try {
 		// create statement and set timeout to 30 sec.
 		Statement statement = connection.createStatement();						
 		statement.setQueryTimeout(30);				
-		statement.executeUpdate("insert or replace into fighters values" + fighter.toSqlString());
+		statement.executeUpdate("insert or replace into " + table);
 		
 		} catch (SQLException e) {
 			// if the error message is "out of memory",
 			// it probably means no database file is found
 			System.err.println(e);
-			System.err.println(e.getMessage());
-		}			
-	}
-	
-	public void update (Fight fight) {
-		throw new UnsupportedOperationException("not yet implmented for fights");
-	}
-	
-	public void update (Event event) {
-		try {
-		// create statement and set timeout to 30 sec.
-		Statement statement = connection.createStatement();						
-		statement.setQueryTimeout(30);				
-		statement.executeUpdate("insert or replace into events values" + event.toSqlString());
-		
-		} catch (SQLException e) {
-			// if the error message is "out of memory",
-			// it probably means no database file is found
-			System.err.println(e);
-			System.err.println(e.getMessage());
 		}			
 	}
 	
@@ -121,11 +114,15 @@ public class StatsHandler extends DbHandler {
 									rs.getString("weight"), rs.getString("reach"), rs.getString("stance"), rs.getDouble("slpm"), 
 									rs.getDouble("sapm"), rs.getDouble("td_avg"), rs.getDouble("sub_avg")));				
 			}
+					/*int id, int age, int str_acc, int str_def, int td_acc,
+	int td_def, int w, int l, int d, int nc, String name,
+	String nickname, String height, String weight, String reach,
+	String stance, double slpm, double sapm, double td_avg,
+	double sub_avg*/
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("BULLSHIT");
 		}		
 		
 		return fightersResult;
