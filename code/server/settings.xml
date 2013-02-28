@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+
+<!-- DTD is malformed, can't find the bug
+<!DOCTYPE database [
+
+<!ELEMENT database (table*)>
+<!ELEMENT table (column*)>
+<!ELEMENT column (attr*)>
+<!ELEMENT attr (#PCDATA)>
+
+<!ATTRLIST database name CDATA #REQUIRED>
+<!ATTRLIST column name CDATA #REQUIRED>
+<!ATTRLIST table name CDATA #REQUIRED>
+<!ATTRLIST attr name CDATA #REQUIRED>
+]>
+-->
+<settings>
+	<database name="stats">
+		<type>sqlite</type>
+		<location>/stats.db</location>
+		<table name="events">
+			<column name="id">
+				<attr name="dbname">id</attr>
+				<attr name="dbtype">primarykey</attr>
+				<attr name="apptype">integer</attr>
+			</column>
+			<column name="name">
+				<attr name="dbname">name</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="apptype">string</attr>
+			</column>
+			<column name="date">
+				<attr name="dbname">date</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="apptype">date</attr>
+				<attr name="formatter">textdate</attr>
+			</column>
+			<column name="location">
+				<attr name="dbname">location</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="apptype">string</attr>
+			</column>
+			<column name="organization">
+				<attr name="dbname">organization</attr>
+				<attr name="dbtype">string</attr>
+				<attr name="apptype">string</attr>
+			</column>
+			<column name="attendance">
+				<attr name="dbname">attandance</attr>
+				<attr name="dbtype">integer</attr>
+				<attr name="apptype">integer</attr>
+				<attr name="formatter">thousand</attr>
+			</column>
+		</table>
+		<table name="fighters">
+			<column name="id">
+				<attr name="dbname">id</attr>
+				<attr name="dbtype">primarykey</attr>
+				<attr name="apptype">integer</attr>
+			</column>
+			<column name="name">
+				<attr name="dbname">name</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="apptype">string</attr>
+			</column>
+			<column name="nickname">
+				<attr name="dbname">nickname</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="apptype">string</attr>
+			</column>
+			<column name="height">
+				<attr name="dbname">height</attr>
+				<attr name="dbtype">integer</attr>
+				<attr name="apptype">integer</attr>
+				<attr name="unit">cm</attr>
+				<attr name="formatter">height</attr>
+			</column>
+			<column name="weight">
+				<attr name="dbname">weight</attr>
+				<attr name="dbtype">integer</attr>
+				<attr name="apptype">integer</attr>
+				<attr name="unit">kg</attr>
+				<attr name="formatter">weight</attr>
+			</column>
+			<column name="reach">
+				<attr name="dbname">reach</attr>
+				<attr name="dbtype">integer</attr>
+				<attr name="apptype">integer</attr>
+				<attr name="unit">cm</attr>
+				<attr name="formatter">reach</attr>
+			</column>
+			<column name="stance">
+				<attr name="dbname">stance</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="apptype">string</attr>
+			</column>
+			<column name="age">
+				<attr name="dbname">age</attr>
+				<attr name="dbtype">integer</attr>
+				<attr name="apptype">integer</attr>
+			</column>
+			<column name="strikes landed">
+				<attr name="dbname">slpm</attr>
+				<attr name="dbtype">real</attr>
+				<attr name="apptype">double</attr>
+				<attr name="formatter">localenumbers</attr>
+			</column>
+			<column name="striking accuracy">
+				<attr name="dbname">str_acc</attr>
+				<attr name="dbtype">integer</attr>
+				<attr name="apptype">integer</attr>
+				<attr name="unit">%</attr>
+				<attr name="formatter">percent</attr>
+			</column>
+			<column name="strikes absorbed">
+				<attr name="dbname">sapm</attr>
+				<attr name="dbtype">real</attr>
+				<attr name="apptype">double</attr>
+				<attr name="formatter">localenumbers</attr>
+			</column>
+			<column name="strike defence">
+				<attr name="dbname">str_def</attr>
+				<attr name="dbtype">integer</attr>
+				<attr name="apptype">integer</attr>
+				<attr name="unit">%</attr>
+				<attr name="formatter">percent</attr>
+			</column>
+			<column name="avarage takedowns">
+				<attr name="dbname">td_avg</attr>
+				<attr name="dbtype">real</attr>
+				<attr name="apptype">double</attr>
+				<attr name="formatter">localenumbers</attr>
+			</column>
+			<column name="takedown accuracy">
+				<attr name="dbname">td_acc</attr>
+				<attr name="dbtype">integer</attr>
+				<attr name="apptype">integer</attr>
+				<attr name="unit">%</attr>
+				<attr name="formatter">percent</attr>
+			</column>
+			<column name="takedown defence">
+				<attr name="dbname">td_def</attr>
+				<attr name="dbtype">integer</attr>
+				<attr name="apptype">integer</attr>
+				<attr name="unit">%</attr>
+				<attr name="formatter">percent</attr>
+			</column>
+			<column name="avarage submissions">
+				<attr name="dbname">sub_avg</attr>
+				<attr name="dbtype">real</attr>
+				<attr name="apptype">double</attr>
+				<attr name="formatter">localenumbers</attr>
+			</column>
+			<column name="wins">
+				<attr name="dbname">wins</attr>
+				<attr name="dbtype">integer</attr>
+				<attr name="apptype">integer</attr>
+			</column>
+			<column name="losses">
+				<attr name="dbname">losses</attr>
+				<attr name="dbtype">integer</attr>
+				<attr name="apptype">integer</attr>
+			</column>
+			<column name="draws">
+				<attr name="dbname">draws</attr>
+				<attr name="dbtype">integer</attr>
+				<attr name="apptype">integer</attr>
+			</column>
+			<column name="no contest">
+				<attr name="dbname">nc</attr>
+				<attr name="dbtype">integer</attr>
+				<attr name="apptype">integer</attr>
+			</column>
+		</table>
+	</database>
+</settings>

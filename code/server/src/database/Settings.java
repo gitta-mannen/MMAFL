@@ -19,31 +19,29 @@ import java.util.HashMap;
  * @author Stugatz
  * Schema singleton object holds the database schema. It's static and doesn't change during the process execution  .
  */
-public class Schema {
-	private static final Schema instance;
-
+public class Settings {
+	private static final String settingsFile = System.getProperty("user.dir") + "/settings.xml";
+	private static final Settings instance;
+	private static HashMap<String[],String> schema = new HashMap<String[],String>();
 
 	static {	   
-		instance = new Schema();	    
+		instance = new Settings();	    
 	}
 
-	public static Schema getInstance() {
+	public static Settings getInstance() {
 		return instance;
 	}
 
-	private Schema() {
+	private Settings() {
 		try {
-
-			File fXmlFile = new File(System.getProperty("user.dir") + "/schema.xml");			
+			File fXmlFile = new File(settingsFile);			
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);
 			doc.getDocumentElement().normalize();
-
-			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-			printNodes(doc.getDocumentElement().getElementsByTagName("table"));
-			System.out.println();
-	
+			
+			buildSchema(doc);
+			//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
 		} catch (org.xml.sax.SAXParseException pe) {
 			pe.printStackTrace();
@@ -58,39 +56,53 @@ public class Schema {
 			e.printStackTrace();
 		}
 	}
-
-	private static void printNodes(NodeList nodeList) {
-		HashMap hm = new HashMap(); 
-		
-		
+	
+	private void buildSchema(Document doc) {
+		NodeList nodeList = (doc.getDocumentElement().getElementsByTagName("table"));				
+		traverse(nodeList, "", "");		
+	}
+	
+	private void traverse(NodeList nodeList, String table, String column) {		
+		String attribute, value;
 		for (int count = 0; count < nodeList.getLength(); count++) {
-			Node tempNode = nodeList.item(count);
-		
-			if (tempNode.hasAttributes()) {
-				System.out.println();
-				System.out.print(tempNode.getNodeName() + " type: " + tempNode.getNodeType());
-
-				NamedNodeMap nodeMap = tempNode.getAttributes();
-				for (int i = 0; i < nodeMap.getLength(); i++) {
-					Node node = nodeMap.item(i);
-					System.out.print(" " + node.getNodeName() + " = ");
-					System.out.print(node.getNodeValue());
-
-				}
+			Node elementNode = nodeList.item(count);
+			if (elementNode.hasAttributes()) {
+				//System.out.println();
+				//System.out.print(elementNode.getNodeName() + " type: " + elementNode.getNodeType());
 				
-				if(tempNode.getNodeName().equals("attribute")) {
-					System.out.print(" value: " + tempNode.getTextContent());
-				}
-
+				NamedNodeMap nodeMap = elementNode.getAttributes();
+				for (int i = 0; i < nodeMap.getLength(); i++) {
+					Node attrNode = nodeMap.item(i);
+					//System.out.print(" " + attrNode.getNodeName() + " = ");
+					//System.out.print(attrNode.getNodeValue());
+					
+					if (attrNode.getNodeName().equals("name")) {
+						if (elementNode.getNodeName().equals("table")) {
+							table = attrNode.getNodeValue();
+						} else if (elementNode.getNodeName().equals("column")) {
+							column = attrNode.getNodeValue();
+						} else if (elementNode.getNodeName().equals("attr")) {
+							attribute = attrNode.getNodeValue();
+							value = elementNode.getTextContent();
+							schema.put(new String[]{table, column, attribute}, value);
+							Logger.log(table + " " + column + " " + attribute + " " + value, true);
+						} else {
+							Logger.log("parsed schema object not regognized", true);
+						}
+					}
+				}				
 			}
 
-			if (tempNode.hasChildNodes()) {
-				printNodes(tempNode.getChildNodes());
+			if (elementNode.hasChildNodes()) {
+				traverse(elementNode.getChildNodes(), table, column);
 			}
 
 			//System.out.println("<<" + tempNode.getNodeValue());
-
-		}
+		}	
+	}
+	
+	public HashMap<String[], String> getSchema() {
+		return schema;
 	}
 	
 	/*
@@ -188,5 +200,38 @@ public class Schema {
 	}	
 	
 	*/
+}
+
+
+class Tree {
+	String type, value;
+	
+	private Tree sibling, child;
+	
+	public Tree() {
+		super();
+	}
+	
+	public Tree(Tree sibling, Tree child) {
+		super();
+		this.sibling = sibling;
+		this.child = child;
+	}
+
+	public void setSibling(Tree sibling) {
+		this.sibling = sibling;
+	}
+
+	public void setChild(Tree child) {
+		this.child = child;
+	}
+
+	public Tree getSibling() {
+		return sibling;
+	}
+	
+	public Tree getChild() {
+		return child;
+	}
 }
 

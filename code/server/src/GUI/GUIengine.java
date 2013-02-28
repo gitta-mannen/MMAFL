@@ -1,16 +1,19 @@
 package GUI;
 
 import javax.swing.SwingUtilities;
-
-import database.Schema;
+import database.Settings;
+import database.StatsHandler;
 import server.HttpServer;
 
 
 public class GUIengine {
 	public static void main(String[] args) { 
 		 try {
-			 	//Access schema file
-			 	Schema.getInstance();
+			 	//Get settings
+			 	Settings.getInstance();
+			 	//Update schema table
+			 	StatsHandler db = new StatsHandler();
+			 	db.resetSchema(Settings.getInstance().getSchema());
 			 
 			 	// Run http server
 				HttpServer httpServer = new HttpServer();
