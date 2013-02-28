@@ -96,6 +96,7 @@ public class StatsHandler extends DbHandler {
 			while(itr.hasNext()) {
 				Entry<String, String> entry = itr.next();
 				cols.append( entry.getKey() );
+				// should check if string to append '
 				vals.append( entry.getValue() );
 				
 				if (itr.hasNext()) {
@@ -108,12 +109,13 @@ public class StatsHandler extends DbHandler {
 			}
 			
 			statement.executeUpdate("insert or replace into " + table + " " +
-					cols.toString() + " " + vals.toString());						
+					cols.toString() + " VALUES " + vals.toString());						
 		
 		} catch (SQLException e) {
 			// if the error message is "out of memory",
 			// it probably means no database file is found
 			System.err.println(e);
+			e.printStackTrace();
 		}			
 	}
 	
