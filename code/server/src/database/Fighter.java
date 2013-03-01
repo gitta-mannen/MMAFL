@@ -198,11 +198,13 @@ public class Fighter extends Record {
 	}
 
 	public String toSqlString () {
-		return String.format("(%d, %d, %d, %d, %d, %d, %d, %d, %d, %d, '%s', '%s', '%s', '%s', '%s', '%s', %d, %d, %d, %d)", id, age, str_acc, str_def, td_acc, td_def, w, l, d, nc, name, nickname, height, weight, reach, stance, slpm, sapm, td_avg, sub_avg);		
+		return String.format("(%d, %d, %d, %d, %d, %d, %d, %d, %d, %d, '%s', '%s', '%s', '%s', '%s', '%s', '%f', '%f', '%f', '%f')", id, age, str_acc, str_def, td_acc, td_def, w, l, d, nc, name, nickname, height, weight, reach, stance, slpm, sapm, td_avg, sub_avg);		
 	}
-	/*int id, int age, int str_acc, int str_def, int td_acc,
-	int td_def, int w, int l, int d, int nc, String name,
-	String nickname, String height, String weight, String reach,
-	String stance, double slpm, double sapm, double td_avg,
-	double sub_avg*/
+	public String getFighterinfo() {
+		return  getId() + "\n" + getAge() + "\n" + getStr_acc() + "\n" + getStr_def() + "\n"
+				+ getTd_acc() + "\n" + getTd_def() + "\n" + getW() + "\n" + getL() + "\n" + getD()
+				+ "\n" + getNc() + "\n" + getName() + "\n" + getNickname() + "\n" + getHeight()
+				+ "\n" + getWeight() + "\n" + getReach() + "\n" + getStance() + "\n" + getSlpm()
+				+ "\n" + getSapm() + "\n" + getTd_avg() + "\n" + getSub_avg();
+	}
 }

@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URLConnection;
 import java.net.URL;
+import java.util.HashMap;
 
 import database.Event;
 import database.StatsHandler;
@@ -15,9 +16,13 @@ public class EventScraper {
 	private String eventLocation;
 	private String eventDate;
 	private String eventAttendance;
+	private String table = "events";
+	private String id = "1";
+	private StatsHandler db = new StatsHandler();
+	private HashMap<String, String> values = new HashMap<String, String>();
 
 	public EventScraper(URL url) throws MalformedURLException {
-
+			values.put("id", id);
 		try {
 			URLConnection yc = url.openConnection();
 			BufferedReader in = new BufferedReader(new InputStreamReader(
@@ -34,6 +39,8 @@ public class EventScraper {
 					inputLine = inputLine.replaceAll("Events > ", "");
 					eventOrganization = inputLine.trim();
 					// eventOrganization = "UFC";
+					values.put("organzation", eventOrganization);
+					
 
 				}
 				// Scrape: Event Name
@@ -43,6 +50,7 @@ public class EventScraper {
 					inputLine = inputLine.replaceAll("  ", " ");
 					inputLine = inputLine.replaceAll("Events > ", "");
 					eventName = inputLine.trim();
+					values.put("name", eventName);
 				}
 				// Scrape: Event Location
 				if (inputLine.contains(">LOCATION</td>")) {
@@ -51,6 +59,7 @@ public class EventScraper {
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
 					eventLocation = inputLine.trim();
+					values.put("Location", eventLocation);
 				}
 				// Scrape: Event Date
 				if (inputLine.contains("DATE</td>")) {
@@ -59,6 +68,7 @@ public class EventScraper {
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
 					eventDate = inputLine.trim();
+					values.put("date", eventDate);
 				}
 				// Scrape: event Attendance
 				if (inputLine.contains(">ATTENDANCE</td>")) {
@@ -68,10 +78,14 @@ public class EventScraper {
 					inputLine = inputLine.replaceAll("  ", " ");
 					inputLine = inputLine.replaceAll("Events > ", "");
 					eventAttendance = inputLine.trim();
+					values.put("attendance", eventAttendance);
 				}
 			}
 			in.close();
-			eventToDb();
+			db.update(table, values);
+			db.close();
+			System.out.println(values);
+			//eventToDb();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -79,15 +93,12 @@ public class EventScraper {
 
 	public void eventToDb() {
 		// used once for all scrapers
-		StatsHandler db = new StatsHandler();
-		// once per record (i.e once per event)
-		// db.update(new Event(1, "UFC the Tuna Sandwich", "2012-02-01",
-		// "Hålanda", "PENIS", "50000000"));
-		db.update(new Event(3, eventName, eventDate, eventLocation,
+		//StatsHandler db = new StatsHandler();
+		/*db.update(new Event(3, eventName, eventDate, eventLocation,
 				eventOrganization, eventAttendance));
 		System.out.println(eventLocation + "\n" + eventOrganization);
 		// once for all scrapers
-		db.close();
+		db.close();*/
 	}
 
 	public String getEvent() {
