@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URLConnection;
 import java.net.URL;
+import java.util.HashMap;
 
 import database.Fighter;
 import database.StatsHandler;
@@ -12,26 +13,32 @@ import database.StatsHandler;
 //import java.util.ArrayList;
 
 public class FighterScraper {
-
-	private int id=2;
-	private int age;
-	private int str_acc;
-	private int str_def;
-	private int td_acc;
-	private int td_def;
-	private int w, l, d, nc;
+	private String id = "1";
+	private String table = "fighters";
+	private StatsHandler db = new StatsHandler();
+	private HashMap<String, String> values = new HashMap<String, String>();
+	
+	private String first;
+	private String last;
+	private String age;
+	private String str_acc;
+	private String str_def;
+	private String td_acc;
+	private String td_def;
+	private String w, l, d, nc;
 
 	private String name;
 	private String nickname;
 	private String height, weight, reach;
 	private String stance;
 
-	private double slpm;
-	private double sapm;
-	private double td_avg;
-	private double sub_avg;
+	private String slpm;
+	private String sapm;
+	private String td_avg;
+	private String sub_avg;
 
 	public FighterScraper(URL url) throws MalformedURLException {
+			values.put("id", id);
 			// fightcardArray = new ArrayList<String>();
 			try {
 				URLConnection yc = url.openConnection();
@@ -45,7 +52,8 @@ public class FighterScraper {
 						inputLine = inputLine.replaceAll("\\<.*?>", "");
 						inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 						inputLine = inputLine.replaceAll("  ", " ");
-						age = Integer.parseInt(inputLine.trim());
+						age = inputLine.trim();
+						values.put("age", age);
 					}
 
 					// Scrape: Striking Accuracy
@@ -56,7 +64,8 @@ public class FighterScraper {
 						inputLine = inputLine.replaceAll("  ", " ");
 						inputLine = inputLine.trim();
 						inputLine = inputLine.substring(0,inputLine.length()-1);
-						str_acc = Integer.parseInt(inputLine);
+						str_acc = inputLine;
+						values.put("striking accuracy", str_acc);
 					}
 
 					// Scrape: Striking Defense
@@ -67,7 +76,8 @@ public class FighterScraper {
 						inputLine = inputLine.replaceAll("  ", " ");
 						inputLine = inputLine.trim();
 						inputLine = inputLine.substring(0,inputLine.length()-1);
-						str_def = Integer.parseInt(inputLine);
+						str_def = inputLine;
+						values.put("striking defense", str_def);
 					}
 
 					// Scrape: Takedown Accuracy
@@ -78,7 +88,8 @@ public class FighterScraper {
 						inputLine = inputLine.replaceAll("  ", " ");
 						inputLine = inputLine.trim();
 						inputLine = inputLine.substring(0,inputLine.length()-1);
-						td_acc = Integer.parseInt(inputLine);
+						td_acc = inputLine;
+						values.put("takedown accuracy", td_acc);
 					}
 
 					// Scrape: Takedown Defense
@@ -89,7 +100,8 @@ public class FighterScraper {
 						inputLine = inputLine.replaceAll("  ", " ");
 						inputLine = inputLine.trim();
 						inputLine = inputLine.substring(0,inputLine.length()-1);
-						td_def = Integer.parseInt(inputLine);
+						td_def = inputLine;
+						values.put("takedown defense", td_def);
 					}
 
 					// Scrape: Wins/Loses/Draws/No Contests OK
@@ -98,25 +110,26 @@ public class FighterScraper {
 						inputLine = inputLine.replaceAll("\\<.*?>", "");
 						inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 						inputLine = inputLine.replaceAll("  ", " ");
-						w = Integer.parseInt(inputLine.trim());
+						w = inputLine.trim();
 						inputLine = in.readLine();
 						inputLine = in.readLine();
 						inputLine = inputLine.replaceAll("\\<.*?>", "");
 						inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 						inputLine = inputLine.replaceAll("  ", " ");
-						l = Integer.parseInt(inputLine.trim());
+						l = inputLine.trim();
 						inputLine = in.readLine();
 						inputLine = in.readLine();
 						inputLine = inputLine.replaceAll("\\<.*?>", "");
 						inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 						inputLine = inputLine.replaceAll("  ", " ");
-						d = Integer.parseInt(inputLine.trim());
+						d = inputLine.trim();
 						inputLine = in.readLine();
 						inputLine = in.readLine();
 						inputLine = inputLine.replaceAll("\\<.*?>", "");
 						inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 						inputLine = inputLine.replaceAll("  ", " ");
-						nc = Integer.parseInt(inputLine.trim());
+						nc = inputLine.trim();
+						values.put("no contest", nc);
 					}
 					
 					// Scrape: Name OK
@@ -124,7 +137,13 @@ public class FighterScraper {
 						inputLine = inputLine.replaceAll("\\<.*?>", "");
 						inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 						inputLine = inputLine.replaceAll("  ", " ");
-						name = inputLine.trim();
+						inputLine = inputLine.trim();
+						name = inputLine;
+						first = inputLine.split("\\s")[0];
+						last = inputLine.split("\\s")[1];
+						values.put("name", name);
+						//values.put("first", first);
+						//values.put("last", last);
 					}
 					// Scrape: Nickname OK
 					if (inputLine.contains("nickname\">")) {
@@ -132,6 +151,7 @@ public class FighterScraper {
 						inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 						inputLine = inputLine.replaceAll("  ", " ");
 						nickname = inputLine.trim();
+						values.put("nickname", nickname);
 					}
 					// Scrape: Height OK
 					if (inputLine.contains(">HEIGHT</td>")) {
@@ -140,6 +160,7 @@ public class FighterScraper {
 						inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 						inputLine = inputLine.replaceAll("  ", " ");
 						height = inputLine.trim();
+						values.put("height", height);
 					}
 					// Scrape: Weight OK
 					if (inputLine.contains(">WEIGHT</td>")) {
@@ -148,6 +169,7 @@ public class FighterScraper {
 						inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 						inputLine = inputLine.replaceAll("  ", " ");
 						weight = inputLine.trim();
+						values.put("weight", weight);
 					}
 					// Scrape: Reach OK
 					if (inputLine.contains(">REACH</td>")) {
@@ -156,6 +178,7 @@ public class FighterScraper {
 						inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 						inputLine = inputLine.replaceAll("  ", " ");
 						reach = inputLine.trim();
+						values.put("reach", reach);
 					}
 
 					// Scrape: Stance OK
@@ -165,6 +188,7 @@ public class FighterScraper {
 						inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 						inputLine = inputLine.replaceAll("  ", " ");
 						stance = inputLine.trim();
+						values.put("stance", stance);
 					}
 					// Scrape: Strikes Landed Per minute
 					if (inputLine.contains("SLpM</td>")) {
@@ -174,7 +198,8 @@ public class FighterScraper {
 						inputLine = inputLine.replaceAll("  ", " ");
 						inputLine = inputLine.trim();
 						inputLine = inputLine.substring(0,inputLine.length());
-						slpm = Double.parseDouble(inputLine);
+						slpm = inputLine;
+						values.put("strikes landed", slpm);
 					}
 					// Scrape: Strikes Absorbed Per minute
 					if (inputLine.contains(">SApM</td>")) {
@@ -184,7 +209,8 @@ public class FighterScraper {
 						inputLine = inputLine.replaceAll("  ", " ");
 						inputLine = inputLine.trim();
 						inputLine = inputLine.substring(0,inputLine.length());
-						sapm = Double.parseDouble(inputLine);
+						sapm = inputLine;
+						values.put("strikes absorbed", sapm);
 					}
 					// Scrape: Takedown Average
 					if (inputLine.contains("TD Avg.</td>")) {
@@ -194,7 +220,8 @@ public class FighterScraper {
 						inputLine = inputLine.replaceAll("  ", " ");
 						inputLine = inputLine.trim();
 						inputLine = inputLine.substring(0,inputLine.length());
-						td_avg = Double.parseDouble(inputLine);
+						td_avg = inputLine;
+						values.put("average takedowns", td_avg);
 					}
 					// Scrape: Submission Average
 					if (inputLine.contains("Sub. Avg.</td>")) {
@@ -204,30 +231,18 @@ public class FighterScraper {
 						inputLine = inputLine.replaceAll("  ", " ");
 						inputLine = inputLine.trim();
 						inputLine = inputLine.substring(0,inputLine.length());
-						sub_avg = Double.parseDouble(inputLine);
+						sub_avg = inputLine;
+						values.put("average submissions", sub_avg);
 					}
 				}
 				in.close();
-				fighterToDb();
+				db.update(table, values);
+				db.close();
+				System.out.println(values);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-
-	public void fighterToDb() {
-		// used once for all scrapers
-		StatsHandler db = new StatsHandler();
-		// once per record (i.e once per event)
-		height="lang";
-		db.update(new Fighter(id, age, str_acc, str_def, td_acc, td_def, w, l,
-				d, nc, name, nickname, height, weight, reach, stance, slpm,
-				sapm, td_avg, sub_avg));
-
-		System.out.println("Id: " + id + " - " + name);
-		System.out.println("-------------------------------\nDone");
-		// once for all scrapers
-		db.close();
-	}
 
 	public String getFighterinfo() {
 		return  id + "\n" + age + "\n" + str_acc + "\n" + str_def + "\n"
