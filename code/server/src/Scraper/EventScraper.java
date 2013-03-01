@@ -39,7 +39,7 @@ public class EventScraper {
 					inputLine = inputLine.replaceAll("Events > ", "");
 					eventOrganization = inputLine.trim();
 					// eventOrganization = "UFC";
-					values.put("organzation", eventOrganization);
+					values.put("organization", eventOrganization);
 					
 
 				}
@@ -59,7 +59,7 @@ public class EventScraper {
 					inputLine = inputLine.replaceAll("\\(.*?\\)", "");
 					inputLine = inputLine.replaceAll("  ", " ");
 					eventLocation = inputLine.trim();
-					values.put("Location", eventLocation);
+					values.put("location", eventLocation);
 				}
 				// Scrape: Event Date
 				if (inputLine.contains("DATE</td>")) {

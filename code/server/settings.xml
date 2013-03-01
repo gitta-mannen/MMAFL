@@ -22,32 +22,38 @@
 			<column name="id">
 				<attr name="dbname">id</attr>
 				<attr name="dbtype">integer</attr>
+				<attr name="constraint">primary key</attr>
 				<attr name="apptype">integer</attr>
 			</column>
 			<column name="name">
 				<attr name="dbname">name</attr>
 				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">string</attr>
 			</column>
 			<column name="date">
 				<attr name="dbname">date</attr>
 				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">date</attr>
 				<attr name="formatter">textdate</attr>
 			</column>
 			<column name="location">
 				<attr name="dbname">location</attr>
 				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">string</attr>
 			</column>
 			<column name="organization">
 				<attr name="dbname">organization</attr>
 				<attr name="dbtype">string</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">string</attr>
 			</column>
 			<column name="attendance">
 				<attr name="dbname">attendance</attr>
 				<attr name="dbtype">integer</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">integer</attr>
 				<attr name="formatter">thousand</attr>
 			</column>
@@ -56,28 +62,32 @@
 			<column name="id">
 				<attr name="dbname">id</attr>
 				<attr name="dbtype">integer</attr>
+				<attr name="constraint">primary key</attr>
 				<attr name="apptype">integer</attr>
 			</column>
 			<column name="name">
 				<attr name="dbname">name</attr>
 				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">string</attr>
 			</column>
 			<column name="nickname">
 				<attr name="dbname">nickname</attr>
 				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">string</attr>
 			</column>
 			<column name="height">
 				<attr name="dbname">height</attr>
 				<attr name="dbtype">integer</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">integer</attr>
-				<attr name="unit">cm</attr>
 				<attr name="formatter">height</attr>
 			</column>
 			<column name="weight">
 				<attr name="dbname">weight</attr>
 				<attr name="dbtype">integer</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">integer</attr>
 				<attr name="unit">kg</attr>
 				<attr name="formatter">weight</attr>
@@ -85,29 +95,33 @@
 			<column name="reach">
 				<attr name="dbname">reach</attr>
 				<attr name="dbtype">integer</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">integer</attr>
-				<attr name="unit">cm</attr>
 				<attr name="formatter">reach</attr>
 			</column>
 			<column name="stance">
 				<attr name="dbname">stance</attr>
 				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">string</attr>
 			</column>
 			<column name="age">
 				<attr name="dbname">age</attr>
 				<attr name="dbtype">integer</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">integer</attr>
 			</column>
 			<column name="strikes landed">
 				<attr name="dbname">slpm</attr>
 				<attr name="dbtype">real</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">double</attr>
 				<attr name="formatter">localenumbers</attr>
 			</column>
 			<column name="striking accuracy">
 				<attr name="dbname">str_acc</attr>
 				<attr name="dbtype">integer</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">integer</attr>
 				<attr name="unit">%</attr>
 				<attr name="formatter">percent</attr>

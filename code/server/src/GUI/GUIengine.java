@@ -13,7 +13,11 @@ public class GUIengine {
 		 try {			 	
 			 	//Get settings
 			 	Settings.getInstance();
-			 
+			 	// reset the tables on startup
+			 	StatsHandler db = new StatsHandler();
+			 	db.resetTables();
+			 	db.close();
+			 	
 			 	// Run http server
 				HttpServer httpServer = new HttpServer();
 	            Thread thread = new Thread( httpServer );

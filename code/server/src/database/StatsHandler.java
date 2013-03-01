@@ -36,46 +36,68 @@ public class StatsHandler extends DbHandler {
 	/**
 	 * Creates the stats-tables if they don't exist
 	 */
-	public void resetSchema (HashMap<String[], String> schema) {
+	public void resetTables () {
 		try {	
 			Statement statement = connection.createStatement();						
 			statement.setQueryTimeout(30);			
 			
-			statement.execute("drop table if exists schema");
-			statement.execute("create table schema ('table' text NOT NULL, 'column' text NOT NULL, 'attribute' text NOT NULL, 'value' text, PRIMARY KEY('table', 'column', 'attribute'))");
+			Schema schema = Settings.getInstance().schema();
 			
-			statement.execute("BEGIN IMMEDIATE");
-			Iterator<Entry<String[], String>> itr = schema.entrySet().iterator();
-			while(itr.hasNext()) {
-				Entry<String[], String> entry = itr.next();
-				String[] key = entry.getKey();
-				String value = entry.getValue();
-
-				statement.execute("insert or replace into schema values" + 
-						 " ('"+ key[0] + "','" + key[1] + "','" + key[2] + "','" + value + "')" );
+			//statement.executeUpdate("BEGIN");
+			Iterator<Entry<String, Table>> tItr = schema.getTables().entrySet().iterator();			
+			while(tItr.hasNext()) {
+				Entry<String, Table> tableEntry = tItr.next();
+				statement.executeUpdate("drop table if exists " + tableEntry.getKey());
+				
+				Iterator<Entry<String, Column>> cItr = tableEntry.getValue().getColumns().entrySet().iterator();
+				StringBuilder columnDef = new StringBuilder("CREATE TABLE " + tableEntry.getKey() + " (");				
+				while(cItr.hasNext()) {
+					Entry<String, Column> columnEntry = cItr.next();
+					columnDef.append("'" + columnEntry.getValue().dbname + "'" + " " + columnEntry.getValue().dbtype);
+					if(cItr.hasNext()) {						
+						columnDef.append(", ");
+					}
+				}
+				columnDef.append(")");
+				//System.out.println(columnDef.toString());
+				statement.execute(columnDef.toString());
 			}
-			statement.execute("COMMIT");
 			
-		} catch (SQLException e) {
-			System.err.println(e);
+			
+			//statement.execute("COMMIT");
 		} catch (Exception e) {
-			System.err.println(e);
-		}			
+			Logger.log(e.getMessage(), true);
+		}
 	}
+//			//statement.execute("drop table if exists schema");
+//			//statement.execute("create table schema ('table' text NOT NULL, 'column' text NOT NULL, 'attribute' text NOT NULL, 'value' text, PRIMARY KEY('table', 'column', 'attribute'))");
+//			
+//			statement.execute("BEGIN IMMEDIATE");
+//			Iterator<Entry<String, String>> itr = Settings.getInstance().schema().entrySet().iterator();
+//			while(itr.hasNext()) {
+//				Entry<String, String> entry = itr.next();
+//				String[] key = entry.getKey().split("-");
+//				String value = entry.getValue();
+//
+//				statement.execute("CREATE TABLE IF NOT EXISTS " + key[0]);
+//			}
+//			statement.execute("COMMIT");
+//			
+//		} catch (SQLException e) {
+//			System.err.println(e);
+//		} catch (Exception e) {
+//			System.err.println(e);
+//		}			
+//	}
 	
 	
-	/**
-	 * Deletes all entries from all tables, creates them if they don't exist
-	 */
+	/*
 	public void resetTables () {
 		try {				
 			Statement statement = connection.createStatement();						
 			statement.setQueryTimeout(30);			
 	
-			statement.executeUpdate("drop table if exists fighters");
-			statement.executeUpdate("drop table if exists events");
-			statement.executeUpdate("drop table if exists fights");
-			statement.executeUpdate("drop table if exists rounds");
+
 						
 		} catch (SQLException e) {
 			System.err.println(e);
@@ -84,6 +106,7 @@ public class StatsHandler extends DbHandler {
 		
 		//createTables();
 	}
+	*/
 	
 	// SHould be moved to it's own class
 	private void format(String value) {
@@ -103,35 +126,45 @@ public class StatsHandler extends DbHandler {
 			while(itr.hasNext()) {
 				Entry<String, String> entry = itr.next();				
 				
-				String dbtype = Settings.getInstance().getSchema().get(table + "-" + entry.getKey() + "-" + "dbtype");
-				String formatter = Settings.getInstance().getSchema().get(table + "-" + entry.getKey() + "-" + "formatter");
-				String dbname = Settings.getInstance().getSchema().get(table + "-" + entry.getKey() + "-" + "dbname");
-								
-				cols.append(dbname);
+				//System.out.println(table + " " + entry.getKey());
 				
-				if (formatter != null) {
-					//formatter logic
-					String temp = ("'" + entry.getValue().replace("'", "''") + "'");
-					System.out.println(temp);
-					vals.append(temp);
-				} else {
-					if (dbtype.equals("text")) {
-						vals.append("'" + entry.getValue() + "'");
-					} else if (dbtype.equals("integer")) {
-						vals.append(entry.getValue());
+				String dbtype = Settings.getInstance().schema().getTable(table).getColumn(entry.getKey()).dbtype;
+				String formatter = Settings.getInstance().schema().getTable(table).getColumn(entry.getKey()).formatter;
+				String dbname = Settings.getInstance().schema().getTable(table).getColumn(entry.getKey()).dbname;
+				
+				if (dbtype == null) {
+					Logger.log("Reference to table: " + table + " column: " + entry.getKey() + " not found in schema", true);
+				} else {				
+					cols.append(dbname);
+					//System.out.println(dbtype + " " + formatter + " " + dbname);
+					
+					if (formatter != null) {
+						//formatter logic
+						String temp = ("'" + entry.getValue().replace("'", "''") + "'");
+						temp = ("'" + entry.getValue().replace(",", ".") + "'");
+						//System.out.println(temp);
+						vals.append(temp);
 					} else {
-						vals.append("'" + entry.getValue() + "'");
+						if (dbtype.equals("text")) {
+							vals.append("'" + entry.getValue() + "'");
+						} else if (dbtype.equals("integer")) {
+							vals.append(entry.getValue());
+						} else {
+							vals.append("'" + entry.getValue() + "'");
+						}
+					}
+					
+					if (itr.hasNext()) {
+						cols.append(",");
+						vals.append(",");
+					} else {
+						cols.append(")");
+						vals.append(")");
 					}
 				}
-				
-				if (itr.hasNext()) {
-					cols.append(",");
-					vals.append(",");
-				} else {
-					cols.append(")");
-					vals.append(")");
-				}
 			}
+			//System.out.println("insert or replace into " + table + " " +
+			//		cols.toString() + " VALUES " + vals.toString());
 			
 			statement.executeUpdate("insert or replace into " + table + " " +
 					cols.toString() + " VALUES " + vals.toString());						

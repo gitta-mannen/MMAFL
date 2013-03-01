@@ -22,8 +22,8 @@ import java.util.HashMap;
 public class Settings {
 	private static final String settingsFile = System.getProperty("user.dir") + "/settings.xml";
 	private static final Settings instance;
-	private static HashMap<String, String> schema = new HashMap<String, String>();
-
+	private static Schema schema;
+	
 	static {	   
 		instance = new Settings();	    
 	}
@@ -33,6 +33,10 @@ public class Settings {
 	}
 
 	private Settings() {
+		reloadSettings();
+	}
+	
+	public void reloadSettings() {
 		try {
 			File fXmlFile = new File(settingsFile);			
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -40,198 +44,122 @@ public class Settings {
 			Document doc = dBuilder.parse(fXmlFile);
 			doc.getDocumentElement().normalize();
 			
+			//gets the schema from xml-file
 			buildSchema(doc);
-			//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+		
 
-		} catch (org.xml.sax.SAXParseException pe) {
-			pe.printStackTrace();
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+		
 	private void buildSchema(Document doc) {
-		NodeList nodeList = (doc.getDocumentElement().getElementsByTagName("table"));				
-		traverse(nodeList, "", "");		
-	}
-	
-	private void traverse(NodeList nodeList, String table, String column) {		
-		String attribute, value;
-		for (int count = 0; count < nodeList.getLength(); count++) {
-			Node elementNode = nodeList.item(count);
-			if (elementNode.hasAttributes()) {
-				//System.out.println();
-				//System.out.print(elementNode.getNodeName() + " type: " + elementNode.getNodeType());
-				
-				NamedNodeMap nodeMap = elementNode.getAttributes();
-				for (int i = 0; i < nodeMap.getLength(); i++) {
-					Node attrNode = nodeMap.item(i);
-					//System.out.print(" " + attrNode.getNodeName() + " = ");
-					//System.out.print(attrNode.getNodeValue());
+		schema = new Schema();
+		
+		NodeList tableList = (doc.getDocumentElement().getElementsByTagName("table"));				
+		for (int tCount = 0; tCount < tableList.getLength(); tCount++) {
+			Node tableNode = tableList.item(tCount);
+			String tableName = tableNode.getAttributes().getNamedItem("name").getNodeValue();
+			schema.addTable(tableName);
+			//System.out.println("table: " + tableName);
+			
+			NodeList columnList = tableNode.getChildNodes();				
+			for (int cCount = 0; cCount < columnList.getLength(); cCount++) {				
+				Node columnNode = columnList.item(cCount);
+				if (columnNode.hasAttributes()) {
+					String columnName = columnNode.getAttributes().getNamedItem("name").getNodeValue();
+					Column column = schema.getTable(tableName).addColumn(columnName);
+					//System.out.println("\tcolumn: " + columnName);
 					
-					if (attrNode.getNodeName().equals("name")) {
-						if (elementNode.getNodeName().equals("table")) {
-							table = attrNode.getNodeValue();
-						} else if (elementNode.getNodeName().equals("column")) {
-							column = attrNode.getNodeValue();
-						} else if (elementNode.getNodeName().equals("attr")) {
-							attribute = attrNode.getNodeValue();
-							value = elementNode.getTextContent();
-							schema.put(table + "-" + column + "-" + attribute, value);
-							//Logger.log(table + " " + column + " " + attribute + " " + value, true);
-						} else {
-							Logger.log("parsed schema object not regognized", true);
+					NodeList attrList = columnNode.getChildNodes();				
+					for (int aCount = 0; aCount < attrList.getLength(); aCount++) {
+						Node attrNode = attrList.item(aCount);
+						if (attrNode.hasAttributes()) {
+							String attrName = attrNode.getAttributes().getNamedItem("name").getNodeValue();
+							
+							if (attrName.equals("dbname")) {
+								column.dbname = attrNode.getTextContent();
+							} else if (attrName.equals("dbtype")) {
+								column.dbtype = attrNode.getTextContent();
+							} else if (attrName.equals("constraint")) {
+								column.constraint = attrNode.getTextContent();
+							} else if (attrName.equals("apptype")) {
+								column.apptype = attrNode.getTextContent();
+							} else if (attrName.equals("formatter")) {
+								column.formatter = attrNode.getTextContent();
+							}  else if (attrName.equals("unit")) {
+								//do nothing
+							} else {							
+								Logger.log("Attribute not supported: " + attrName, true);
+							}
+											
+							//System.out.println("\t\tattribute: " + attrName + " value: " + attrNode.getTextContent());
 						}
 					}
-				}				
-			}
-
-			if (elementNode.hasChildNodes()) {
-				traverse(elementNode.getChildNodes(), table, column);
-			}
-
-			//System.out.println("<<" + tempNode.getNodeValue());
-		}	
+				}
+			}			
+		}
 	}
 	
-	public HashMap<String, String> getSchema() {
+	public Schema schema() {
 		return schema;
 	}
 	
-	/*
-	private void printNode(Node n) {	  
-	    int type = n.getNodeType();
+}
 
-	    switch (type) {
-	        case Node.ATTRIBUTE_NODE:
-	        	System.out.print.print("ATTR:");
-	            printlnCommon(n);
-	            break;
 
-	        case Node.CDATA_SECTION_NODE:
-	            out.print("CDATA:");
-	            printlnCommon(n);
-	            break;
+class Schema {
+	private HashMap<String, Table> tables;
+	public Schema() {
+		super();
+		tables = new HashMap<String, Table>();
+	}
+	
+	public HashMap<String, Table> getTables() {
+		return tables;
+	}
+	
+	public Table getTable (String table) {
+		return tables.get(table);
+	}
+	
+	public Table addTable (String name) {
+		Table temp = new Table();
+		tables.put(name, temp);
+		return temp;
+	}
 
-	        case Node.COMMENT_NODE:
-	            out.print("COMM:");
-	            printlnCommon(n);
-	            break;
+}
 
-	        case Node.DOCUMENT_FRAGMENT_NODE:
-	            out.print("DOC_FRAG:");
-	            printlnCommon(n);
-	            break;
-
-	        case Node.DOCUMENT_NODE:
-	            out.print("DOC:");
-	            printlnCommon(n);
-	            break;
-
-	        case Node.DOCUMENT_TYPE_NODE:
-	            out.print("DOC_TYPE:");
-	            printlnCommon(n);
-	            NamedNodeMap nodeMap = ((DocumentType)n).getEntities();
-	            indent += 2;
-	            for (int i = 0; i < nodeMap.getLength(); i++) {
-	                Entity entity = (Entity)nodeMap.item(i);
-	                echo(entity);
-	            }
-	            indent -= 2;
-	            break;
-
-	        case Node.ELEMENT_NODE:
-	            out.print("ELEM:");
-	            printlnCommon(n);
-
-	            NamedNodeMap atts = n.getAttributes();
-	            indent += 2;
-	            for (int i = 0; i < atts.getLength(); i++) {
-	                Node att = atts.item(i);
-	                echo(att);
-	            }
-	            indent -= 2;
-	            break;
-
-	        case Node.ENTITY_NODE:
-	            out.print("ENT:");
-	            printlnCommon(n);
-	            break;
-
-	        case Node.ENTITY_REFERENCE_NODE:
-	            out.print("ENT_REF:");
-	            printlnCommon(n);
-	            break;
-
-	        case Node.NOTATION_NODE:
-	            out.print("NOTATION:");
-	            printlnCommon(n);
-	            break;
-
-	        case Node.PROCESSING_INSTRUCTION_NODE:
-	            out.print("PROC_INST:");
-	            printlnCommon(n);
-	            break;
-
-	        case Node.TEXT_NODE:
-	            out.print("TEXT:");
-	            printlnCommon(n);
-	            break;
-
-	        default:
-	            out.print("UNSUPPORTED NODE: " + type);
-	            printlnCommon(n);
-	            break;
-	    }
-
-	    indent++;
-	    for (Node child = n.getFirstChild(); child != null;
-	         child = child.getNextSibling()) {
-	        echo(child);
-	    }
-	    indent--;
+class Table {
+	HashMap<String, Column> columns;
+	public Table() {
+		super();
+		columns = new HashMap<String, Column>();
+	}
+	
+	public HashMap<String, Column> getColumns() {
+		return columns;
+	}
+	
+	public Column getColumn (String column) {
+		return columns.get(column);
+	}
+		
+	public Column addColumn (String name) {
+		Column temp = new Column();
+		columns.put(name, temp);
+		return temp;
 	}	
-	
-	*/
+}
+
+class Column {
+	public String dbname;
+	public String dbtype;
+	public String apptype;
+	public String formatter;
+	public String constraint;
 }
 
 
-class Tree {
-	String type, value;
-	
-	private Tree sibling, child;
-	
-	public Tree() {
-		super();
-	}
-	
-	public Tree(Tree sibling, Tree child) {
-		super();
-		this.sibling = sibling;
-		this.child = child;
-	}
-
-	public void setSibling(Tree sibling) {
-		this.sibling = sibling;
-	}
-
-	public void setChild(Tree child) {
-		this.child = child;
-	}
-
-	public Tree getSibling() {
-		return sibling;
-	}
-	
-	public Tree getChild() {
-		return child;
-	}
-}
 
