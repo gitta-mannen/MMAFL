@@ -21,7 +21,7 @@
 		<table name="events">
 			<column name="id">
 				<attr name="dbname">id</attr>
-				<attr name="dbtype">primarykey</attr>
+				<attr name="dbtype">integer</attr>
 				<attr name="apptype">integer</attr>
 			</column>
 			<column name="name">
@@ -46,7 +46,7 @@
 				<attr name="apptype">string</attr>
 			</column>
 			<column name="attendance">
-				<attr name="dbname">attandance</attr>
+				<attr name="dbname">attendance</attr>
 				<attr name="dbtype">integer</attr>
 				<attr name="apptype">integer</attr>
 				<attr name="formatter">thousand</attr>
@@ -55,7 +55,7 @@
 		<table name="fighters">
 			<column name="id">
 				<attr name="dbname">id</attr>
-				<attr name="dbtype">primarykey</attr>
+				<attr name="dbtype">integer</attr>
 				<attr name="apptype">integer</attr>
 			</column>
 			<column name="name">

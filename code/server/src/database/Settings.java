@@ -22,7 +22,7 @@ import java.util.HashMap;
 public class Settings {
 	private static final String settingsFile = System.getProperty("user.dir") + "/settings.xml";
 	private static final Settings instance;
-	private static HashMap<String[],String> schema = new HashMap<String[],String>();
+	private static HashMap<String, String> schema = new HashMap<String, String>();
 
 	static {	   
 		instance = new Settings();	    
@@ -84,7 +84,7 @@ public class Settings {
 						} else if (elementNode.getNodeName().equals("attr")) {
 							attribute = attrNode.getNodeValue();
 							value = elementNode.getTextContent();
-							schema.put(new String[]{table, column, attribute}, value);
+							schema.put(table + "-" + column + "-" + attribute, value);
 							//Logger.log(table + " " + column + " " + attribute + " " + value, true);
 						} else {
 							Logger.log("parsed schema object not regognized", true);
@@ -101,7 +101,7 @@ public class Settings {
 		}	
 	}
 	
-	public HashMap<String[], String> getSchema() {
+	public HashMap<String, String> getSchema() {
 		return schema;
 	}
 	

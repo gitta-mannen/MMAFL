@@ -41,18 +41,20 @@ public class StatsHandler extends DbHandler {
 			Statement statement = connection.createStatement();						
 			statement.setQueryTimeout(30);			
 			
-			statement.executeUpdate("drop table if exists schema");
-			statement.executeUpdate("create table schema ('table' text, 'column' text, 'attribute' text, 'value' text)");
+			statement.execute("drop table if exists schema");
+			statement.execute("create table schema ('table' text NOT NULL, 'column' text NOT NULL, 'attribute' text NOT NULL, 'value' text, PRIMARY KEY('table', 'column', 'attribute'))");
 			
+			statement.execute("BEGIN IMMEDIATE");
 			Iterator<Entry<String[], String>> itr = schema.entrySet().iterator();
 			while(itr.hasNext()) {
 				Entry<String[], String> entry = itr.next();
 				String[] key = entry.getKey();
 				String value = entry.getValue();
-				//System.out.println(key[0] + "-" + key[1] + "-" + key[2] + " : " + value.toString());
-				statement.executeUpdate("insert or replace into schema values" + 
+
+				statement.execute("insert or replace into schema values" + 
 						 " ('"+ key[0] + "','" + key[1] + "','" + key[2] + "','" + value + "')" );
-			}			
+			}
+			statement.execute("COMMIT");
 			
 		} catch (SQLException e) {
 			System.err.println(e);
@@ -83,6 +85,11 @@ public class StatsHandler extends DbHandler {
 		//createTables();
 	}
 	
+	// SHould be moved to it's own class
+	private void format(String value) {
+		
+	}
+	
 	public void update (String table, HashMap<String, String> columnValuePair) {
 		try {
 			// create statement and set timeout to 30 sec.
@@ -94,10 +101,28 @@ public class StatsHandler extends DbHandler {
 			Iterator<Entry<String, String>> itr = columnValuePair.entrySet().iterator();
 						
 			while(itr.hasNext()) {
-				Entry<String, String> entry = itr.next();
-				cols.append( entry.getKey() );
-				// should check if string to append '
-				vals.append( entry.getValue() );
+				Entry<String, String> entry = itr.next();				
+				
+				String dbtype = Settings.getInstance().getSchema().get(table + "-" + entry.getKey() + "-" + "dbtype");
+				String formatter = Settings.getInstance().getSchema().get(table + "-" + entry.getKey() + "-" + "formatter");
+				String dbname = Settings.getInstance().getSchema().get(table + "-" + entry.getKey() + "-" + "dbname");
+								
+				cols.append(dbname);
+				
+				if (formatter != null) {
+					//formatter logic
+					String temp = ("'" + entry.getValue().replace("'", "''") + "'");
+					System.out.println(temp);
+					vals.append(temp);
+				} else {
+					if (dbtype.equals("text")) {
+						vals.append("'" + entry.getValue() + "'");
+					} else if (dbtype.equals("integer")) {
+						vals.append(entry.getValue());
+					} else {
+						vals.append("'" + entry.getValue() + "'");
+					}
+				}
 				
 				if (itr.hasNext()) {
 					cols.append(",");
