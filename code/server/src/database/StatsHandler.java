@@ -152,7 +152,7 @@ public class StatsHandler {
 			for (int i = 0; i < count; i++) {
 				resultArray[0][i] = meta.getColumnName(i+1);
 			}					
-
+			
 			return resultArray;
 			
 		} catch (Exception e) {
