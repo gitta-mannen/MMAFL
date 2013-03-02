@@ -2,6 +2,7 @@ package database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -134,6 +135,31 @@ public class StatsHandler {
 			System.err.println(e);
 			e.printStackTrace();
 		}			
+	}
+	
+	public Object[][] getTable(String table) {	
+		try {
+			Statement statement = connection.createStatement();						
+			statement.setQueryTimeout(30);		
+			
+			ResultSet result = statement.executeQuery("SELECT * FROM " + table);
+			
+			
+			ResultSetMetaData meta = result.getMetaData();			
+			int count = meta.getColumnCount();
+			Object[][] resultArray = new Object[1][count];
+			
+			for (int i = 0; i < count; i++) {
+				resultArray[0][i] = meta.getColumnName(i+1);
+			}					
+
+			return resultArray;
+			
+		} catch (Exception e) {
+			Logger.log(e.getMessage(), true);
+			return null;
+		} 
+
 	}
 	
 	public void close () {

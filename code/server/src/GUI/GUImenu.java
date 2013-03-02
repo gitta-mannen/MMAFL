@@ -2,12 +2,14 @@ package GUI;
 
 import javax.swing.*;
 
-import util.SimpleTableDemo;
+import util.GuiTable;
 
 import database.Settings;
+import database.StatsHandler;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
 import java.awt.event.*;
 import java.awt.*;
 import java.net.MalformedURLException;
@@ -40,21 +42,31 @@ public GUImenu() {
         menuBar.add(filemenu);
         menuBar.add(cardsmenu);
  
-        Container content = this.getContentPane();
-        content.setBackground(Color.white);
-        content.setLayout(new FlowLayout()); 
-        
-        Iterator<String> tables = Settings.getInstance().getSchema().getTables().keySet().iterator();
-        while (tables.hasNext()) {
-        	JButton button = new JButton(tables.next());//The JButton name.
-        	GridBagConstraints c = new GridBagConstraints();
-    		add(button);//Add the button to the JFrame.
-        }
-        
-        GridBagConstraints c = new GridBagConstraints();
-        add(new SimpleTableDemo());
-//        newContentPane.setOpaque(true); //content panes must be opaque
-//        this.setContentPane(newContentPane);
+        	
+        	// fulhack för att testa tables i gui. 
+        	StatsHandler db = new StatsHandler();
+	        Container content = this.getContentPane();
+	        content.setBackground(Color.white);
+	        content.setLayout(new GridBagLayout()); 
+	        
+	        Iterator<String> tables = Settings.getInstance().getSchema().getTables().keySet().iterator();
+	        while (tables.hasNext()) {
+	        	JButton button = new JButton(tables.next());//The JButton name.
+	        	GridBagConstraints c = new GridBagConstraints();
+	    		add(button);//Add the button to the JFrame.
+	        }
+	        
+	        GridBagConstraints c = new GridBagConstraints();
+	        c.anchor = GridBagConstraints.PAGE_END;
+	        c.fill = GridBagConstraints.HORIZONTAL;
+	        c.ipady = 40;      //make this component tall
+	        c.weightx = 0.0;
+	        c.gridwidth = 3;
+	        c.gridx = 0;
+	        c.gridy = 1;
+	        add(new GuiTable(new String[]{"id", "org", "loc", "att", "name", "date"}, db.getTable("events")), c);
+	        db.close();
+
         
         
         JMenuItem quititem = new JMenuItem("Quit");

@@ -10,33 +10,33 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
  
 //http://docs.oracle.com/javase/tutorial/uiswing/components/table.html
-public class SimpleTableDemo extends JPanel {
+public class GuiTable extends JPanel {
     private boolean DEBUG = true;
  
-    public SimpleTableDemo() {
+    public GuiTable(String[] columnNames, Object[][] data) {
         super(new GridLayout(1,0));
  
-        String[] columnNames = {"First Name",
-                                "Last Name",
-                                "Sport",
-                                "# of Years",
-                                "Vegetarian"};
- 
-        Object[][] data = {
-        {"Kathy", "Smith",
-         "Snowboarding", new Integer(5), new Boolean(false)},
-        {"John", "Doe",
-         "Rowing", new Integer(3), new Boolean(true)},
-        {"Sue", "Black",
-         "Knitting", new Integer(2), new Boolean(false)},
-        {"Jane", "White",
-         "Speed reading", new Integer(20), new Boolean(true)},
-        {"Joe", "Brown",
-         "Pool", new Integer(10), new Boolean(false)}
-        };
+//        String[] columnNames = {"First Name",
+//                                "Last Name",
+//                                "Sport",
+//                                "# of Years",
+//                                "Vegetarian"};
+// 
+//        Object[][] data = {
+//        {"Kathy", "Smith",
+//         "Snowboarding", new Integer(5), new Boolean(false)},
+//        {"John", "Doe",
+//         "Rowing", new Integer(3), new Boolean(true)},
+//        {"Sue", "Black",
+//         "Knitting", new Integer(2), new Boolean(false)},
+//        {"Jane", "White",
+//         "Speed reading", new Integer(20), new Boolean(true)},
+//        {"Joe", "Brown",
+//         "Pool", new Integer(10), new Boolean(false)}
+//        };
  
         final JTable table = new JTable(data, columnNames);
-        table.setPreferredScrollableViewportSize(new Dimension(600, 300));
+        table.setPreferredScrollableViewportSize(new Dimension(580, 300));
         table.setFillsViewportHeight(true);
  
         if (DEBUG) {
@@ -75,20 +75,20 @@ public class SimpleTableDemo extends JPanel {
      * this method should be invoked from the
      * event-dispatching thread.
      */
-    private static void createAndShowGUI() {
-        //Create and set up the window.
-        JFrame frame = new JFrame("SimpleTableDemo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
- 
-        //Create and set up the content pane.
-        SimpleTableDemo newContentPane = new SimpleTableDemo();
-        newContentPane.setOpaque(true); //content panes must be opaque
-        frame.setContentPane(newContentPane);
- 
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
-    }
+//    private static void createAndShowGUI() {
+//        //Create and set up the window.
+//        JFrame frame = new JFrame("SimpleTableDemo");
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+// 
+//        //Create and set up the content pane.
+//        GuiTable newContentPane = new GuiTable();
+//        newContentPane.setOpaque(true); //content panes must be opaque
+//        frame.setContentPane(newContentPane);
+// 
+//        //Display the window.
+//        frame.pack();
+//        frame.setVisible(true);
+//    }
  
 //    public static void main(String[] args) {
 //        //Schedule a job for the event-dispatching thread:
