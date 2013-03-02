@@ -11,8 +11,6 @@ import server.HttpServer;
 public class GUIengine {
 	public static void main(String[] args) { 
 		 try {			 	
-			 	//Get settings
-			 	Settings.getInstance();
 			 	// reset the tables on startup
 			 	StatsHandler db = new StatsHandler();
 			 	db.resetTables();

@@ -6,8 +6,6 @@ import java.net.MalformedURLException;
 import java.net.URLConnection;
 import java.net.URL;
 import java.util.HashMap;
-
-import database.Event;
 import database.StatsHandler;
 
 public class EventScraper {

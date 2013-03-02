@@ -6,8 +6,6 @@ import java.net.MalformedURLException;
 import java.net.URLConnection;
 import java.net.URL;
 import java.util.HashMap;
-
-import database.Fighter;
 import database.StatsHandler;
 
 //import java.util.ArrayList;

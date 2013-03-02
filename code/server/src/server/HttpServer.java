@@ -3,8 +3,6 @@ package server;
 import java.io.* ;
 import java.net.* ;
 import java.util.* ;
-
-import database.Event;
 import database.StatsHandler;
 
 /**
@@ -212,11 +210,11 @@ class HttpRequest implements Runnable{
                     page.append("<tr><th> id </th><th> name </th><th> date </th><th> location </th><th> organization </th><th> attendence </th></tr>" + CRLF);
                     
                     // Get table from DB
-                    ArrayList<Event> events = db.get(new Event());
-                    for (Event event : events) {
-                    	page.append(event.toHtmlString());
-                    	page.append(CRLF);
-            		}                    
+//                    ArrayList<Event> events = db.get(new Event());
+//                    for (Event event : events) {
+//                    	page.append(event.toHtmlString());
+//                    	page.append(CRLF);
+//            		}                    
  
                     page.append("</table></BODY></HTML>" + CRLF);
                     os.writeBytes(page.toString());                    

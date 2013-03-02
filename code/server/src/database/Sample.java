@@ -3,7 +3,6 @@ import java.util.HashMap;
 
 public class Sample {
 	public static void main(String[] args) throws ClassNotFoundException {
-		Settings.getInstance().reloadSettings();
 		StatsHandler db = new StatsHandler();
 		db.resetTables();
 		

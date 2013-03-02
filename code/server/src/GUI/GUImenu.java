@@ -2,9 +2,17 @@ package GUI;
 
 import javax.swing.*;
 
+import util.SimpleTableDemo;
+
+import database.Settings;
+
+import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.event.*;
+import java.awt.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Iterator;
 
 import Scraper.EventScraper;
 import Scraper.FighterScraper;
@@ -32,8 +40,21 @@ public GUImenu() {
         menuBar.add(filemenu);
         menuBar.add(cardsmenu);
  
-
+        Container content = this.getContentPane();
+        content.setBackground(Color.white);
+        content.setLayout(new FlowLayout()); 
         
+        Iterator<String> tables = Settings.getInstance().getSchema().getTables().keySet().iterator();
+        while (tables.hasNext()) {
+        	JButton button = new JButton(tables.next());//The JButton name.
+        	GridBagConstraints c = new GridBagConstraints();
+    		add(button);//Add the button to the JFrame.
+        }
+        
+        GridBagConstraints c = new GridBagConstraints();
+        add(new SimpleTableDemo());
+//        newContentPane.setOpaque(true); //content panes must be opaque
+//        this.setContentPane(newContentPane);
         
         
         JMenuItem quititem = new JMenuItem("Quit");
@@ -142,7 +163,7 @@ public GUImenu() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //add title to main window
-        this.setJMenuBar(menuBar); //set the Frames JMenuBar
+        this.setJMenuBar(menuBar); //set the Frames JMenuBar        
         this.setTitle("UFC Fantasy League 2012"); //title of the frame
         this.setVisible(true); //show the Frame
        
