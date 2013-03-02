@@ -1,10 +1,15 @@
-package GUI;
+package gui;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
-import util.GuiTable;
+import scraper.EventScraper;
+import scraper.FighterScraper;
+import scraper.IterativeUrlFeeder;
+import settings.Settings;
+import util.Pair;
 
-import database.Settings;
+
 import database.StatsHandler;
 
 import java.awt.Container;
@@ -14,11 +19,9 @@ import java.awt.event.*;
 import java.awt.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Iterator;
 
-import Scraper.EventScraper;
-import Scraper.FighterScraper;
-import Scraper.IterativeUrlFeeder;
  
 @SuppressWarnings("serial")
 public class GUImenu extends JFrame {
@@ -29,7 +32,7 @@ final String fighterUrl = "http://hosteddb.fightmetric.com/fighters/details/372"
 public GUImenu() {
  
         //set the Frame size
-        this.setSize(600, 600);
+        this.setSize(700, 600);
  
         //Create the menu bar.
         JMenuBar menuBar = new JMenuBar();
@@ -43,29 +46,45 @@ public GUImenu() {
         menuBar.add(cardsmenu);
  
         	
-        	// fulhack för att testa tables i gui. 
+        	// fulhack för att testa tables i gui.
         	StatsHandler db = new StatsHandler();
+        	Pair <String[], Object[][]> data = db.getTable("sqlite_MASTER");
+        	db.close();
+        	final GuiTable guiTable = new GuiTable(data.getA(), data.getB());
+                	
 	        Container content = this.getContentPane();
 	        content.setBackground(Color.white);
 	        content.setLayout(new GridBagLayout()); 
 	        
 	        Iterator<String> tables = Settings.getInstance().getSchema().getTables().keySet().iterator();
 	        while (tables.hasNext()) {
-	        	JButton button = new JButton(tables.next());//The JButton name.
+	        	final JButton button = new JButton(tables.next());
+	        	button.addActionListener(new ActionListener() {
+	                @Override
+	                public void actionPerformed(ActionEvent e) {
+	                	StatsHandler db = new StatsHandler();
+	                	Pair <String[], Object[][]> data = db.getTable(button.getText());
+	                    guiTable.setModel(new DefaultTableModel(data.getB(), data.getA()));
+	                    db.close();
+	                }
+	            });
+	        	
 	        	GridBagConstraints c = new GridBagConstraints();
 	    		add(button);//Add the button to the JFrame.
 	        }
 	        
 	        GridBagConstraints c = new GridBagConstraints();
 	        c.anchor = GridBagConstraints.PAGE_END;
-	        c.fill = GridBagConstraints.HORIZONTAL;
+	        c.fill = GridBagConstraints.BOTH;
 	        c.ipady = 40;      //make this component tall
-	        c.weightx = 0.0;
+	        c.weightx = 1.0;
+	        c.weighty = 1.0;
 	        c.gridwidth = 3;
 	        c.gridx = 0;
-	        c.gridy = 1;
-	        add(new GuiTable(new String[]{"id", "org", "loc", "att", "name", "date"}, db.getTable("events")), c);
-	        db.close();
+	        c.gridy = 1;	        	      
+	        add(guiTable, c);
+	        
+	       
 
         
         

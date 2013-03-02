@@ -5,16 +5,21 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import settings.Column;
+import settings.Schema;
+import settings.Settings;
+import settings.Table;
 import util.Logger;
+import util.Pair;
 
 /**
+ * Handles the database connection. Each thread should have it's own instance.
+ * 
  * @author Stugatz
- *
  */
 public class StatsHandler {
 	private Connection connection = null;
@@ -27,19 +32,19 @@ public class StatsHandler {
 			this.connection = DriverManager.getConnection("jdbc:sqlite:stats.db");
 			
 		} catch (ClassNotFoundException e) {
-			System.err.println(e);
-			System.err.println(e.getMessage());
+			Logger.log(e.getMessage(), true);
 		} catch (Exception e) {
-			System.err.println(e);
-			System.err.println(e.getMessage());
+			Logger.log(e.getMessage(), true);
 		}
 	}
 	
-	
+
 	/**
-	 * Creates the stats-tables if they don't exist
+	 * Creates the tables based on the schema in the settings Object
+	 * 
+	 * @param dropExisting indicates if existing tables should be rebuilt.
 	 */
-	public void resetTables () {
+	public void resetTables (boolean dropExisting) {
 		try {	
 			Statement statement = connection.createStatement();						
 			statement.setQueryTimeout(30);			
@@ -50,10 +55,12 @@ public class StatsHandler {
 			Iterator<Entry<String, Table>> tItr = schema.getTables().entrySet().iterator();			
 			while(tItr.hasNext()) {
 				Entry<String, Table> tableEntry = tItr.next();
-				statement.executeUpdate("drop table if exists " + tableEntry.getKey());
+				if (dropExisting) {
+					statement.executeUpdate("DROP TABLE IF EXISTS " + tableEntry.getKey());
+				}
 				
 				Iterator<Entry<String, Column>> cItr = tableEntry.getValue().getColumns().entrySet().iterator();
-				StringBuilder columnDef = new StringBuilder("CREATE TABLE " + tableEntry.getKey() + " (");				
+				StringBuilder columnDef = new StringBuilder("CREATE TABLE IF NOT EXISTS " + tableEntry.getKey() + " (");				
 				while(cItr.hasNext()) {
 					Entry<String, Column> columnEntry = cItr.next();
 					columnDef.append("'" + columnEntry.getValue().dbname + "'" + " " + columnEntry.getValue().dbtype);
@@ -130,35 +137,66 @@ public class StatsHandler {
 					cols.toString() + " VALUES " + vals.toString());						
 		
 		} catch (SQLException e) {
-			// if the error message is "out of memory",
-			// it probably means no database file is found
-			System.err.println(e);
-			e.printStackTrace();
+			Logger.log(e.getMessage(), true);
 		}			
 	}
 	
-	public Object[][] getTable(String table) {	
-		try {
+	/**
+	 * Takes a table name and return the tables contents, as well as column names
+	 * 
+	 * @param table name of the table
+	 * @return A Pair where the first element is an String array
+	 * 	containing the column names. The second element is an
+	 *  Array of Object Arrays holding the data.
+	 *  Return null if query return an empty record.
+	 *   
+	 */
+	public Pair<String[], Object[][]> getTable(String table) {	
+		Object[][] resultArray = null;
+		String[] headerArray = null;
+		
+		try {	
 			Statement statement = connection.createStatement();						
-			statement.setQueryTimeout(30);		
+			statement.setQueryTimeout(30);						
 			
-			ResultSet result = statement.executeQuery("SELECT * FROM " + table);
+			//get row count, Sqlite result sets aren't rewindable
+			ResultSet rs = statement.executeQuery("SELECT Count(*) AS rowCount FROM " + table);
+		    int rowCount = rs.getInt("rowCount"); 
+		    
+		    // get data
+		    rs = statement.executeQuery("SELECT * FROM " + table);
+		    
+			//get column count
+			ResultSetMetaData meta = rs.getMetaData();			
+			int colCount = meta.getColumnCount();			
+		    
+		    //create array of proper size for column names and data
+			resultArray = new Object[rowCount][colCount];
+			headerArray = new String[colCount];
 			
-			
-			ResultSetMetaData meta = result.getMetaData();			
-			int count = meta.getColumnCount();
-			Object[][] resultArray = new Object[1][count];
-			
-			for (int i = 0; i < count; i++) {
-				resultArray[0][i] = meta.getColumnName(i+1);
+			// Fill column names
+			for (int col = 0; col < colCount; col++) {
+				headerArray[col] = meta.getColumnName(col + 1);
 			}					
 			
-			return resultArray;
+			//add data 				
+			int row = 0;
+			while (rs.next()) {
+				for(int col = 0; col < colCount; col++) {
+					resultArray[row][col] = rs.getString(col + 1);
+				}
+				row++;
+			}							
 			
 		} catch (Exception e) {
-			Logger.log(e.getMessage(), true);
-			return null;
+			Logger.log(e.toString(), true);
 		} 
+		
+	    if (headerArray != null)  {
+	    	return new Pair<String[], Object[][]>(headerArray, resultArray);
+	    } else {
+	    	return null;
+	    }
 
 	}
 	
@@ -169,8 +207,7 @@ public class StatsHandler {
 			}
 		} catch (SQLException e) {
 			// connection close failed.
-			System.err.println(e);
-			System.err.println(e.getMessage());
+			Logger.log(e.getMessage(), true);
 		}
 							
 	}

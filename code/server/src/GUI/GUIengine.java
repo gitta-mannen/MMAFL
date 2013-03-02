@@ -1,19 +1,17 @@
-package GUI;
-
-import java.util.HashMap;
+package gui;
 
 import javax.swing.SwingUtilities;
-import database.Settings;
 import database.StatsHandler;
 import server.HttpServer;
-
+import util.Logger;
 
 public class GUIengine {
 	public static void main(String[] args) { 
 		 try {			 	
-			 	// reset the tables on startup
+			 	// reset the tables on startup			 	
+			 	// parameter false means that existing tables aren't overwritten
 			 	StatsHandler db = new StatsHandler();
-			 	db.resetTables();
+			 	db.resetTables(false);
 			 	db.close();
 			 	
 			 	// Run http server
@@ -28,7 +26,7 @@ public class GUIengine {
 	                }
 	            });
 			} catch (Exception e) {
-				System.out.println(e);
+				Logger.log(e.getMessage(), true);
 			}
 	}
 }

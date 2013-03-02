@@ -6,9 +6,9 @@ import java.util.* ;
 import database.StatsHandler;
 
 /**
- * httpServer main class
+ * Accepts connections on server socket and then delegates them to request
+ *  threads on dynamically assigned sockets.
  * @author Stugatz
- * Accepts connections on server socket and then delegates them to request threads on dynamically assigned sockets.
  */
 public class HttpServer implements Runnable {
     final static int port = 80;

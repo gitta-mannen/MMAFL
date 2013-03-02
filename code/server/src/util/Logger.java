@@ -24,7 +24,7 @@ public class Logger {
 	}
 	
 	public static synchronized  void log (String message, boolean printToConsole) {
-		StackTraceElement st = Thread.currentThread().getStackTrace()[STACK_INDEX + 2];
+		StackTraceElement st = Thread.currentThread().getStackTrace()[STACK_INDEX + 0];
 		long threadId = Thread.currentThread().getId();
 		String className = st.getClassName();
 		String MethodName = st.getMethodName();

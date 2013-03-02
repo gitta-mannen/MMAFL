@@ -1,8 +1,9 @@
-package Scraper;
+package scraper;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import Scraper.IterativeEventScraper;
+import scraper.IterativeEventScraper;
+
 
 public class IterativeUrlFeeder {
 	

@@ -1,51 +1,38 @@
-package util;
+package gui;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.TableModel;
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
  
-//http://docs.oracle.com/javase/tutorial/uiswing/components/table.html
+
 public class GuiTable extends JPanel {
-    private boolean DEBUG = true;
- 
+    /**
+	 * http://docs.oracle.com/javase/tutorial/uiswing/components/table.html
+	 */
+	private static final long serialVersionUID = 1L;
+	private boolean DEBUG = true;
+	private JTable table;
+	
     public GuiTable(String[] columnNames, Object[][] data) {
         super(new GridLayout(1,0));
  
-//        String[] columnNames = {"First Name",
-//                                "Last Name",
-//                                "Sport",
-//                                "# of Years",
-//                                "Vegetarian"};
-// 
-//        Object[][] data = {
-//        {"Kathy", "Smith",
-//         "Snowboarding", new Integer(5), new Boolean(false)},
-//        {"John", "Doe",
-//         "Rowing", new Integer(3), new Boolean(true)},
-//        {"Sue", "Black",
-//         "Knitting", new Integer(2), new Boolean(false)},
-//        {"Jane", "White",
-//         "Speed reading", new Integer(20), new Boolean(true)},
-//        {"Joe", "Brown",
-//         "Pool", new Integer(10), new Boolean(false)}
-//        };
- 
-        final JTable table = new JTable(data, columnNames);
+        table = new JTable(data, columnNames);
         table.setPreferredScrollableViewportSize(new Dimension(580, 300));
         table.setFillsViewportHeight(true);
  
-        if (DEBUG) {
-            table.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e) {
-                    printDebugData(table);
-                }
-            });
-        }
+//        if (DEBUG) {
+//            table.addMouseListener(new MouseAdapter() {
+//                public void mouseClicked(MouseEvent e) {
+//                    printDebugData(table);
+//                }
+//            });
+//        }
  
         //Create the scroll pane and add the table to it.
         JScrollPane scrollPane = new JScrollPane(table);
@@ -53,7 +40,11 @@ public class GuiTable extends JPanel {
         //Add the scroll pane to this panel.
         add(scrollPane);
     }
- 
+    
+    public void setModel(TableModel tm) {
+    	table.setModel(tm);
+    }
+    
     private void printDebugData(JTable table) {
         int numRows = table.getRowCount();
         int numCols = table.getColumnCount();
