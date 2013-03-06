@@ -28,6 +28,7 @@ public class Logger {
 		long threadId = Thread.currentThread().getId();
 		String className = st.getClassName();
 		String MethodName = st.getMethodName();
+		int line = st.getLineNumber();
 		String time;
 		
 		Calendar cal = Calendar.getInstance();
@@ -38,8 +39,8 @@ public class Logger {
 		log.add(new Object[]{time, threadId, className, MethodName, message});
 		
 		if (printToConsole) {
-			System.out.println(" <logger [" + time + "]" + "> Class: '" + className
-					+ "' Method: '" + MethodName + "' Thread: '" + threadId + "' message: '" + message + "'");	
+			System.out.println("[" + time + "]" + "' Thread: '" + threadId +" Class: '" + className
+					+ "' Method: '" + MethodName +  "' Line: '" + line + "' message: '" + message + "'");	
 		}
 		
 	}

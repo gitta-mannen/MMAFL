@@ -1,7 +1,7 @@
 package gui;
 
 import javax.swing.SwingUtilities;
-import database.StatsHandler;
+import database.DbHandler;
 import server.HttpServer;
 import util.Logger;
 
@@ -10,7 +10,7 @@ public class GUIengine {
 		 try {			 	
 			 	// reset the tables on startup			 	
 			 	// parameter false means that existing tables aren't overwritten
-			 	StatsHandler db = new StatsHandler();
+			 	DbHandler db = new DbHandler();
 			 	db.resetTables(false);
 			 	db.close();
 			 	

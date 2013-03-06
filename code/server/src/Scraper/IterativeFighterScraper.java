@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URLConnection;
 import java.net.URL;
-import database.StatsHandler;
+import database.DbHandler;
 
 public class IterativeFighterScraper {
 	
@@ -28,7 +28,7 @@ public class IterativeFighterScraper {
 	private double sub_avg; 
 
 	
-	private StatsHandler db = new StatsHandler();
+	private DbHandler db = new DbHandler();
 
 	public IterativeFighterScraper(URL url, int id) throws MalformedURLException {
 		try {
@@ -219,7 +219,7 @@ public class IterativeFighterScraper {
 
     public void eventToDb() {
     	// used once for all scrapers
-		StatsHandler db = new StatsHandler();
+		DbHandler db = new DbHandler();
 		// once per record (i.e once per event)
 //		db.update(new Fighter(id, age, str_acc, str_def, td_acc,
 //						td_def, w, l, d, nc, name,

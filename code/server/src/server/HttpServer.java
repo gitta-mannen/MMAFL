@@ -3,7 +3,9 @@ package server;
 import java.io.* ;
 import java.net.* ;
 import java.util.* ;
-import database.StatsHandler;
+
+import util.Logger;
+import database.DbHandler;
 
 /**
  * Accepts connections on server socket and then delegates them to request
@@ -19,8 +21,7 @@ public class HttpServer implements Runnable {
 	public void run() {     
 		try {
 			socket = new ServerSocket(port);
-			System.out.println("<Server> Server started, accepting connections on port: " + port +
-                 " ,thread id: " + Thread.currentThread().getId());
+			Logger.log("Http Server started, accepting connections on port: " + port, true);			
 		} catch (IOException e) {
 			System.out.println("<Server Error> Failed to initialize server socket, stopping server."
 					+ " Make sure that you aren't running another web server or a program such as skype that uses port 80."
@@ -58,7 +59,7 @@ public class HttpServer implements Runnable {
  */
 class HttpRequest implements Runnable{
 	private HashMap<String, String> tables;	
-	private StatsHandler db;
+	private DbHandler db;
     private Socket socket;
     final static String CRLF = "\r\n";
     // Shouldn't be used in production
@@ -79,7 +80,7 @@ class HttpRequest implements Runnable{
                  " ,thread id: " + Thread.currentThread().getId());
     	 
     	HashMap<String, String> request;
-    	db = new StatsHandler();
+    	db = new DbHandler();
     	
     	// hackkkkkkkkkkkk...
     	tables = new HashMap<String, String>();
@@ -88,7 +89,7 @@ class HttpRequest implements Runnable{
     	    	
 	    try {
 	    	// Each request thread starts it's on database connection which should be thread safe on normally compiled SqLite drivers.
-       	 	db = new StatsHandler();
+       	 	db = new DbHandler();
 	        // Get a reference to the socket's input and output streams.
 			is = new InputStreamReader( socket.getInputStream() );
 			os = new DataOutputStream( socket.getOutputStream() );

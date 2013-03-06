@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URLConnection;
 import java.net.URL;
-import database.StatsHandler;
+import database.DbHandler;
 
 public class IterativeEventScraper {
 	
@@ -16,7 +16,7 @@ public class IterativeEventScraper {
 	private String eventDate;
 	private String eventAttendance;
 	
-	private StatsHandler db = new StatsHandler();
+	private DbHandler db = new DbHandler();
 
 	public IterativeEventScraper(URL url, int Id) throws MalformedURLException {
 		try {
@@ -120,7 +120,7 @@ public class IterativeEventScraper {
 	}
     public void eventToDb() {
     	// used once for all scrapers
-		StatsHandler db = new StatsHandler();
+		DbHandler db = new DbHandler();
 		// once per record (i.e once per event)
 //		db.update(new Event(id, eventName, eventDate, eventLocation, eventOrganization, eventAttendance));
 		System.out.println("Event: " + id + " - " + eventName);

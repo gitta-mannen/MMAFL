@@ -21,10 +21,10 @@ import util.Pair;
  * 
  * @author Stugatz
  */
-public class StatsHandler {
+public class DbHandler {
 	private Connection connection = null;
 
-	public StatsHandler () {
+	public DbHandler () {
 		try {
 			// load the Sqlite-JDBC driver using the current class loader
 			Class.forName("org.sqlite.JDBC");						
@@ -38,7 +38,6 @@ public class StatsHandler {
 		}
 	}
 	
-
 	/**
 	 * Creates the tables based on the schema in the settings Object
 	 * 
@@ -59,28 +58,27 @@ public class StatsHandler {
 					statement.executeUpdate("DROP TABLE IF EXISTS " + tableEntry.getKey());
 				}
 				
+				//build the sql command
 				Iterator<Entry<String, Column>> cItr = tableEntry.getValue().getColumns().entrySet().iterator();
 				StringBuilder columnDef = new StringBuilder("CREATE TABLE IF NOT EXISTS " + tableEntry.getKey() + " (");				
 				while(cItr.hasNext()) {
 					Entry<String, Column> columnEntry = cItr.next();
-					columnDef.append("'" + columnEntry.getValue().dbname + "'" + " " + columnEntry.getValue().dbtype);
+					columnDef.append("'" + columnEntry.getValue().dbname + "'" + " " + columnEntry.getValue().dbtype + " " + columnEntry.getValue().constraint);
 					if(cItr.hasNext()) {						
 						columnDef.append(", ");
 					}
 				}
 				columnDef.append(")");
-				//System.out.println(columnDef.toString());
+				// Create the table
 				statement.execute(columnDef.toString());
-			}
-			
-			
+			}						
 			statement.execute("COMMIT");
 		} catch (Exception e) {
 			Logger.log(e.getMessage(), true);
 		}
 	}
 	
-	public void update (String table, HashMap<String, String> columnValuePair) {
+	public void update (String table, HashMap<String, Object> columnValuePair) {
 		try {
 			// create statement and set timeout to 30 sec.
 			Statement statement = connection.createStatement();						
@@ -88,37 +86,22 @@ public class StatsHandler {
 			
 			StringBuilder vals = new StringBuilder("(");
 			StringBuilder cols = new StringBuilder("(");
-			Iterator<Entry<String, String>> itr = columnValuePair.entrySet().iterator();
+			Iterator<Entry<String, Object>> itr = columnValuePair.entrySet().iterator();
 						
 			while(itr.hasNext()) {
-				Entry<String, String> entry = itr.next();				
+				Entry<String, Object> entry = itr.next();								
+				String dbColumn = Settings.getInstance().getSchema().getTable(table).getColumn(entry.getKey()).dbname;
 				
-				//System.out.println(table + " " + entry.getKey());
-				
-				String dbtype = Settings.getInstance().getSchema().getTable(table).getColumn(entry.getKey()).dbtype;
-				String formatter = Settings.getInstance().getSchema().getTable(table).getColumn(entry.getKey()).formatter;
-				String dbname = Settings.getInstance().getSchema().getTable(table).getColumn(entry.getKey()).dbname;
-				
-				if (dbtype == null) {
+				if (dbColumn == null) {
 					Logger.log("Reference to table: " + table + " column: " + entry.getKey() + " not found in schema", true);
 				} else {				
-					cols.append(dbname);
-					//System.out.println(dbtype + " " + formatter + " " + dbname);
+					cols.append(dbColumn);
 					
-					if (formatter != null) {
-						//formatter logic
-						String temp = ("'" + entry.getValue().replace("'", "") + "'");
-						temp = ("'" + entry.getValue().replace(",", ".") + "'");
-						//System.out.println(temp);
-						vals.append(temp);
+					String type = entry.getValue().getClass().getSimpleName();
+					if (type.equals("String") || type.equals("Date")) {
+						vals.append("'" + entry.getValue().toString() + "'");
 					} else {
-						if (dbtype.equals("text")) {
-							vals.append("'" + entry.getValue() + "'");
-						} else if (dbtype.equals("integer")) {
-							vals.append(entry.getValue());
-						} else {
-							vals.append("'" + entry.getValue() + "'");
-						}
+						vals.append(entry.getValue().toString().replace(",", "."));
 					}
 					
 					if (itr.hasNext()) {
@@ -130,8 +113,6 @@ public class StatsHandler {
 					}
 				}
 			}
-			//System.out.println("insert or replace into " + table + " " +
-			//		cols.toString() + " VALUES " + vals.toString());
 			
 			statement.executeUpdate("insert or replace into " + table + " " +
 					cols.toString() + " VALUES " + vals.toString());						

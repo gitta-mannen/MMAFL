@@ -7,6 +7,9 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import util.Logger;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.nio.CharBuffer;
 
 /**
  * @author Stugatz
@@ -34,7 +37,11 @@ public class Settings {
 			File fXmlFile = new File(settingsFile);			
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(fXmlFile);
+			FileInputStream fis = new FileInputStream(settingsFile);
+			//check the encoding
+//			InputStreamReader r = new InputStreamReader(fis, "UTF-8");
+//			System.out.println(r.getEncoding());			
+			Document doc = dBuilder.parse (fis);
 			doc.getDocumentElement().normalize();
 			
 			//gets the schema from xml-file
@@ -78,10 +85,10 @@ public class Settings {
 								column.constraint = attrNode.getTextContent();
 							} else if (attrName.equals("apptype")) {
 								column.apptype = attrNode.getTextContent();
-							} else if (attrName.equals("formatter")) {
-								column.formatter = attrNode.getTextContent();
-							}  else if (attrName.equals("unit")) {
-								//do nothing
+							} else if (attrName.equals("regex")) {
+								column.regex = attrNode.getTextContent();
+							} else if (attrName.equals("formatex")) {
+								column.formatex = attrNode.getTextContent(); 								
 							} else {							
 								Logger.log("Attribute not supported: " + attrName, true);
 							}

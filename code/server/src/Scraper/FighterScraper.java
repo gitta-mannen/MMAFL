@@ -6,14 +6,14 @@ import java.net.MalformedURLException;
 import java.net.URLConnection;
 import java.net.URL;
 import java.util.HashMap;
-import database.StatsHandler;
+import database.DbHandler;
 
 //import java.util.ArrayList;
 
 public class FighterScraper {
 	private String id = "1";
 	private String table = "fighters";
-	private StatsHandler db = new StatsHandler();
+	private DbHandler db = new DbHandler();
 	private HashMap<String, String> values = new HashMap<String, String>();
 	
 	private String first;
@@ -234,7 +234,7 @@ public class FighterScraper {
 					}
 				}
 				in.close();
-				db.update(table, values);
+//				db.update(table, values);
 				db.close();
 				System.out.println(values);
 			} catch (Exception e) {

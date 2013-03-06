@@ -10,7 +10,7 @@ import settings.Settings;
 import util.Pair;
 
 
-import database.StatsHandler;
+import database.DbHandler;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -47,7 +47,7 @@ public GUImenu() {
  
         	
         	// fulhack för att testa tables i gui.
-        	StatsHandler db = new StatsHandler();
+        	DbHandler db = new DbHandler();
         	Pair <String[], Object[][]> data = db.getTable("sqlite_MASTER");
         	db.close();
         	final GuiTable guiTable = new GuiTable(data.getA(), data.getB());
@@ -62,7 +62,7 @@ public GUImenu() {
 	        	button.addActionListener(new ActionListener() {
 	                @Override
 	                public void actionPerformed(ActionEvent e) {
-	                	StatsHandler db = new StatsHandler();
+	                	DbHandler db = new DbHandler();
 	                	Pair <String[], Object[][]> data = db.getTable(button.getText());
 	                    guiTable.setModel(new DefaultTableModel(data.getB(), data.getA()));
 	                    db.close();

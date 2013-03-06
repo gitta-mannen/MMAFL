@@ -6,7 +6,7 @@ import java.net.MalformedURLException;
 import java.net.URLConnection;
 import java.net.URL;
 import java.util.HashMap;
-import database.StatsHandler;
+import database.DbHandler;
 
 public class EventScraper {
 	private String eventOrganization;
@@ -16,7 +16,7 @@ public class EventScraper {
 	private String eventAttendance;
 	private String table = "events";
 	private String id = "1";
-	private StatsHandler db = new StatsHandler();
+	private DbHandler db = new DbHandler();
 	private HashMap<String, String> values = new HashMap<String, String>();
 
 	public EventScraper(URL url) throws MalformedURLException {
@@ -80,7 +80,7 @@ public class EventScraper {
 				}
 			}
 			in.close();
-			db.update(table, values);
+//			db.update(table, values);
 			db.close();
 			System.out.println(values);
 			//eventToDb();
