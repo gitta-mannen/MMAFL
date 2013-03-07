@@ -20,7 +20,7 @@ import util.Logger;
 public class Scraper {
 	private Scraper() {};		
 	// Scrapes the given URL using regex taken from the settings object (which gets it from the xml settings file)
-	public static HashMap<String, Object> scrape(URL url, String table) throws MalformedURLException {
+	public static HashMap<String, Object> scrape(URL url, String table) {
 		HashMap<String, Object> values = new HashMap<String, Object>();
 		try {
 			// Opens a stream to the given URL and copies the html content in to a String
@@ -45,7 +45,7 @@ public class Scraper {
 							} else if (column.getValue().apptype.equals("string")){
 								values.put(column.getKey(), match);
 							} else {
-								Logger.log("Type not regocgnized", true);
+								Logger.log("Type not recognized", true);
 							}							
 					}
 				}
@@ -56,7 +56,7 @@ public class Scraper {
 		return values;
 	}		
 	
-	// Calls the scrape method for a range of <from-to>. Takes the table name and base url as arguments
+	// Calls the scrape method for an id range of <from-to>. Also takes the table name and base URL as arguments
 	public static void scrapeRangeToDb(String table, String baseUrl, int from, int to) throws MalformedURLException {
 		DbHandler db = new DbHandler();									
 		for (int id = from; id <= to; id++) {
@@ -69,7 +69,7 @@ public class Scraper {
 	
 	// test method for scraping iteratively
 	public static void main(String[] args) throws MalformedURLException {
-		scrapeRangeToDb("fighters", "http://hosteddb.fightmetric.com/fighters/details/", 3, 4);
-		scrapeRangeToDb("events", "http://hosteddb.fightmetric.com/events/details/", 1, 2);		
+		scrapeRangeToDb("fighters", "http://hosteddb.fightmetric.com/fighters/details/", 803, 803);
+		scrapeRangeToDb("events", "http://hosteddb.fightmetric.com/events/details/", 615, 615);		
 	}
 }

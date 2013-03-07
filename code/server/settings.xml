@@ -142,6 +142,7 @@
 			<column name="strikes absorbed">
 				<attr name="dbname">sapm</attr>
 				<attr name="dbtype">real</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">double</attr>
 				<attr name="regex"><![CDATA[(<td.*class="title_text">SApM</td>[\s|\r\n]+<td>)(\d+.\d+)(</td>)]]></attr>
 
@@ -149,6 +150,7 @@
 			<column name="strike defence">
 				<attr name="dbname">str_def</attr>
 				<attr name="dbtype">integer</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">integer</attr>
 				<attr name="regex"><![CDATA[(<td.*class="title_text">Str..Def.</td>[\s|\r\n]+<td>)(\d+)(\D</td>)]]></attr>
 
@@ -156,6 +158,7 @@
 			<column name="takedown avarage">
 				<attr name="dbname">td_avg</attr>
 				<attr name="dbtype">real</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">double</attr>
 				<attr name="regex"><![CDATA[(<td.*class="title_text">TD.Avg.</td>[\s|\r\n]+<td>)(\d+.\d+)(</td>)]]></attr>
 
@@ -163,6 +166,7 @@
 			<column name="takedown accuracy">
 				<attr name="dbname">td_acc</attr>
 				<attr name="dbtype">integer</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">integer</attr>
 				<attr name="regex"><![CDATA[(<td.*class="title_text">TD.Acc.</td>[\s|\r\n]+<td>)(\d+)(\D</td>)]]></attr>
 
@@ -171,6 +175,7 @@
 			<column name="takedown defence">
 				<attr name="dbname">td_def</attr>
 				<attr name="dbtype">integer</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">integer</attr>
 				<attr name="regex"><![CDATA[(<td.*class="title_text">TD.Def.</td>[\s|\r\n]+<td>)(\d+)(\D</td>)]]></attr>
 
@@ -179,6 +184,7 @@
 			<column name="submission avarage">
 				<attr name="dbname">sub_avg</attr>
 				<attr name="dbtype">real</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">double</attr>
 				<attr name="regex"><![CDATA[(<td.*class="title_text">Sub..Avg.</td>[\s|\r\n]+<td>)(\d+.\d+)(</td>)]]></attr>
 
@@ -186,24 +192,28 @@
 			<column name="wins">
 				<attr name="dbname">wins</attr>
 				<attr name="dbtype">integer</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">integer</attr>
 				<attr name="regex"><![CDATA[(<td\s+class="title_text">RECORD</td>\D+)(\d+)(</td>)]]></attr>
 			</column>
 			<column name="losses">
 				<attr name="dbname">losses</attr>
 				<attr name="dbtype">integer</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">integer</attr>
 				<attr name="regex"><![CDATA[(<td\s+class="title_text">RECORD</td>\D+\d+\D+)(\d+)(</td>)]]></attr>
 			</column>
 			<column name="draws">
 				<attr name="dbname">draws</attr>
 				<attr name="dbtype">integer</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">integer</attr>
 				<attr name="regex"><![CDATA[(<td\s+class="title_text">RECORD</td>\D+\d+\D+\d+\D+)(\d+)(</td>)]]></attr>
 			</column>
 			<column name="no contest">
 				<attr name="dbname">nc</attr>
 				<attr name="dbtype">integer</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">integer</attr>
 				<attr name="regex"><![CDATA[(<td\s+class="title_text">RECORD</td>\D+\d+\D+\d+\D+\d+\D+)(\d+)(</td>)]]></attr>
 			</column>
