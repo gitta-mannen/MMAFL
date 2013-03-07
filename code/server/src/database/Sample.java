@@ -7,7 +7,7 @@ import java.util.HashMap;
 public class Sample {
 	public static void main(String[] args) throws ClassNotFoundException, ParseException {
 		DbHandler db = new DbHandler();
-		db.resetTables(false);
+		db.resetTables(true);
 		
 		for (int i = 10; i <= 30; i++) {
 			HashMap<String, Object> ht  = new HashMap<String, Object>();

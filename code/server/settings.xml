@@ -146,14 +146,14 @@
 				<attr name="regex"><![CDATA[(<td.*class="title_text">SApM</td>[\s|\r\n]+<td>)(\d+.\d+)(</td>)]]></attr>
 
 			</column>
-			<column name="strike defence">
+			<column name="strike defense">
 				<attr name="dbname">str_def</attr>
 				<attr name="dbtype">integer</attr>
 				<attr name="apptype">integer</attr>
 				<attr name="regex"><![CDATA[(<td.*class="title_text">Str..Def.</td>[\s|\r\n]+<td>)(\d+)(\D</td>)]]></attr>
 
 			</column>
-			<column name="takedown avarage">
+			<column name="takedown average">
 				<attr name="dbname">td_avg</attr>
 				<attr name="dbtype">real</attr>
 				<attr name="apptype">double</attr>
@@ -168,7 +168,7 @@
 
 
 			</column>
-			<column name="takedown defence">
+			<column name="takedown defense">
 				<attr name="dbname">td_def</attr>
 				<attr name="dbtype">integer</attr>
 				<attr name="apptype">integer</attr>
@@ -176,7 +176,7 @@
 
 
 			</column>
-			<column name="submission avarage">
+			<column name="submission average">
 				<attr name="dbname">sub_avg</attr>
 				<attr name="dbtype">real</attr>
 				<attr name="apptype">double</attr>

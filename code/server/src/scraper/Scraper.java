@@ -45,7 +45,7 @@ public class Scraper {
 							} else if (column.getValue().apptype.equals("string")){
 								values.put(column.getKey(), match);
 							} else {
-								Logger.log("Type not regocgnized", true);
+								Logger.log("Type not regcognized", true);
 							}							
 					}
 				}
@@ -53,6 +53,38 @@ public class Scraper {
 		} catch (Exception e) {
 			Logger.log(e.getStackTrace()[0].toString(), true);
 		}		
+//		for (Entry<String, Object> entry : values.entrySet()) {
+//			if(entry.getKey().equals("name") ) {
+//				System.out.println("\n");
+//				System.out.println(entry.getKey() + ": " + entry.getValue());
+//			}
+//			System.out.println(entry.getKey() + ": " + entry.getValue());
+//		}
+		System.out.println("name: " 	+ values.get("name"));
+		System.out.println("nickname: " + values.get("nickname"));
+		System.out.println("age: " 		+ values.get("age"));
+		System.out.println("stance: " 	+ values.get("stance"));
+		
+		System.out.println("wins: " 	+ values.get("wins"));
+		System.out.println("losses: " 	+ values.get("losses"));
+		System.out.println("draws: " 	+ values.get("draws"));
+		System.out.println("nc: " 		+ values.get("no contest"));
+		
+		System.out.println("weight: " 	+ values.get("weight"));
+		System.out.println("height: " 	+ values.get("height"));
+		System.out.println("reach: " 	+ values.get("reach"));
+		
+		System.out.println("strikes landed: "		+ values.get("strikes landed"));
+		System.out.println("striking accuracy: "	+ values.get("striking accuracy"));
+		System.out.println("strikes absorbed: "		+ values.get("strikes absorbed"));
+		System.out.println("strike defense: "	 	+ values.get("strike defense"));
+		
+		System.out.println("takedown average: "		+ values.get("takedown average"));
+		System.out.println("takedown defense: " 	+ values.get("takedown defense"));
+		System.out.println("takedown accuracy: "	+ values.get("takedown accuracy"));
+		System.out.println("----------------------------------------------------------------");
+		System.out.println("\n");		
+		
 		return values;
 	}		
 	
@@ -69,7 +101,7 @@ public class Scraper {
 	
 	// test method for scraping iteratively
 	public static void main(String[] args) throws MalformedURLException {
-		scrapeRangeToDb("fighters", "http://hosteddb.fightmetric.com/fighters/details/", 3, 4);
-		scrapeRangeToDb("events", "http://hosteddb.fightmetric.com/events/details/", 1, 2);		
+		scrapeRangeToDb("fighters", "http://hosteddb.fightmetric.com/fighters/details/", 439, 439);
+		//scrapeRangeToDb("events", "http://hosteddb.fightmetric.com/events/details/", 100, 105);		
 	}
 }
