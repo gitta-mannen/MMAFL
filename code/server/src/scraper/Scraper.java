@@ -101,7 +101,9 @@ public class Scraper {
 	
 	// test method for scraping iteratively
 	public static void main(String[] args) throws MalformedURLException {
-		scrapeRangeToDb("fighters", "http://hosteddb.fightmetric.com/fighters/details/", 439, 439);
-		//scrapeRangeToDb("events", "http://hosteddb.fightmetric.com/events/details/", 100, 105);		
+		scrapeRangeToDb("fighters", "http://hosteddb.fightmetric.com/fighters/details/", 439, 442);
+		//scrapeRangeToDb("events", "http://hosteddb.fightmetric.com/events/details/", 100, 105);	
+		//scrapeRangeToDb("rounds", "http://hosteddb.fightmetric.com/fights/index/", 100, 105);		
+		//scrapeRangeToDb("fights", "http://hosteddb.fightmetric.com/fights/index/", 100, 105);		
 	}
 }
