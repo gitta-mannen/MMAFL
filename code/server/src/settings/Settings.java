@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.CharBuffer;
-
+import settings.Constants.AppType;
 /**
  * @author Stugatz
  * Schema singleton object holds the database schema. It's static and doesn't change during the process execution  .
@@ -84,11 +84,9 @@ public class Settings {
 							} else if (attrName.equals("constraint")) {
 								column.constraint = attrNode.getTextContent();
 							} else if (attrName.equals("apptype")) {
-								column.apptype = attrNode.getTextContent();
+								column.apptype = Enum.valueOf(AppType.class, attrNode.getTextContent().toUpperCase());
 							} else if (attrName.equals("regex")) {
-								column.regex = attrNode.getTextContent();
-							} else if (attrName.equals("formatex")) {
-								column.formatex = attrNode.getTextContent(); 								
+								column.regex = attrNode.getTextContent();							
 							} else {							
 								Logger.log("Attribute not supported: " + attrName, true);
 							}
@@ -101,7 +99,11 @@ public class Settings {
 		}
 	}
 	
-	public Schema getSchema() {
+	public static Table getTable(String table) {
+		return Settings.getSchema().getTable(table);
+	}
+	
+	public static Schema getSchema() {
 		return schema;
 	}
 	
