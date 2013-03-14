@@ -10,8 +10,8 @@ import database.DbHandler;
 public class ScrapeScheduler implements Runnable {
 	public ScrapeScheduler () {}
 	private final DbHandler db = new DbHandler();
-	private final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
-	private final LinkedBlockingQueue<LinkedHashMap<String, List<String>>> results = new LinkedBlockingQueue<LinkedHashMap<String, List<String>>>();
+	private final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(2);
+	private final LinkedBlockingQueue<ScrapeResult> results = new LinkedBlockingQueue<ScrapeResult>();
 	
 	@Override
 	public void run() {
@@ -19,13 +19,16 @@ public class ScrapeScheduler implements Runnable {
 		test.add("803");
 		test.add("804");
 		executor.execute(new WebScraper(results, "http://hosteddb.fightmetric.com/fighters/details/", test, "fighters"));
-		try {
-			System.out.println(results.take().values());
-			System.out.println("result read");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		while(true) {			
+			System.out.println("polling: " + results.poll());
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		
 	}
 	
 	public static void main(String[] args) {

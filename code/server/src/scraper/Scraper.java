@@ -59,15 +59,30 @@ abstract class Scraper {
 		return values;
 	}		
 	
-	public static LinkedHashMap<String, List<String>> scrape(String text, List<Pair<String, String>> keyRegexList) {
-		LinkedHashMap<String, List<String>> resultMap = new LinkedHashMap<String, List<String>>();
-		
+	
+	public static LinkedHashMap<String, String> scrapeFirst(String text, List<Pair<String, String>> keyRegexList) {
+		LinkedHashMap<String, String> resultMap = new LinkedHashMap<String, String>(keyRegexList.size());		
 		Iterator <Pair<String, String>> itrKeyVal = keyRegexList.iterator();
 		while (itrKeyVal.hasNext()) {
 			Pair<String, String> entry = itrKeyVal.next();
-			resultMap.put(entry.getA(), util.Text.findAll(text, entry.getB()));			
+			resultMap.put(entry.getA(), scraper.Scraper.findFirst(text, entry.getB()) );			
 		}
 		
+		return resultMap;
+	}
+	
+	public static LinkedHashMap<String, List<String>> scrape(String text, List<Pair<String, String>> keyRegexList) {
+		System.out.println("scrape");
+		LinkedHashMap<String, List<String>> resultMap = new LinkedHashMap<String, List<String>>();		
+		Iterator <Pair<String, String>> itrKeyVal = keyRegexList.iterator();
+		System.out.println("scrape while");
+		while (itrKeyVal.hasNext()) {			
+			Pair<String, String> entry = itrKeyVal.next();
+			System.out.println("scrape " + entry.getA() + " " + entry.getB());
+			resultMap.put(entry.getA(), scraper.Scraper.findAll(text, entry.getB()) );			
+		}
+		
+		System.out.println("scrape return ");
 		return resultMap;
 	}
 	
@@ -91,6 +106,36 @@ abstract class Scraper {
 	
 	public static String textFromUrl (String url) throws MalformedURLException, IOException {
 		return util.IO.streamToString( (new URL(url)).openConnection().getInputStream());
+	}
+	/**
+	 * Finds the first match for a given regex in the given string.
+	 * Assumes the regex has three groups and extracts the middle one.
+	 * @param text
+	 * @param regex
+	 * @param group
+	 * @return
+	 */
+	public static String findFirst (String text, String regex) {
+		Matcher matcher = Pattern.compile(regex, Pattern.MULTILINE).matcher(text);
+		matcher.find();
+		return matcher.group(2);								
+	}
+	/**
+	 * Finds all matches for the given regex in the given string.
+	 * Assumes the regex has three groups and extracts the middle one.
+	 * @param text
+	 * @param regex
+	 * @param group
+	 * @return
+	 */
+	public static LinkedList<String> findAll (String text, String regex) {
+		LinkedList<String> list = new LinkedList<String>();
+		Matcher matcher = Pattern.compile(regex, Pattern.MULTILINE).matcher(text);
+		while(matcher.find() && matcher.groupCount() == 3) {	
+			list.add(matcher.group(2));								
+		}
+		
+		return list;
 	}
 	
 

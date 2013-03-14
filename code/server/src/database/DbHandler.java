@@ -89,7 +89,8 @@ public class DbHandler {
 						
 			while(itr.hasNext()) {
 				Entry<String, Object> entry = itr.next();								
-				String dbColumn = Settings.getInstance().getSchema().getTable(table).getColumn(entry.getKey()).dbname;
+				Settings.getInstance();
+				String dbColumn = Settings.getSchema().getTable(table).getColumn(entry.getKey()).dbname;
 				
 				if (dbColumn == null) {
 					Logger.log("Reference to table: " + table + " column: " + entry.getKey() + " not found in schema", true);
