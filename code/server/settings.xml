@@ -25,42 +25,48 @@
 				<attr name="dbtype">integer</attr>
 				<attr name="constraint">primary key</attr>
 				<attr name="apptype">integer</attr>
-				<attr name="regex"><![CDATA[]]></attr>
 			</column>
-			<column name="name">
-				<attr name="dbname">name</attr>
+			<column name="event id">
+				<attr name="dbname">event_id</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">integer</attr>
+				<attr name="regex"><![CDATA[(/events/details/)(.*)(">)]]></attr>
+			</column>
+			<column name="event name">
+				<attr name="dbname">event_name</attr>
 				<attr name="dbtype">text</attr>
 				<attr name="constraint"></attr>
 				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<h1\s+class="event_header_h1">)(.*)(</h1>)]]></attr>
+				<attr name="regex"><![CDATA[(fight_details_h1">)(.*)(</a>)]]></attr>
 			</column>
-			<column name="date">
-				<attr name="dbname">date</attr>
+			<column name="defender id">
+				<attr name="dbname">defender_id</attr>
 				<attr name="dbtype">text</attr>
 				<attr name="constraint"></attr>
-				<attr name="apptype">date</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">DATE</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
+				<attr name="apptype">integer</attr>
+				<attr name="regex"><![CDATA[(/fighters/details/)(.*)(">)]]></attr>
 			</column>
-			<column name="location">
-				<attr name="dbname">location</attr>
+			<column name="defender name">
+				<attr name="dbname">defender_name</attr>
 				<attr name="dbtype">text</attr>
 				<attr name="constraint"></attr>
 				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">LOCATION</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
+				//<attr name="regex"><![CDATA[(/fighters/details/.*/fighters/details/)(.*)(">)]]></attr>
 			</column>
-			<column name="organization">
-				<attr name="dbname">organization</attr>
-				<attr name="dbtype">string</attr>
+			<column name="contender id">
+				<attr name="dbname">contender_id</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">integer</attr>
+				<attr name="regex"><![CDATA[(sdfsdf)(.*)(">)]]></attr>
+			</column>
+			<column name="contender name">
+				<attr name="dbname">contender_name</attr>
+				<attr name="dbtype">text</attr>
 				<attr name="constraint"></attr>
 				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">ORGANIZATION</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
-			<column name="attendance">
-				<attr name="dbname">attendance</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">long</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">ATTENDANCE</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
+				<attr name="regex"><![CDATA[(sdfsdf)(.*)(">)]]></attr>
 			</column>
 		</table>
 		<table name="rounds">
