@@ -236,6 +236,7 @@
 			<column name="strikes absorbed">
 				<attr name="dbname">sapm</attr>
 				<attr name="dbtype">real</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">double</attr>
 				<attr name="regex"><![CDATA[(<td.*class="title_text">SApM</td>[\s|\r\n]+<td>)(\d+.\d+)(</td>)]]></attr>
 
@@ -243,6 +244,7 @@
 			<column name="strike defense">
 				<attr name="dbname">str_def</attr>
 				<attr name="dbtype">integer</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">integer</attr>
 				<attr name="regex"><![CDATA[(<td.*class="title_text">Str..Def.</td>[\s|\r\n]+<td>)(\d+)(\D</td>)]]></attr>
 
@@ -250,6 +252,7 @@
 			<column name="takedown average">
 				<attr name="dbname">td_avg</attr>
 				<attr name="dbtype">real</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">double</attr>
 				<attr name="regex"><![CDATA[(<td.*class="title_text">TD.Avg.</td>[\s|\r\n]+<td>)(\d+.\d+)(</td>)]]></attr>
 
@@ -257,6 +260,7 @@
 			<column name="takedown accuracy">
 				<attr name="dbname">td_acc</attr>
 				<attr name="dbtype">integer</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">integer</attr>
 				<attr name="regex"><![CDATA[(<td.*class="title_text">TD.Acc.</td>[\s|\r\n]+<td>)(\d+)(\D</td>)]]></attr>
 
@@ -265,6 +269,7 @@
 			<column name="takedown defense">
 				<attr name="dbname">td_def</attr>
 				<attr name="dbtype">integer</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">integer</attr>
 				<attr name="regex"><![CDATA[(<td.*class="title_text">TD.Def.</td>[\s|\r\n]+<td>)(\d+)(\D</td>)]]></attr>
 
@@ -273,6 +278,7 @@
 			<column name="submission average">
 				<attr name="dbname">sub_avg</attr>
 				<attr name="dbtype">real</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">double</attr>
 				<attr name="regex"><![CDATA[(<td.*class="title_text">Sub..Avg.</td>[\s|\r\n]+<td>)(\d+.\d+)(</td>)]]></attr>
 
@@ -280,26 +286,74 @@
 			<column name="wins">
 				<attr name="dbname">wins</attr>
 				<attr name="dbtype">integer</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">integer</attr>
 				<attr name="regex"><![CDATA[(<td\s+class="title_text">RECORD</td>\D+)(\d+)(</td>)]]></attr>
 			</column>
 			<column name="losses">
 				<attr name="dbname">losses</attr>
 				<attr name="dbtype">integer</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">integer</attr>
 				<attr name="regex"><![CDATA[(<td\s+class="title_text">RECORD</td>\D+\d+\D+)(\d+)(</td>)]]></attr>
 			</column>
 			<column name="draws">
 				<attr name="dbname">draws</attr>
 				<attr name="dbtype">integer</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">integer</attr>
 				<attr name="regex"><![CDATA[(<td\s+class="title_text">RECORD</td>\D+\d+\D+\d+\D+)(\d+)(</td>)]]></attr>
 			</column>
 			<column name="no contest">
 				<attr name="dbname">nc</attr>
 				<attr name="dbtype">integer</attr>
+				<attr name="constraint"></attr>
 				<attr name="apptype">integer</attr>
 				<attr name="regex"><![CDATA[(<td\s+class="title_text">RECORD</td>\D+\d+\D+\d+\D+\d+\D+)(\d+)(</td>)]]></attr>
+			</column>
+		</table>
+		<table name="schedule">
+			<column name="event title">
+				<attr name="dbname">full_title</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">string</attr>
+				<attr name="regex"><![CDATA[(<div\sclass="event-title"><a\shref="/event/.*">)(.*)(</a>)]]></attr>
+			</column>
+			<column name="event simple title">
+				<attr name="dbname">simple_title</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">string</attr>
+				<attr name="regex"><![CDATA[(<div\sclass="event-title"><a\shref="/event/)(\S+)(">)]]></attr>
+			</column>
+			<column name="event tagline">
+				<attr name="dbname">tagline</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">string</attr>
+				<attr name="regex"><![CDATA[(<div\sclass="event-tagline"><a\shref="/event/.*">)(.*)(</a>)]]></attr>
+			</column>
+			<column name="event date">
+				<attr name="dbname">date</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">string</attr>
+				<attr name="regex"><![CDATA[(<td\sclass="event-info">[\r\n]\s+<div\sclass="date">)(.*)(</div>)]]></attr>
+			</column>
+			<column name="event time">
+				<attr name="dbname">time</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">string</attr>
+				<attr name="regex"><![CDATA[(<td\sclass="event-info">\s*[\r\n].*[\r\n]\s*<div\sclass="time">[\r\n]\s*)(.*)(\W)]]></attr>
+			</column>
+			<column name="timezone">
+				<attr name="dbname">timezone</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">string</attr>
+				<attr name="regex"><![CDATA[(<td\sclass="event-info">[\W\w]*?<div\sclass="time-zone">)(.*)(</div>)]]></attr>
 			</column>
 		</table>
 	</database>

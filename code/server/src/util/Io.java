@@ -5,8 +5,8 @@ package util;
  * Has a private constructor as it's not meant to be instantiated.
  * @author Stugatz
  */
-public final class Io {
-	private Io() {};
+public final class IO {
+	private IO() {};
 	
 	/**
 	 * Takes a stream and returns it as a string.

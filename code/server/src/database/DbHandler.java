@@ -1,12 +1,14 @@
 package database;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map.Entry;
 
 import settings.Column;
@@ -23,7 +25,7 @@ import util.Pair;
  */
 public class DbHandler {
 	private Connection connection = null;
-
+	
 	public DbHandler () {
 		try {
 			// load the Sqlite-JDBC driver using the current class loader
@@ -78,13 +80,10 @@ public class DbHandler {
 		}
 	}
 	
-	public void update (String table, HashMap<String, Object> columnValuePair) {
+	public void update (String table, HashMap<String, Object> columnValuePair) {	
 		try {
-			// create statement and set timeout to 30 sec.
-			Statement statement = connection.createStatement();						
-			statement.setQueryTimeout(30);		
-			
-			StringBuilder vals = new StringBuilder("(");
+			StringBuilder params = new StringBuilder("(");
+			LinkedList<Object> vals = new LinkedList<Object>();
 			StringBuilder cols = new StringBuilder("(");
 			Iterator<Entry<String, Object>> itr = columnValuePair.entrySet().iterator();
 						
@@ -95,28 +94,25 @@ public class DbHandler {
 				if (dbColumn == null) {
 					Logger.log("Reference to table: " + table + " column: " + entry.getKey() + " not found in schema", true);
 				} else {				
+					params.append("?");					
 					cols.append(dbColumn);
-					
-					String type = entry.getValue().getClass().getSimpleName();
-					if (type.equals("String") || type.equals("Date")) {
-						vals.append("'" + entry.getValue().toString() + "'");
-					} else {
-						vals.append(entry.getValue().toString().replace(",", "."));
-					}
-					
-					if (itr.hasNext()) {
-						cols.append(",");
-						vals.append(",");
-					} else {
-						cols.append(")");
-						vals.append(")");
-					}
+					vals.add(entry.getValue());
 				}
+				
+				params.append(itr.hasNext() ? ", " : ")");
+				cols.append(itr.hasNext() ? ", " : ")");
 			}
-			
-			statement.executeUpdate("insert or replace into " + table + " " +
-					cols.toString() + " VALUES " + vals.toString());						
-		
+				final PreparedStatement pStmt = connection.prepareStatement("insert or replace into " + table + " " + cols.toString() + " values " + params.toString());
+				
+				//System.out.println(vals.size());
+				
+				int i = 1;
+				for (Object o : vals) {
+					//System.out.println(i + ": " + o.toString());
+					pStmt.setObject(i++, o);
+				}				
+				pStmt.executeUpdate();								
+				
 		} catch (SQLException e) {
 			Logger.log(e.getMessage(), true);
 		}			

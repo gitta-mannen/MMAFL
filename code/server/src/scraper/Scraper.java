@@ -1,30 +1,33 @@
 package scraper;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import database.DbHandler;
-import settings.Column;
-import settings.Settings;
-import util.Logger;
+import settings.*;
+import util.*;
 
-// Private constructor, can't be instantiated.
-public class Scraper {
-	private Scraper() {};		
+
+abstract class Scraper {
+	public Scraper() {}		
 	// Scrapes the given URL using regex taken from the settings object (which gets it from the xml settings file)
-	public static HashMap<String, Object> scrape(URL url, String table) throws MalformedURLException {
+	public static HashMap<String, Object> scrapeTable(URL url, String table) {
 		HashMap<String, Object> values = new HashMap<String, Object>();
 		try {
 			// Opens a stream to the given URL and copies the html content in to a String
-			String htmlContent = util.Io.streamToString(url.openConnection().getInputStream());		
+			String htmlContent = util.IO.streamToString(url.openConnection().getInputStream());		
 			// Iterates over the columns in the given table
 			Iterator<Entry<String, Column>> itrColumns = Settings.getInstance().getSchema().getTable(table).getColumns().entrySet().iterator();						
 			while (itrColumns.hasNext()) {
@@ -45,7 +48,7 @@ public class Scraper {
 							} else if (column.getValue().apptype.equals("string")){
 								values.put(column.getKey(), match);
 							} else {
-								Logger.log("Type not regcognized", true);
+								Logger.log("Type not recognized", true);
 							}							
 					}
 				}
@@ -53,57 +56,42 @@ public class Scraper {
 		} catch (Exception e) {
 			Logger.log(e.getStackTrace()[0].toString(), true);
 		}		
-
-//		System.out.println("name: " 	+ values.get("name"));
-//		System.out.println("nickname: " + values.get("nickname"));
-//		System.out.println("age: " 		+ values.get("age"));
-//		System.out.println("stance: " 	+ values.get("stance"));
-//		
-//		System.out.println("wins: " 	+ values.get("wins"));
-//		System.out.println("losses: " 	+ values.get("losses"));
-//		System.out.println("draws: " 	+ values.get("draws"));
-//		System.out.println("nc: " 		+ values.get("no contest"));
-//		
-//		System.out.println("weight: " 	+ values.get("weight"));
-//		System.out.println("height: " 	+ values.get("height"));
-//		System.out.println("reach: " 	+ values.get("reach"));
-//		
-//		System.out.println("strikes landed: "		+ values.get("strikes landed"));
-//		System.out.println("striking accuracy: "	+ values.get("striking accuracy"));
-//		System.out.println("strikes absorbed: "		+ values.get("strikes absorbed"));
-//		System.out.println("strike defense: "	 	+ values.get("strike defense"));
-//		
-//		System.out.println("takedown average: "		+ values.get("takedown average"));
-//		System.out.println("takedown defense: " 	+ values.get("takedown defense"));
-//		System.out.println("takedown accuracy: "	+ values.get("takedown accuracy"));
-//		System.out.println("----------------------------------------------------------------");
-//		System.out.println("\n");
-		System.out.println("id: " 	+ values.get("id"));
-		System.out.println("event name: " 	+ values.get("name"));
-
-		
 		return values;
+	}		
+	
+	public static LinkedHashMap<String, List<String>> scrape(String text, List<Pair<String, String>> keyRegexList) {
+		LinkedHashMap<String, List<String>> resultMap = new LinkedHashMap<String, List<String>>();
+		
+		Iterator <Pair<String, String>> itrKeyVal = keyRegexList.iterator();
+		while (itrKeyVal.hasNext()) {
+			Pair<String, String> entry = itrKeyVal.next();
+			resultMap.put(entry.getA(), util.Text.findAll(text, entry.getB()));			
+		}
+		
+		return resultMap;
 	}
 	
-	
-	
-	// Calls the scrape method for a range of <from-to>. Takes the table name and base url as arguments
+	// Calls the scrape method for an id range of <from-to>. Also takes the table name and base URL as arguments
 	public static void scrapeRangeToDb(String table, String baseUrl, int from, int to) throws MalformedURLException {
-		DbHandler db = new DbHandler();	
-		db.resetTables(true);
+		DbHandler db = new DbHandler();									
 		for (int id = from; id <= to; id++) {
-			HashMap <String, Object> hm = scrape( new URL(baseUrl + Integer.toString(id)), table);
+			HashMap <String, Object> hm = scrapeTable( new URL(baseUrl + Integer.toString(id)), table);
 			hm.put("id", id);
 			db.update(table, hm);
 		}
 		db.close();
 	}
 	
-	// test method for scraping iteratively
-	public static void main(String[] args) throws MalformedURLException {
-		//scrapeRangeToDb("fighters", "http://hosteddb.fightmetric.com/fighters/details/", 439, 442);
-		//scrapeRangeToDb("events", "http://hosteddb.fightmetric.com/events/details/", 100, 105);	
-		//scrapeRangeToDb("rounds", "http://hosteddb.fightmetric.com/fights/index/", 100, 105);		
-		scrapeRangeToDb("fights", "http://hosteddb.fightmetric.com/fights/index/", 4060, 4060);		
+	public static void scrapeOnce(String table, String baseUrl) throws MalformedURLException {
+		DbHandler db = new DbHandler();	
+		db.resetTables(true);
+			db.update(table, scrapeTable( new URL(baseUrl), table));
+		db.close();
 	}
+	
+	public static String textFromUrl (String url) throws MalformedURLException, IOException {
+		return util.IO.streamToString( (new URL(url)).openConnection().getInputStream());
+	}
+	
+
 }
