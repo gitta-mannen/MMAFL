@@ -11,7 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
  
 
-public class GuiTable extends JPanel {
+public class GUItable extends JPanel {
     /**
 	 * http://docs.oracle.com/javase/tutorial/uiswing/components/table.html
 	 */
@@ -19,7 +19,7 @@ public class GuiTable extends JPanel {
 	private boolean DEBUG = true;
 	private JTable table;
 	
-    public GuiTable(String[] columnNames, Object[][] data) {
+    public GUItable(String[] columnNames, Object[][] data) {
         super(new GridLayout(1,0));
  
         table = new JTable(data, columnNames);
@@ -33,6 +33,7 @@ public class GuiTable extends JPanel {
 //                }
 //            });
 //        }
+        //sdfsd
  
         //Create the scroll pane and add the table to it.
         JScrollPane scrollPane = new JScrollPane(table);

@@ -46,7 +46,7 @@ public GUImenu() {
         	DbHandler db = new DbHandler();
         	Pair <String[], Object[][]> data = db.getTable("sqlite_MASTER");
         	db.close();
-        	final GuiTable guiTable = new GuiTable(data.getA(), data.getB());
+        	final GUItable guiTable = new GUItable(data.getA(), data.getB());
                 	
 	        Container content = this.getContentPane();
 	        content.setBackground(Color.white);
