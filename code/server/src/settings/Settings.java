@@ -2,14 +2,18 @@ package settings;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
+
 import util.Logger;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.nio.CharBuffer;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import settings.Constants.AppType;
 /**
  * @author Stugatz
@@ -32,30 +36,24 @@ public class Settings {
 		reloadSettings();
 	}
 	
-	private void reloadSettings() {
+	public void reloadSettings() {
 		try {
-			File fXmlFile = new File(settingsFile);			
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			FileInputStream fis = new FileInputStream(settingsFile);
-			//check the encoding
-//			InputStreamReader r = new InputStreamReader(fis, "UTF-8");
-//			System.out.println(r.getEncoding());			
-			Document doc = dBuilder.parse (fis);
-			doc.getDocumentElement().normalize();
-			
-			//gets the schema from xml-file
-			buildSchema(doc);
-		
+			buildSchema(readSettingsFile());
+		} catch (ParserConfigurationException | SAXException | IOException e) {
+			Logger.log(e.getMessage(), true);
+		}	
+	}
+	
+	private Document readSettingsFile() throws ParserConfigurationException, FileNotFoundException, SAXException, IOException {
+		DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+		Document doc = dBuilder.parse (new FileInputStream(new File(settingsFile)));
+		doc.normalize();
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		return doc;
 	}
 		
 	private void buildSchema(Document doc) {
 		schema = new Schema();
-		
 		NodeList tableList = (doc.getDocumentElement().getElementsByTagName("table"));				
 		for (int tCount = 0; tCount < tableList.getLength(); tCount++) {
 			Node tableNode = tableList.item(tCount);
