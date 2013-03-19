@@ -18,7 +18,7 @@ public class Schema {
 	}
 	
 	public Table addTable (String name) {
-		Table temp = new Table();
+		Table temp = new Table(name);
 		tables.put(name, temp);
 		return temp;
 	}

@@ -1,480 +1,147 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- DTD is malformed, can't find the bug
-<!DOCTYPE database [
-
-<!ELEMENT database (table*)>
-<!ELEMENT table (column*)>
-<!ELEMENT column (attr*)>
-<!ELEMENT attr (#PCDATA)>
-
-<!ATTRLIST database name CDATA #REQUIRED>
-<!ATTRLIST column name CDATA #REQUIRED>
-<!ATTRLIST table name CDATA #REQUIRED>
-<!ATTRLIST attr name CDATA #REQUIRED>
-
-]>
--->
+<!-- -->
 <settings>
 	<database name="stats">
-		<type>sqlite</type>
-		<location>/stats.db</location>
-		<table name="fights">
-			<column name="id">
-				<attr name="dbname">id</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint">primary key</attr>
-				<attr name="apptype">integer</attr>
-			</column>
-			<column name="event id">
-				<attr name="dbname">event_id</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">integer</attr>
-				<attr name="regex"><![CDATA[(/events/details/)(.*)(">)]]></attr>
-			</column>
-			<column name="event name">
-				<attr name="dbname">event_name</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(fight_details_h1">)(.*)(</a>)]]></attr>
-			</column>
-			<column name="defender name">
-				<attr name="dbname">defender name</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<td><h1>MATCHUP:</h1></td>[\W\w]*?/fighters/details/\d+">)(.*)(</a>)]]></attr>
-			</column>
-			<column name="contender name">
-				<attr name="dbname">contender_name</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<div[\s]class="fighter_name">[\w\W]*/fighters/details/\d+">)(.*)(</a>)]]></attr>
-			</column>
-			<column name="winner id">
-				<attr name="dbname">winner_id</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">integer</attr>
-				<attr name="regex"><![CDATA[(<div[\s]class="fight_details_name">[\W\w]*?[W][\w\W]*?/fighters/details/)(.*)(">)]]></attr>
-			</column>
-			<column name="loser id">
-				<attr name="dbname">loser_id</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">integer</attr>
-				<attr name="regex"><![CDATA[(<div[\s]class="fight_details_name">[\W\w]*?[L][\w\W]*?/fighters/details/)(.*)(">)]]></attr>
-			</column>
-			<column name="winner name">
-				<attr name="dbname">winner_name</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<div[\s]class="fight_details_name">[\W\w]*?[W][\w\W]*?/fighters/details/\d+">)(.*)(</a>)]]></attr>
-			</column>
-			<column name="loser name">
-				<attr name="dbname">winner_name</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<div[\s]class="fight_details_name">[\W\w]*?[L][\w\W]*?/fighters/details/\d+">)(.*)(</a>)]]></attr>
-			</column>
-			<column name="weight class">
-				<attr name="dbname">weight_class</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<h1[\s]class="fight_details_h1">[\W\w]*[\s])([\w]+WEIGHT)([\s])]]></attr>
-			</column>
-			<column name="finish method">
-				<attr name="dbname">finish_mehod</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<td[\s]class="title_text">REFEREE</td>[\W\w]*?<td>)(.*)(</td>)]]></attr>
-			</column>
-		</table>
-		<table name="rounds">
-			<column name="id">
-				<attr name="dbname">id</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">integer</attr>
-				<attr name="regex"><![CDATA[]]></attr>
-			</column>
-			<column name="name">
-				<attr name="dbname">name</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<h1\s+class="event_header_h1">)(.*)(</h1>)]]></attr>
-			</column>
-			<column name="date">
-				<attr name="dbname">date</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">date</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">DATE</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
-			<column name="location">
-				<attr name="dbname">location</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">LOCATION</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
-			<column name="organization">
-				<attr name="dbname">organization</attr>
-				<attr name="dbtype">string</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">ORGANIZATION</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
-			<column name="attendance">
-				<attr name="dbname">attendance</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">long</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">ATTENDANCE</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
-		</table>
 		<table name="events">
-			<children><![CDATA[event, fights]]></children>
-			<primarykey><![CDATA[id]]></primarykey>
-			<source><![CDATA[http://hosteddb.fightmetric.com/events/index/date/desc/1/all]]></source>
-			<column name="id">
-				<attr name="dbname">id</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="apptype">integer</attr>
-				<attr name="regex"><![CDATA[**add**]]></attr>
-			</column>
-			<column name="name">
-				<attr name="dbname">name</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<h1\s+class="event_header_h1">)(.*)(</h1>)]]></attr>
-			</column>
-			<column name="date">
-				<attr name="dbname">date</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">date</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">DATE</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
-			<column name="completed">
-				<attr name="dbname">completed</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">LOCATION</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
-			<column name="organization">
-				<attr name="dbname">organization</attr>
-				<attr name="dbtype">string</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">ORGANIZATION</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
-			<column name="attendance">
-				<attr name="dbname">attendance</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">long</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">ATTENDANCE</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
+			<table-definition name="primarykey"><![CDATA[id]]></table-definition>
+			<column name="id" dbtype="integer" />
+			<column name="name" dbtype="text" />
+			<column name="date" dbtype="text" />
+			<column name="organization" dbtype="text" />
+			<column name="location" dbtype="text" />
+			<column name="attendance" dbtype="integer" />
+			<column name="completed" dbtype="integer" />
+			<column name="child_url" dbtype="text" />
+			<column name="child_updated" dbtype="integer" />
 		</table>
-		<table name="event">
-			<children>event
-			<column name="id">
-				<attr name="dbname">id</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint">primary key</attr>
-				<attr name="apptype">integer</attr>
-				<attr name="regex"><![CDATA[]]></attr>
-			</column>
-			<column name="name">
-				<attr name="dbname">name</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<h1\s+class="event_header_h1">)(.*)(</h1>)]]></attr>
-			</column>
-			<column name="date">
-				<attr name="dbname">date</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">date</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">DATE</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
-			<column name="location">
-				<attr name="dbname">location</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">LOCATION</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
-			<column name="organization">
-				<attr name="dbname">organization</attr>
-				<attr name="dbtype">string</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">ORGANIZATION</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
-			<column name="attendance">
-				<attr name="dbname">attendance</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">long</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">ATTENDANCE</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
+
+		<table name="tmp_events">
+			<table-definition name="primarykey"><![CDATA[id]]></table-definition>
+			<column name="id" dbtype="integer" />
+			<column name="completed" dbtype="integer" />
+			<column name="child_url" dbtype="text" />
 		</table>
-		<table name="event">
-			<children>event
-			<column name="id">
-				<attr name="dbname">id</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint">primary key</attr>
-				<attr name="apptype">integer</attr>
-				<attr name="regex"><![CDATA[]]></attr>
-			</column>
-			<column name="name">
-				<attr name="dbname">name</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<h1\s+class="event_header_h1">)(.*)(</h1>)]]></attr>
-			</column>
-			<column name="date">
-				<attr name="dbname">date</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">date</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">DATE</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
-			<column name="location">
-				<attr name="dbname">location</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">LOCATION</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
-			<column name="organization">
-				<attr name="dbname">organization</attr>
-				<attr name="dbtype">string</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">ORGANIZATION</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
-			<column name="attendance">
-				<attr name="dbname">attendance</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">long</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">ATTENDANCE</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
-		</table>
-		<table name="fighters">
-			<column name="id">
-				<attr name="dbname">id</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint">primary key</attr>
-				<attr name="apptype">integer</attr>
-				<attr name="regex"></attr>
-			</column>
-			<column name="name">
-				<attr name="dbname">name</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<h1\s+class="fighter_details_h1">)(.*)(</h1>)]]></attr>
-			</column>
-			<column name="nickname">
-				<attr name="dbname">nickname</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<span\s+class="nickname">")(.*)("</span>)]]></attr>
-			</column>
-			<column name="height">
-				<attr name="dbname">height</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">integer</attr>
-				<attr name="regex"><![CDATA[(<td.*class="title_text">HEIGHT</td>[\r\n|\s]+<td>[0-9\s'"]+.)(\d+)(.*</td>)]]></attr>
 
-			</column>
-			<column name="weight">
-				<attr name="dbname">weight</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">integer</attr>
-				<attr name="regex"><![CDATA[(<td.*class="title_text">WEIGHT</td>[\s|\r\n]+<td>\d+\D+)(\d+)(\D+</td>)]]></attr>
+		<!--
+		<prepared-statement name="clear" table="tmp_events"><![CDATA[DELETE * FROM tmp_events]]></prepared-statement>
+		<prepared-statement name="select-all" table="events"><![CDATA[SELECT * FROM events]]></prepared-statement>
+		<prepared-statement name="insert" table="tmp_events"><![CDATA[INSERT OR REPLACE INTO tmp_events (id, completed, child_url) VALUES (?, ?, ?)]]></prepared-statement>
+		
+		<prepared-statement name="select-trigger" table="events"><![CDATA[SELECT id, completed FROM events]]></prepared-statement>
+		<prepared-statement name="insert-event-index" table="events"><![CDATA[INSERT OR REPLACE INTO events (id, name, date, organization, location, completed, child_url, child_updated) VALUES (?, ?, ?, ?, ?, ?, ?, 0)]]></prepared-statement>
+		<prepared-statement name="set-child-updated" table="events"><![CDATA[UPDATE events SET child_updated = '1' where id = ?]]></prepared-statement>
+		<prepared-statement name="select-not-updated" table="events"><![CDATA[SELECT id FROM events where child_updated = '0']]></prepared-statement>
+		<prepared-statement name="test-insert" table="events"><![CDATA[INSERT OR REPLACE INTO events (id, name, child_updated) VALUES (?, ?, 0)]]></prepared-statement>
 
-			</column>
-			<column name="reach">
-				<attr name="dbname">reach</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">integer</attr>
-				<attr name="regex"><![CDATA[(<td.*class="title_text">REACH</td>[\s|\r\n]+<td>\d+.\d+\D+)(\d+.\d+)(\D+</td>)]]></attr>
-
-			</column>
-			<column name="stance">
-				<attr name="dbname">stance</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<td.*class="title_text">STANCE</td>[\s|\r\n]+<td>)(.*)(</td>)]]></attr>
-			</column>
-			<column name="age">
-				<attr name="dbname">age</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">integer</attr>
-				<attr name="regex"><![CDATA[(<td.*class="title_text">AGE</td>[\s|\r\n]+<td>)(\d+)(</td>)]]></attr>
-			</column>
-			<column name="strikes landed">
-				<attr name="dbname">slpm</attr>
-				<attr name="dbtype">real</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">double</attr>
-				<attr name="regex"><![CDATA[(<td.*class="title_text">SLpM</td>[\s|\r\n]+<td>)(\d+.\d+)(</td>)]]></attr>
-
-			</column>
-			<column name="striking accuracy">
-				<attr name="dbname">str_acc</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">integer</attr>
-				<attr name="regex"><![CDATA[(<td.*class="title_text">Str.\sAcc.</td>[\s|\r\n]+<td>)(\d+)(\D</td>)]]></attr>
-
-			</column>
-			<column name="strikes absorbed">
-				<attr name="dbname">sapm</attr>
-				<attr name="dbtype">real</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">double</attr>
-				<attr name="regex"><![CDATA[(<td.*class="title_text">SApM</td>[\s|\r\n]+<td>)(\d+.\d+)(</td>)]]></attr>
-
-			</column>
-			<column name="strike defense">
-				<attr name="dbname">str_def</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">integer</attr>
-				<attr name="regex"><![CDATA[(<td.*class="title_text">Str..Def.</td>[\s|\r\n]+<td>)(\d+)(\D</td>)]]></attr>
-
-			</column>
-			<column name="takedown average">
-				<attr name="dbname">td_avg</attr>
-				<attr name="dbtype">real</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">double</attr>
-				<attr name="regex"><![CDATA[(<td.*class="title_text">TD.Avg.</td>[\s|\r\n]+<td>)(\d+.\d+)(</td>)]]></attr>
-
-			</column>
-			<column name="takedown accuracy">
-				<attr name="dbname">td_acc</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">integer</attr>
-				<attr name="regex"><![CDATA[(<td.*class="title_text">TD.Acc.</td>[\s|\r\n]+<td>)(\d+)(\D</td>)]]></attr>
+		<prepared-statement name="drop" table="events_temp"><![CDATA[DROP IF EXISTS TABLE events_temp]]></prepared-statement>
+		<prepared-statement name="insert-temp" table="events"><![CDATA[INSERT OR REPLACE INTO events a id,completed FROM events_temp b WHERE NOT EXISTS (SELECT id,completed FROM events WHERE a.id=b.id AND a.completed=b.completed)]]></prepared-statement>
 
 
-			</column>
-			<column name="takedown defense">
-				<attr name="dbname">td_def</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">integer</attr>
-				<attr name="regex"><![CDATA[(<td.*class="title_text">TD.Def.</td>[\s|\r\n]+<td>)(\d+)(\D</td>)]]></attr>
+		<prepared-statement name="select-all" table="fights"><![CDATA[SELECT * FROM events]]></prepared-statement>
+		<prepared-statement name="select-trigger" table="fights"><![CDATA[SELECT id, completed FROM events]]></prepared-statement>-->
 
-
-			</column>
-			<column name="submission average">
-				<attr name="dbname">sub_avg</attr>
-				<attr name="dbtype">real</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">double</attr>
-				<attr name="regex"><![CDATA[(<td.*class="title_text">Sub..Avg.</td>[\s|\r\n]+<td>)(\d+.\d+)(</td>)]]></attr>
-
-			</column>
-			<column name="wins">
-				<attr name="dbname">wins</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">integer</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">RECORD</td>\D+)(\d+)(</td>)]]></attr>
-			</column>
-			<column name="losses">
-				<attr name="dbname">losses</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">integer</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">RECORD</td>\D+\d+\D+)(\d+)(</td>)]]></attr>
-			</column>
-			<column name="draws">
-				<attr name="dbname">draws</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">integer</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">RECORD</td>\D+\d+\D+\d+\D+)(\d+)(</td>)]]></attr>
-			</column>
-			<column name="no contest">
-				<attr name="dbname">nc</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">integer</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">RECORD</td>\D+\d+\D+\d+\D+\d+\D+)(\d+)(</td>)]]></attr>
-			</column>
-		</table>
-		<table name="schedule">
-			<column name="event title">
-				<attr name="dbname">full_title</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<div\sclass="event-title"><a\shref="/event/.*">)(.*)(</a>)]]></attr>
-			</column>
-			<column name="event simple title">
-				<attr name="dbname">simple_title</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<div\sclass="event-title"><a\shref="/event/)(\S+)(">)]]></attr>
-			</column>
-			<column name="event tagline">
-				<attr name="dbname">tagline</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<div\sclass="event-tagline"><a\shref="/event/.*">)(.*)(</a>)]]></attr>
-			</column>
-			<column name="event date">
-				<attr name="dbname">date</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<td\sclass="event-info">[\r\n]\s+<div\sclass="date">)(.*)(</div>)]]></attr>
-			</column>
-			<column name="event time">
-				<attr name="dbname">time</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<td\sclass="event-info">\s*[\r\n].*[\r\n]\s*<div\sclass="time">[\r\n]\s*)(.*)(\W)]]></attr>
-			</column>
-			<column name="timezone">
-				<attr name="dbname">timezone</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<td\sclass="event-info">[\W\w]*?<div\sclass="time-zone">)(.*)(</div>)]]></attr>
-			</column>
-		</table>
 	</database>
-</settings>
+
+	<scrapers>
+		<completed-events>
+			<prepared-statement>
+				<name>clear</name>
+				<statement><![CDATA[DELETE * FROM tmp_events]]></statement>
+			</prepared-statement>
+			<prepared-statement>
+				<name>insert</name>
+				<statement><![CDATA[INSERT OR REPLACE INTO tmp_events (id, completed, child_url) VALUES (?, 1, ?)]]></statement>
+			</prepared-statement>
+
+			<index-delimiter><![CDATA[**row split regex**]]></index-delimiter>
+			<source-url><![CDATA[http://hosteddb.fightmetric.com/events/index/date/desc/1/all]]></source-url>
+
+			<scrape-field>
+				<name>id</name>
+				<apptype>integer</apptype>
+				<regex><![CDATA[()()()]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>completed</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[()()()]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>child_url</name> 
+				<apptype>string</apptype>
+				<regex><![CDATA[()()()]]></regex>
+			</scrape-field>
+		</completed-events>
+
+		<upcoming-events>
+			<prepared-statement>
+				<name>clear</name>
+				<statement><![CDATA[DELETE * FROM tmp_events]]></statement>
+			</prepared-statement>
+			<prepared-statement>
+				<name>insert</name>
+				<statement><![CDATA[INSERT OR REPLACE INTO tmp_events (id, completed, child_url) VALUES (?, 0, ?)]]></statement>
+			</prepared-statement>
+
+			<index-delimiter><![CDATA[**row split regex**]]></index-delimiter>
+			<source-url><![CDATA[http://hosteddb.fightmetric.com/events/index/date/asc/0/all/]]></source-url>
+
+			<scrape-field>
+				<name>id</name>
+				<apptype>integer</apptype>
+				<regex><![CDATA[()()()]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>completed</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[()()()]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>child_url</name> 
+				<apptype>string</apptype>
+				<regex><![CDATA[()()()]]></regex>
+			</scrape-field>
+		</upcoming-events>
+	</scrapers>
+<!--
+	<scraper>
+		<scraper-task name="completed-events">
+			
+			<scraper-setting name="index-delimiter"><![CDATA[**row split regex**]]></scraper-setting>
+			<scraper-setting name="child-scraper-task"><![CDATA[compare-events]]></scraper-setting>
+		<scraper-setting name="source"><![CDATA[http://hosteddb.fightmetric.com/events/index/date/desc/1/all/]]></scraper-setting>			
+			<scraper-setting name="child-key"><![CDATA[id]]></scraper-setting>
+			<scraper-setting name="child-scraper-base-url"><![CDATA[http://hosteddb.fightmetric.com]]></scraper-setting>
+			<scraper-setting name="child-scraper-url"><![CDATA[child_url]]></scraper-setting>
+			<scraper-setting name="trigger"><![CDATA[id, completed]]></scraper-setting>
+			<scraper-setting name="trigger-statement"><![CDATA[select-trigger]]></scraper-setting>
+			<scraper-setting name="trigger-type"><![CDATA[insert-replace]]></scraper-setting>
+
+			<scrape-data name="id" apptype="integer"><![CDATA[()()()]]></scrape-data>
+			<scrape-data name="name" apptype="string"><![CDATA[()()()]]></scrape-data>
+			<scrape-data name="date" apptype="date"><![CDATA[()()()]]></scrape-data>
+			<scrape-data name="organization" apptype="string"><![CDATA[()()()]]></scrape-data>
+			<scrape-data name="location" apptype="string"><![CDATA[()()()]]></scrape-data>
+			<scrape-data name="completed" apptype="boolean"><![CDATA[]]></scrape-data>
+			<scrape-data name="child_url" apptype="string"><![CDATA[()()()]]></scrape-data>
+		</scraper-task>
+
+		<scraper-task name="future-events">
+		</scraper-task>
+		<scraper-task name="event-time">
+		</scraper-task>
+		<scraper-task name="event-details">
+		</scraper-task>
+		<scraper-task name="fights">
+		</scraper-task>
+		<scraper-task name="fight-details">
+		</scraper-task>
+		<scraper-task name="rounds">
+		</scraper-task>
+		<scraper-task name="fighters">
+		</scraper-task>
+		<scraper-task name="fighter-details">
+		</scraper-task>
+	</scraper>
+</settings> -->

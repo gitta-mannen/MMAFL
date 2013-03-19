@@ -18,7 +18,7 @@ public class ScrapeScheduler implements Runnable {
 		LinkedList<String> test = new LinkedList<String>();
 		test.add("803");
 		test.add("804");
-		executor.execute(new WebScraper(results, "http://hosteddb.fightmetric.com/fighters/details/", test, "fighters"));
+//		executor.execute(new WebScraper(results, "http://hosteddb.fightmetric.com/fighters/details/", test, "fighters"));
 		while(true) {			
 			System.out.println("polling: " + results.poll());
 			try {

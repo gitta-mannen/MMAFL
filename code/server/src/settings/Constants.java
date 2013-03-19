@@ -6,6 +6,10 @@ public abstract class Constants {
 	}
 	
 	public enum DbType {
-		TEXT, REAL, INTEGER, BLOB
+		TEXT("text"), REAL("real"), INTEGER("integer"), BLOB("blob");
+		
+		   private final String stringValue;
+		   private DbType(final String s) { stringValue = s; }
+		   public String toString() { return stringValue; }
 	}
 }

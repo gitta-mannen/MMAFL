@@ -23,8 +23,13 @@ public class Logger {
         STACK_INDEX = i;
 	}
 	
-	public static synchronized  void log (String message, boolean printToConsole) {
-		StackTraceElement st = Thread.currentThread().getStackTrace()[STACK_INDEX + 0];
+	public static synchronized  void log (Object message, boolean printToConsole) {
+		StackTraceElement st;
+		if (message instanceof Exception) {
+			st = ((Exception) message).getStackTrace()[0];
+		} else {
+			st = Thread.currentThread().getStackTrace()[STACK_INDEX + 0];
+		}
 		long threadId = Thread.currentThread().getId();
 		String className = st.getClassName();
 		String MethodName = st.getMethodName();
