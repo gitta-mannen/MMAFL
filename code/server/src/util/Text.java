@@ -3,11 +3,19 @@ package util;
 import settings.Constants.AppType;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.joda.time.*;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.PeriodFormat;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
+import org.joda.time.format.PeriodParser;
 
 public final class Text {
 	private Text(){
@@ -21,17 +29,42 @@ public final class Text {
 	 * @return - Object created by parsing or null if type isn't recognized.
 	 * @throws ParseException
 	 */
+//	public static Object stringToObject (String s, AppType type) throws ParseException {
+//		 switch (type) {
+//         case DATE:
+//        	 return (new SimpleDateFormat("MMM. dd, yyyy").parse(s));
+//         case TIME:
+//        	 return (new SimpleDateFormat("mm:ss").parse(s));
+//		case LONG: case DOUBLE: case INTEGER:
+//             return (NumberFormat.getInstance(Locale.US).parseObject(s));
+//		case STRING:
+//             return s;
+//		default:
+//        	 Logger.log("Type not recognized", true);
+//        	 return null;
+//		 }
+//	}
 	public static Object stringToObject (String s, AppType type) throws ParseException {
 		 switch (type) {
-         case DATE:
-        	 return (new SimpleDateFormat("MMM. dd, yyyy").parse(s));
+        case DATE:
+       	 return (new SimpleDateFormat("MMM. dd, yyyy").parse(s));
+        case TIME:
+        	PeriodFormatter ms = new PeriodFormatterBuilder()
+        	.minimumPrintedDigits(2)
+            .printZeroAlways()
+        	.appendMinutes()
+            .appendSeparator(":")
+            .appendSeconds()
+            .toFormatter();
+        	Period p = ms.parsePeriod(s);
+        	return ms.print(p);
 		case LONG: case DOUBLE: case INTEGER:
-             return (NumberFormat.getInstance(Locale.US).parseObject(s));
+            return (NumberFormat.getInstance(Locale.US).parseObject(s));
 		case STRING:
-             return s;
+            return s;
 		default:
-        	 Logger.log("Type not recognized", true);
-        	 return null;
+       	 Logger.log("Type not recognized", true);
+       	 return null;
 		 }
 	}
 	

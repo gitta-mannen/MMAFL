@@ -96,6 +96,41 @@
 				<attr name="apptype">string</attr>
 				<attr name="regex"><![CDATA[(<td[\s]class="title_text">REFEREE</td>[\W\w]*?<td>)(.*)(</td>)]]></attr>
 			</column>
+			<column name="finish details">
+				<attr name="dbname">finish_details</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">string</attr>
+				<attr name="regex"><![CDATA[(class="title_text">DETAILS</td>[\W\w]*?[\s])([\S]\D*)(<br[\s]/>[\s]+</td>)]]></attr>
+			</column>
+			<column name="rounds fought">
+				<attr name="dbname">rounds_fought</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">integer</attr>
+				<attr name="regex"><![CDATA[(<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)(.*)(</td>)]]></attr>
+			</column>
+			<column name="time in last round">
+				<attr name="dbname">time_in_last_round</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">time</attr>
+				<attr name="regex"><![CDATA[(<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\d+.*\s+.*\s+)(.*\S)([\s]+</td>)]]></attr>
+			</column>
+			<column name="round format">
+				<attr name="dbname">round_format</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">string</attr>
+				<attr name="regex"><![CDATA[(<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\d+.*\s+.*\s+.*\s+\D+)(.*)(</td>*?)]]></attr>
+			</column>
+			<column name="referee name">
+				<attr name="dbname">referee_name</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">string</attr>
+				<attr name="regex"><![CDATA[(<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\d+.*\s+.*\s+.*\s+\D+)(.*)(</td>*?)]]></attr>
+			</column>
 		</table>
 		<table name="rounds">
 			<column name="id">
