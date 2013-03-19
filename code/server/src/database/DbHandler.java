@@ -23,7 +23,6 @@ public class DbHandler {
 	
 	static {
 		// create tables on first use
-		System.out.println("static constructor"); 
 		buildTables(false);
 	}
 	
@@ -56,7 +55,6 @@ public class DbHandler {
 	}
 	
 	public static void buildTables(boolean replace) {
-		System.out.println("build table method");
 		try {
 			Class.forName("org.sqlite.JDBC");
 			Connection con = DriverManager.getConnection("jdbc:sqlite:stats.db");
@@ -65,11 +63,11 @@ public class DbHandler {
 			con.setAutoCommit(false);
 			
 			String[] tables = Settings.getNodeText("database:tables:table");
-			System.out.println("table count: " + tables.length);
-			
+		
 			for (int i = 0; i < tables.length; i++) {
-				System.out.println("building table: " + tables[i]); 
+				
 				if (replace) {
+					System.out.println("dropping table: " + tables[i]); 
 					statement.execute("DROP TABLE IF EXISTS " + tables[i]);
 				}
 				

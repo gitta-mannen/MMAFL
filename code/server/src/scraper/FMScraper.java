@@ -16,7 +16,7 @@ public class FMScraper implements Runnable {
 	Stack<FMScraperTask> tasks = new Stack<FMScraperTask>();
 
 	public FMScraper() throws MalformedURLException, IOException {		
-//		tasks.push(new RootScraperTask("completed-events"));
+		tasks.push(new RootScraperTask("completed-events"));
 		tasks.push(new RootScraperTask("upcoming-events"));		
 	}
 
@@ -81,9 +81,9 @@ class RootScraperTask extends FMScraperTask {
 
 	@Override
 	public void doTask() throws Exception {
-//		htmlContent = Scraper.textFromUrl(url);
-		htmlContent = util.IO.fileToString("E:\\projekt\\MMAFL\\code\\server\\www\\fm_u_events.htm");		
-		splitContent = Scraper.findFirst(htmlContent, Settings.getNodeText("scrapers:upcoming-events:table-regex")[0]).split(delimiter);
+//		htmlContent = Scraper.textFromUrl(url); // testing from file
+		htmlContent = util.IO.fileToString(Settings.getNodeText("scrapers:" + taskName + ":source-file")[0]);		
+		splitContent = Scraper.findFirst(htmlContent, Settings.getNodeText("scrapers:" + taskName + ":table-regex")[0]).split(delimiter);
 		
 		db.setAutoCommit(false);
 		for (int i = 1; i < splitContent.length; i++) {

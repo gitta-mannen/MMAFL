@@ -79,6 +79,7 @@
 			<table-regex><![CDATA[(<div[\s]class="events_table[\s]data_table[\s]row_is_link">)([\w\W]*?)(</div>)]]></table-regex>
 			<index-delimiter><![CDATA[</tr>[\w\W]*?<tr.+?>]]></index-delimiter>
 			<source-url><![CDATA[http://hosteddb.fightmetric.com/events/index/date/desc/1/all]]></source-url>
+			<source-file><![CDATA[E:\projekt\MMAFL\code\server\www\fm_c_events.htm]]></source-file>
 
 			<scrape-field>
 				<name>id</name>
@@ -88,7 +89,7 @@
 			<scrape-field>
 				<name>child_url</name> 
 				<apptype>string</apptype>
-				<regex><![CDATA[(<td[\s]class="left_border"><a href=")(.*)(">)]]></regex>
+				<regex><![CDATA[(href=")(.*)(">)]]></regex>
 			</scrape-field>
 		</completed-events>
 
@@ -105,6 +106,7 @@
 			<table-regex><![CDATA[(<div[\s]class="events_table[\s]data_table[\s]row_is_link">)([\w\W]*?)(</div>)]]></table-regex>
 			<index-delimiter><![CDATA[</tr>[\w\W]*?<tr.+?>]]></index-delimiter>
 			<source-url><![CDATA[http://hosteddb.fightmetric.com/events/index/date/asc/0/all/]]></source-url>
+			<source-file><![CDATA[E:\projekt\MMAFL\code\server\www\fm_u_events.htm]]></source-file>
 
 			<scrape-field>
 				<name>id</name>

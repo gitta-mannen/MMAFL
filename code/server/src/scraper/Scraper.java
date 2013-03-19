@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import util.Logger;
+
 
 abstract class Scraper {
 	public Scraper() {}		
@@ -40,7 +42,12 @@ abstract class Scraper {
 	public static String findFirst(String text, String regex) {
 		Matcher matcher = Pattern.compile(regex, Pattern.MULTILINE).matcher(text);
 		matcher.find();
-		return matcher.group(2);								
+		if (matcher.groupCount() == 3) {
+			return matcher.group(2);
+		} else {
+			Logger.log("No match found", true);
+			return "";
+		}
 	}
 	/**
 	 * Finds all matches for the given regex in the given string.

@@ -1,0 +1,3770 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/FMShell.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<!-- InstanceBeginEditable name="doctitle" -->
+<title>FightMetric - MMA Statistics : SQL/XML Data Feeds</title>
+<link href="http://www.fightmetric.com/Assets/saasbeta.css"  rel="stylesheet" type="text/css"> 
+<!-- InstanceEndEditable -->
+<link href="http://www.fightmetric.com/css/fightmetric.css" rel="stylesheet" type="text/css" />
+<LINK REL="SHORTCUT ICON" HREF="/images/favicon.ico">
+<style type="text/css">
+<!--
+.style1 {font-size: 0.9em}
+body,td,th {
+	font-size: 12px;
+}
+-->
+</style>
+<!-- InstanceBeginEditable name="head" -->
+<script type="text/javascript" src="http://www.fightmetric.com/js/prototype.js"></script>
+<script type="text/javascript" src="http://www.fightmetric.com/js/scriptaculous.js?load=effects,builder"></script>
+<script type="text/javascript" src="http://www.fightmetric.com/js/lightbox.js"></script>
+<link rel="stylesheet" href="http://www.fightmetric.com/css/lightbox.css" type="text/css" media="screen" />
+<!-- InstanceEndEditable -->
+<script type="text/javascript">
+ 
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-2855164-1']);
+  _gaq.push(['_setDomainName', '.fightmetric.com']);
+  _gaq.push(['_trackPageview']);
+ 
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+ 
+</script>
+<!-- BigLeadSports Ad Code -->
+<SCRIPT> 
+var a = Math.floor(Math.random()*9999999999+1) 
+var random_number = a; 
+</SCRIPT>
+<!-- Begin comScore Tag -->
+<script>
+    document.write(unescape("%3Cscript src="http://www.fightmetric.com/ + (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js' %3E%3C/script%3E"));
+</script>
+<script>
+  COMSCORE.beacon({
+    c1:2,
+    c2:"6035210",
+    c3:"",
+    c4:"www.fightmetric.com",
+    c5:"",
+    c6:"",
+    c15:""
+  });
+</script>
+<noscript>
+  <img src="http://b.scorecardresearch.com/b?c1=2&c2=6035210&c3=&c4=www.fightmetric.com&c5=&c6=&c15=&cv=1.3&cj=1" style="display:none" width="0" height="0" alt="" />
+</noscript>
+<!-- End comScore Tag -->
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">google.load("jquery", "1");</script>
+<script type='text/javascript'>$.noConflict();</script>
+<link rel="stylesheet" type="text/css" href="http://hosteddb.fightmetric.com/css/style.css" />
+<link rel="stylesheet" type="text/css" href="http://hosteddb.fightmetric.com/css/autocomplete.css" />
+<script type="text/javascript" src="http://hosteddb.fightmetric.com/js/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="http://hosteddb.fightmetric.com/js/jquery.qtip.min.js"></script>
+
+</head>
+<body>
+<table width="857" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="185"><span class="style1"></span></td>
+    <td width="15"><span class="style1"><img src="http://www.fightmetric.com/beta/_images/spacer.gif" name="spacer" width="15" height="45" id="spacer" /></span></td>
+    <td width="656" valign="bottom"><img src="http://www.fightmetric.com/beta/_images/UFC-stats-provider.png" alt="Official Stats Provider UFC" width="258" height="46" align="right" /></td>
+    <td width="656"><img src="http://www.fightmetric.com/beta/_images/spacer.gif" alt="spacer" width="135" height="20" /> </td>
+  </tr>
+  <tr>
+    <td width="185" height="725" valign="top"><a href="http://www.fightmetric.com/index.html"><img src="http://www.fightmetric.com/beta/_images/FMlogo.png" alt="fightmetric logo" width="185" height="46" border="0" /></a><br />
+      <br />
+      <table width="184" border="0" cellspacing="0" cellpadding="3">
+        <tr>
+          <td class="leftmenuTD"><a href="http://www.fightmetric.com/index.html">home</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTD"><a href="http://hosteddb.fightmetric.com">STATISTICS</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub">&nbsp;&nbsp;<a href="http://hosteddb.fightmetric.com/events">&nbsp;&nbsp;&nbsp;. Events &amp; Fights</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub">&nbsp;&nbsp;<a href="http://hosteddb.fightmetric.com/fighters">&nbsp;&nbsp;&nbsp;. Fighters</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub">&nbsp;&nbsp;<a href="http://www.fightmetric.com/ufcrecords.html">&nbsp;&nbsp;&nbsp;. UFC Records</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub"><a href="http://www.fightmetric.com/aboutthestats.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;. About The Stats</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTD"><a href="http://www.fightmetric.com/datafeeds.html"> Products</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub"><a href="http://www.fightmetric.com/datafeeds.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;. Data Feeds</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub"><a href="http://www.fightmetric.com/hosteddb.html"> </a><a href="http://www.fightmetric.com/datafeeds.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.</a> <a href="http://www.fightmetric.com/hosteddb.html">Hosted DB</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub"><a href="http://www.fightmetric.com/datafeeds.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.</a> <a href="http://www.fightmetric.com/fantasy.html">Fantasy</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub"><a href="http://www.fightmetric.com/consulting.html"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.Consulting</a></td>
+        </tr>
+        
+        <tr>
+          <td class="leftmenuTD"><a href="http://www.fightmetric.com/aboutthecompany.html">About The Company</a> </td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub">&nbsp;&nbsp;<a href="http://blog.fightmetric.com">&nbsp;&nbsp;&nbsp;. Blog </a></td>
+        </tr>
+        
+        <tr>
+          <td class="leftmenuTD"><a href="http://www.fightmetric.com/contactus.html">contact us</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTD"><a href="http://feeds.feedburner.com/Fightmetric"><img src="http://www.fightmetric.com/_images/rss-logo.png" alt="rss" width="16" height="16" border="0" /></a>&nbsp;<a href="http://www.twitter.com/fightmetric"><img src="http://www.fightmetric.com/_images/twitter-logo.png" alt="twitter" width="16" height="16" border="0" /></a> <a href="http://www.facebook.com/FightMetric"><img src="http://www.fightmetric.com/_images/facebook.png" alt="facebook" width="16" height="16" border="0" /></a></td>
+        </tr>
+    </table>
+    <p align="center">&nbsp;</p>
+    </td>
+    <td width="15"><p class="style1"><img src="http://www.fightmetric.com/beta/_images/spacer.gif" alt="spacer" name="spacer" width="15" height="15" id="spacer" /></p>    </td>
+    <td valign="top"><div id="main-content"><!-- InstanceBeginEditable name="CenterContent" --><div id="dataproductstab">
+        data products        </div>
+	  <div id="gradientbox">
+	    <table width="600" height="49" border="0" cellpadding="0" cellspacing="0">
+		  <tr>
+			<td height="49" valign="top">
+			  <table width="600" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td width="450"><div class="pagetitle">RESULTS &amp; STATS</div>                  </td>
+                  <td width="150"><div class="contactbox" id="contactbox"><a href="http://www.fightmetric.com/contactus.html"><img src="http://www.fightmetric.com/_images/sm-arrow.png" alt="small arrow" width="13" height="21" border="0" align="right" />Contact Us to Get <br />
+                    Your Hosted DB</a></div></td>
+                </tr>
+                <tr>
+                  <td colspan="2"><table width="400" border="1" cellpadding="5" cellspacing="0" bordercolor="#8B0303">
+                    <tr>
+                      <td width="120" align="center" bordercolor="#8B0303" bgcolor="#4A0404"><a href="http://hosteddb.fightmetric.com/events" style="color:white; text-decoration:none"><strong>Events &amp; Fights</strong></a></td>
+                      <td width="80" align="center" bordercolor="#8B0303" bgcolor="#4A0404"><a href="http://hosteddb.fightmetric.com/fighters" style="color:white; text-decoration:none"><strong>Fighters</strong></a></td>
+                      <td width="80" align="center" bordercolor="#8B0303" bgcolor="#4A0404"><a href="http://hosteddb.fightmetric.com/judges" style="color:white; text-decoration:none"><strong>Judges</strong></a></td>
+                      <td width="80" align="center" bordercolor="#8B0303" bgcolor="#4A0404"><a href="http://hosteddb.fightmetric.com/referees" style="color:white; text-decoration:none"><strong>Referees</strong></a></td>
+                    </tr>
+                  </table></td>
+                </tr>
+                
+                <tr>
+                  <td colspan="2"><br />
+				  <div id="saasbeta"> <div class="fightmetric"><div class="breadcrumbs">Events</div>
+<div class="events_list">
+	<div class="header">
+		<h1 class="events_header_h1">Events</h1>
+		<div class="search_box">
+			<form action="/events/index" method="post">
+				<input name="data[Event][search]" type="text" id="autocomplete" class="text_field" value="Enter Event or Organization" />				<input type="submit" value="Search" />			</form>
+		</div>
+		<div class="clr"></div>
+	</div>
+			<div class="view_panel">
+			<div class="events_completed_type">
+				VIEW:
+				<input type="radio" name="data[Event][completed]" id="EventCompleted1" value="1" checked="checked"  /><label for="EventCompleted1">Completed</label><input type="radio" name="data[Event][completed]" id="EventCompleted0" value="0"  /><label for="EventCompleted0">Upcoming</label> 
+			</div>
+			<div class="pagination">
+	VIEW: ALL <a href="/events/index/date/desc/1/pages">PAGES</a></div>
+<div class="clr"></div>		</div>
+		<div class="events_table data_table row_is_link">
+			<table>
+				<tr>
+					<th class="left_border"><a href="/events/index/name/asc/1/all/">NAME</a></th>
+					<th><a href="/events/index/date/asc/1/all/">DATE</a></th>
+					<th><a href="/events/index/org/asc/1/all/">ORGANIZATION</a></th>
+					<th class="right_border"><a href="/events/index/loc/asc/1/all/">LOCATION</a></th>
+				</tr>
+                                    <tr class='upcoming'>
+                        <td>
+                            Next: <a href="/events/details/622">UFC on FUEL TV 9</a>                        </td>
+						<td>
+                            <nobr>Apr. 6, 2013</nobr>
+                        </td>
+						<td>
+                            Ultimate Fighting Championship                        </td>
+												<td>Stockholm, Sweden</td>
+                    </tr>
+                                					<tr >
+						<td class="left_border"><a href="/events/details/619">UFC 158: St-Pierre vs. Diaz</a></td>
+						<td><nobr>Mar. 16, 2013</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Montreal, Quebec, Canada</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/618">UFC on FUEL TV 8</a></td>
+						<td><nobr>Mar. 2, 2013</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/616">UFC 157: Rousey vs. Carmouche</a></td>
+						<td><nobr>Feb. 23, 2013</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Anaheim, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/615">UFC on FUEL TV 7</a></td>
+						<td><nobr>Feb. 16, 2013</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>London, England, United Kingdom</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/613">UFC 156: Aldo vs. Edgar</a></td>
+						<td><nobr>Feb. 2, 2013</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/612">UFC on Fox 6</a></td>
+						<td><nobr>Jan. 26, 2013</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Chicago, Illinois, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/614">UFC on FX 7</a></td>
+						<td><nobr>Jan. 19, 2013</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Sao Paulo, Brazil</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/611">Strikeforce - Marquardt vs. Saffiedine</a></td>
+						<td><nobr>Jan. 12, 2013</nobr></td>
+						<td>Strikeforce</td>
+												<td>Oklahoma City, Oklahoma, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/617">DREAM 18</a></td>
+						<td><nobr>Dec. 31, 2012</nobr></td>
+						<td>DREAM</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/610">UFC 155: Dos Santos vs. Velasquez 2</a></td>
+						<td><nobr>Dec. 29, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/609">UFC - TUF 16 Finale</a></td>
+						<td><nobr>Dec. 15, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/602">UFC on FX 6</a></td>
+						<td><nobr>Dec. 14, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Gold Coast, Queensland, Australia</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/608">UFC on Fox 5</a></td>
+						<td><nobr>Dec. 8, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Seattle, Washington, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/600">UFC 154: St-Pierre vs. Condit</a></td>
+						<td><nobr>Nov. 17, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Montreal, Quebec, Canada</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/607">UFC on FUEL TV 6</a></td>
+						<td><nobr>Nov. 10, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Macau, China</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/604">UFC 153: Silva vs. Bonnar</a></td>
+						<td><nobr>Oct. 13, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Rio de Janeiro, Brazil</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/603">UFC on FX 5</a></td>
+						<td><nobr>Oct. 5, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Minneapolis, Minnesota, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/598">UFC on FUEL TV 5</a></td>
+						<td><nobr>Sep. 29, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Nottingham, England, United Kingdom</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/601">UFC 152: Jones vs. Belfort</a></td>
+						<td><nobr>Sep. 22, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Toronto, Ontario, Canada</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/599">Strikeforce - Rousey vs. Kaufman</a></td>
+						<td><nobr>Aug. 18, 2012</nobr></td>
+						<td>Strikeforce</td>
+												<td>San Diego, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/597">UFC 150: Henderson vs. Edgar 2</a></td>
+						<td><nobr>Aug. 11, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Denver, Colorado, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/596">UFC on Fox 4</a></td>
+						<td><nobr>Aug. 4, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Los Angeles, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/592">UFC 149: Faber vs. Barao</a></td>
+						<td><nobr>Jul. 21, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Calgary, Alberta, Canada</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/595">Strikeforce - Rockhold vs. Kennedy</a></td>
+						<td><nobr>Jul. 14, 2012</nobr></td>
+						<td>Strikeforce</td>
+												<td>Portland, Oregon, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/594">UFC on FUEL TV 4</a></td>
+						<td><nobr>Jul. 11, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>San Jose, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/591">UFC 148: Silva vs. Sonnen 2</a></td>
+						<td><nobr>Jul. 7, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/593">UFC 147: Silva vs. Franklin 2</a></td>
+						<td><nobr>Jun. 23, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Belo Horizonte, Minas Gerais, Brazil</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/590">UFC on FX 4</a></td>
+						<td><nobr>Jun. 22, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Atlantic City, New Jersey, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/605">M-1 Global - Fedor vs. Rizzo</a></td>
+						<td><nobr>Jun. 21, 2012</nobr></td>
+						<td>M-1 Global</td>
+												<td>St. Petersburg, Russia</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/588">UFC on FX 3</a></td>
+						<td><nobr>Jun. 8, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Sunrise, Florida, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/589">UFC - TUF 15 Finale</a></td>
+						<td><nobr>Jun. 1, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/586">UFC 146: Dos Santos vs. Mir</a></td>
+						<td><nobr>May. 26, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/587">Strikeforce - Barnett vs. Cormier</a></td>
+						<td><nobr>May. 19, 2012</nobr></td>
+						<td>Strikeforce</td>
+												<td>San Jose, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/585">UFC on FUEL TV 3</a></td>
+						<td><nobr>May. 15, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Fairfax, Virginia, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/584">UFC on Fox 3</a></td>
+						<td><nobr>May. 5, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>East Rutherford, New Jersey, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/581">UFC 145: Jones vs. Evans</a></td>
+						<td><nobr>Apr. 21, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Atlanta, Georgia, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/579">UFC on FUEL TV 2</a></td>
+						<td><nobr>Apr. 14, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Stockholm, Sweden</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/580">Strikeforce - Tate vs. Rousey</a></td>
+						<td><nobr>Mar. 3, 2012</nobr></td>
+						<td>Strikeforce</td>
+												<td>Columbus, Ohio, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/577">UFC on FX 2</a></td>
+						<td><nobr>Mar. 2, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Sydney, NSW, Australia</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/572">UFC 144: Edgar vs. Henderson</a></td>
+						<td><nobr>Feb. 25, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/578">UFC on FUEL TV 1</a></td>
+						<td><nobr>Feb. 15, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Omaha, Nebraska, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/575">UFC 143: Diaz vs. Condit</a></td>
+						<td><nobr>Feb. 4, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/574">UFC on Fox 2</a></td>
+						<td><nobr>Jan. 28, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Chicago, Illinois, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/571">UFC on FX 1</a></td>
+						<td><nobr>Jan. 20, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Nashville, Tennessee, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/573">UFC 142: Aldo vs. Mendes</a></td>
+						<td><nobr>Jan. 14, 2012</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Rio de Janeiro, Brazil</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/576">Strikeforce - Rockhold vs. Jardine</a></td>
+						<td><nobr>Jan. 7, 2012</nobr></td>
+						<td>Strikeforce</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/569">DREAM - New Year! 2011</a></td>
+						<td><nobr>Dec. 31, 2011</nobr></td>
+						<td>DREAM</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/568">UFC 141: Lesnar vs. Overeem</a></td>
+						<td><nobr>Dec. 30, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/567">Strikeforce - Melendez vs. Masvidal</a></td>
+						<td><nobr>Dec. 17, 2011</nobr></td>
+						<td>Strikeforce</td>
+												<td>San Diego, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/566">UFC 140: Jones vs. Machida</a></td>
+						<td><nobr>Dec. 10, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Toronto, Ontario, Canada</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/565">UFC - TUF 14 Finale</a></td>
+						<td><nobr>Dec. 3, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/570">M-1 Global - Fedor vs. Monson</a></td>
+						<td><nobr>Nov. 20, 2011</nobr></td>
+						<td>M-1 Global</td>
+												<td>Moscow, Russia</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/564">UFC 139: Shogun vs. Henderson</a></td>
+						<td><nobr>Nov. 19, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>San Jose, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/563">Strikeforce Challengers 20</a></td>
+						<td><nobr>Nov. 18, 2011</nobr></td>
+						<td>Strikeforce</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/561">UFC on Fox 1</a></td>
+						<td><nobr>Nov. 12, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Anaheim, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/562">UFC 138: Leben vs. Munoz</a></td>
+						<td><nobr>Nov. 5, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Birmingham, England, United Kingdom</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/560">UFC 137: Penn vs. Diaz</a></td>
+						<td><nobr>Oct. 29, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/555">UFC 136: Edgar vs. Maynard 3</a></td>
+						<td><nobr>Oct. 8, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Houston, Texas, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/558">UFC on Versus 6</a></td>
+						<td><nobr>Oct. 1, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Washington, DC, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/557">DREAM 17</a></td>
+						<td><nobr>Sep. 24, 2011</nobr></td>
+						<td>DREAM</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/554">UFC 135: Jones vs. Rampage</a></td>
+						<td><nobr>Sep. 24, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Denver, Colorado, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/559">Strikeforce Challengers 19</a></td>
+						<td><nobr>Sep. 23, 2011</nobr></td>
+						<td>Strikeforce</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/553">UFC Fight Night 25</a></td>
+						<td><nobr>Sep. 17, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>New Orleans, Louisiana, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/556">Strikeforce - Barnett vs. Kharitonov</a></td>
+						<td><nobr>Sep. 10, 2011</nobr></td>
+						<td>Strikeforce</td>
+												<td>Cincinnati, Ohio, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/545">UFC 134: Silva vs. Okami</a></td>
+						<td><nobr>Aug. 27, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Rio de Janeiro, Brazil</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/551">UFC on Versus 5</a></td>
+						<td><nobr>Aug. 14, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Milwaukee, Wisconsin, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/552">Strikeforce Challengers 18</a></td>
+						<td><nobr>Aug. 12, 2011</nobr></td>
+						<td>Strikeforce</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/547">UFC 133: Evans vs. Ortiz 2</a></td>
+						<td><nobr>Aug. 6, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Philadelphia, Pennsylvania, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/548">Strikeforce - Fedor vs. Henderson</a></td>
+						<td><nobr>Jul. 30, 2011</nobr></td>
+						<td>Strikeforce</td>
+												<td>Hoffman Estates, Illinois, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/549">Strikeforce Challengers 17</a></td>
+						<td><nobr>Jul. 22, 2011</nobr></td>
+						<td>Strikeforce</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/550">DREAM - Japan GP Final</a></td>
+						<td><nobr>Jul. 16, 2011</nobr></td>
+						<td>DREAM</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/542">UFC 132: Cruz vs. Faber</a></td>
+						<td><nobr>Jul. 2, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/543">UFC on Versus 4</a></td>
+						<td><nobr>Jun. 26, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Pittsburgh, Pennsylvania, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/546">Strikeforce Challengers 16</a></td>
+						<td><nobr>Jun. 24, 2011</nobr></td>
+						<td>Strikeforce</td>
+												<td>Kent, Washington, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/538">Strikeforce - Overeem vs. Werdum</a></td>
+						<td><nobr>Jun. 18, 2011</nobr></td>
+						<td>Strikeforce</td>
+												<td>Dallas, Texas, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/540">UFC 131: Dos Santos vs. Carwin</a></td>
+						<td><nobr>Jun. 11, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Vancouver, British Columbia, Canada</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/541">UFC - TUF 13 Finale</a></td>
+						<td><nobr>Jun. 4, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/544">DREAM - Fight for Japan</a></td>
+						<td><nobr>May. 29, 2011</nobr></td>
+						<td>DREAM</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/536">UFC 130: Rampage vs. Hamill</a></td>
+						<td><nobr>May. 28, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/534">UFC 129: St-Pierre vs. Shields</a></td>
+						<td><nobr>Apr. 30, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Toronto, Ontario, Canada</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/537">Strikeforce - Diaz vs. Daley</a></td>
+						<td><nobr>Apr. 9, 2011</nobr></td>
+						<td>Strikeforce</td>
+												<td>San Diego, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/539">Strikeforce Challengers 15</a></td>
+						<td><nobr>Apr. 1, 2011</nobr></td>
+						<td>Strikeforce</td>
+												<td>Stockton, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/533">UFC Fight Night 24</a></td>
+						<td><nobr>Mar. 26, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Seattle, Washington, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/528">UFC 128: Shogun vs. Jones</a></td>
+						<td><nobr>Mar. 19, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Newark, New Jersey, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/535">Strikeforce - Feijao vs. Henderson</a></td>
+						<td><nobr>Mar. 5, 2011</nobr></td>
+						<td>Strikeforce</td>
+												<td>Columbus, Ohio, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/530">UFC on Versus 3</a></td>
+						<td><nobr>Mar. 3, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Louisville, Kentucky, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/526">UFC 127: Penn vs. Fitch</a></td>
+						<td><nobr>Feb. 26, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, Australia</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/531">Strikeforce Challengers 14</a></td>
+						<td><nobr>Feb. 18, 2011</nobr></td>
+						<td>Strikeforce</td>
+												<td>Cedar Park, Texas, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/529">Strikeforce - Fedor vs. Silva</a></td>
+						<td><nobr>Feb. 12, 2011</nobr></td>
+						<td>Strikeforce</td>
+												<td>East Rutherford, New Jersey, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/525">UFC 126: Silva vs. Belfort</a></td>
+						<td><nobr>Feb. 5, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/527">Strikeforce - Diaz vs. Cyborg</a></td>
+						<td><nobr>Jan. 29, 2011</nobr></td>
+						<td>Strikeforce</td>
+												<td>San Jose, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/522">UFC Fight Night 23 - Fight for the Troops 2</a></td>
+						<td><nobr>Jan. 22, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Killeen, Texas, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/524">Strikeforce Challengers 13</a></td>
+						<td><nobr>Jan. 7, 2011</nobr></td>
+						<td>Strikeforce</td>
+												<td>Nashville, Tennessee, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/518">UFC 125: Resolution</a></td>
+						<td><nobr>Jan. 1, 2011</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/523">Dynamite!! 2010</a></td>
+						<td><nobr>Dec. 31, 2010</nobr></td>
+						<td>DREAM</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/503">WEC 53: Henderson vs. Pettis</a></td>
+						<td><nobr>Dec. 16, 2010</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Glendale, Arizona, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/517">UFC 124: St. Pierre vs. Koscheck 2</a></td>
+						<td><nobr>Dec. 11, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Montreal, Quebec, Canada</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/507">UFC - TUF 12 Finale</a></td>
+						<td><nobr>Dec. 4, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/504">Strikeforce - Henderson vs. Babalu</a></td>
+						<td><nobr>Dec. 4, 2010</nobr></td>
+						<td>Strikeforce</td>
+												<td>St. Louis, Missouri, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/498">UFC 123: Rampage vs. Machida</a></td>
+						<td><nobr>Nov. 20, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Auburn Hills, Michigan, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/508">Strikeforce Challengers 12</a></td>
+						<td><nobr>Nov. 19, 2010</nobr></td>
+						<td>Strikeforce</td>
+												<td>Jackson, Mississippi, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/497">UFC 122: Marquardt vs. Okami</a></td>
+						<td><nobr>Nov. 13, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Oberhausen, Nordrhein-Westfalen, Germany</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/502">WEC 52: Faber vs. Mizugaki</a></td>
+						<td><nobr>Nov. 11, 2010</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/606">DEEP 50 - Impact</a></td>
+						<td><nobr>Oct. 24, 2010</nobr></td>
+						<td>DEEP</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/494">UFC 121: Lesnar vs. Velasquez</a></td>
+						<td><nobr>Oct. 23, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Anaheim, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/496">Strikeforce Challengers 11</a></td>
+						<td><nobr>Oct. 22, 2010</nobr></td>
+						<td>Strikeforce</td>
+												<td>Fresno, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/485">UFC 120: Bisping vs. Akiyama</a></td>
+						<td><nobr>Oct. 16, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>London, England, United Kingdom</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/495">Strikeforce - Diaz vs. Noons 2</a></td>
+						<td><nobr>Oct. 9, 2010</nobr></td>
+						<td>Strikeforce</td>
+												<td>San Jose, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/487">WEC 51: Aldo vs. Gamburyan</a></td>
+						<td><nobr>Sep. 30, 2010</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Broomfield, Colorado, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/486">DREAM 16</a></td>
+						<td><nobr>Sep. 25, 2010</nobr></td>
+						<td>DREAM</td>
+												<td>Nagoya, Aichi, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/484">UFC 119: Mir vs. Cro Cop</a></td>
+						<td><nobr>Sep. 25, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Indianapolis, Indiana, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/479">UFC Fight Night 22</a></td>
+						<td><nobr>Sep. 15, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Austin, Texas, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/466">UFC 118: Edgar vs. Penn 2</a></td>
+						<td><nobr>Aug. 28, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Boston, Massachusetts, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/477">Strikeforce - Houston</a></td>
+						<td><nobr>Aug. 21, 2010</nobr></td>
+						<td>Strikeforce</td>
+												<td>Houston, Texas, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/465">WEC 50: Cruz vs. Benavidez</a></td>
+						<td><nobr>Aug. 18, 2010</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/478">Strikeforce Challengers 10</a></td>
+						<td><nobr>Aug. 13, 2010</nobr></td>
+						<td>Strikeforce</td>
+												<td>Phoenix, Arizona, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/463">UFC 117: Silva vs. Sonnen</a></td>
+						<td><nobr>Aug. 7, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Oakland, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/462">UFC on Versus 2</a></td>
+						<td><nobr>Aug. 1, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>San Diego, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/464">Strikeforce Challengers 9</a></td>
+						<td><nobr>Jul. 23, 2010</nobr></td>
+						<td>Strikeforce</td>
+												<td>Everett, Washington, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/461">DREAM 15</a></td>
+						<td><nobr>Jul. 10, 2010</nobr></td>
+						<td>DREAM</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/492">Impact FC 1</a></td>
+						<td><nobr>Jul. 10, 2010</nobr></td>
+						<td>Impact FC</td>
+												<td>Brisbane, Queensland, Australia</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/457">UFC 116: Lesnar vs. Carwin</a></td>
+						<td><nobr>Jul. 3, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/459">Strikeforce - Fedor vs. Werdum</a></td>
+						<td><nobr>Jun. 26, 2010</nobr></td>
+						<td>Strikeforce</td>
+												<td>San Jose, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/451">WEC 49: Varner vs. Shalorus</a></td>
+						<td><nobr>Jun. 20, 2010</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Edmonton, Alberta, Canada</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/455">UFC - TUF 11 Finale</a></td>
+						<td><nobr>Jun. 19, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/456">Strikeforce - Los Angeles</a></td>
+						<td><nobr>Jun. 16, 2010</nobr></td>
+						<td>Strikeforce</td>
+												<td>Los Angeles, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/449">UFC 115: Liddell vs. Franklin</a></td>
+						<td><nobr>Jun. 12, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Vancouver, British Columbia, Canada</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/446">UFC 114: Jackson vs. Evans</a></td>
+						<td><nobr>May. 29, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/450">DREAM 14</a></td>
+						<td><nobr>May. 29, 2010</nobr></td>
+						<td>DREAM</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/452">Strikeforce Challengers 8</a></td>
+						<td><nobr>May. 21, 2010</nobr></td>
+						<td>Strikeforce</td>
+												<td>Portland, Oregon, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/447">Strikeforce - Heavy Artillery</a></td>
+						<td><nobr>May. 15, 2010</nobr></td>
+						<td>Strikeforce</td>
+												<td>St. Louis, Missouri, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/445">UFC 113: Machida vs. Shogun 2</a></td>
+						<td><nobr>May. 8, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Montreal, Quebec, Canada</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/441">WEC 48: Aldo vs. Faber</a></td>
+						<td><nobr>Apr. 24, 2010</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Sacramento, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/448">Strikeforce - Nashville</a></td>
+						<td><nobr>Apr. 17, 2010</nobr></td>
+						<td>Strikeforce</td>
+												<td>Nashville, Tennessee, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/437">UFC 112: Invincible</a></td>
+						<td><nobr>Apr. 10, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Abu Dhabi, United Arab Emirates</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/440">UFC Fight Night 21</a></td>
+						<td><nobr>Mar. 31, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Charlotte, North Carolina, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/435">UFC 111: St. Pierre vs. Hardy</a></td>
+						<td><nobr>Mar. 27, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Newark, New Jersey, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/444">Strikeforce Challengers 7</a></td>
+						<td><nobr>Mar. 26, 2010</nobr></td>
+						<td>Strikeforce</td>
+												<td>Fresno, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/442">DREAM 13</a></td>
+						<td><nobr>Mar. 22, 2010</nobr></td>
+						<td>DREAM</td>
+												<td>Yokohama, Kanagawa, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/436">UFC on Versus 1</a></td>
+						<td><nobr>Mar. 21, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Broomfield, Colorado, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/434">WEC 47: Bowles vs. Cruz</a></td>
+						<td><nobr>Mar. 6, 2010</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Columbus, Ohio, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/443">Strikeforce Challengers 6</a></td>
+						<td><nobr>Feb. 26, 2010</nobr></td>
+						<td>Strikeforce</td>
+												<td>San Jose, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/427">UFC 110: Nogueira vs. Velasquez</a></td>
+						<td><nobr>Feb. 20, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, Australia</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/426">UFC 109: Relentless</a></td>
+						<td><nobr>Feb. 6, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/431">Strikeforce - Miami</a></td>
+						<td><nobr>Jan. 30, 2010</nobr></td>
+						<td>Strikeforce</td>
+												<td>Miami, Florida, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/425">UFC Fight Night 20</a></td>
+						<td><nobr>Jan. 11, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Fairfax, Virginia, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/433">WEC 46: Varner vs. Henderson</a></td>
+						<td><nobr>Jan. 10, 2010</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Sacramento, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/424">UFC 108: Evans vs. Silva</a></td>
+						<td><nobr>Jan. 2, 2010</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/428">Dynamite!! 2009</a></td>
+						<td><nobr>Dec. 31, 2009</nobr></td>
+						<td>DREAM</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/430">Strikeforce - Evolution</a></td>
+						<td><nobr>Dec. 19, 2009</nobr></td>
+						<td>Strikeforce</td>
+												<td>San Jose, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/432">WEC 45: Cerrone vs. Ratcliff</a></td>
+						<td><nobr>Dec. 19, 2009</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/422">UFC 107: Penn vs. Sanchez</a></td>
+						<td><nobr>Dec. 12, 2009</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Memphis, Tennessee, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/413">UFC - TUF 10 Finale</a></td>
+						<td><nobr>Dec. 5, 2009</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/412">UFC 106: Ortiz vs. Griffin 2</a></td>
+						<td><nobr>Nov. 21, 2009</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/429">Strikeforce Challengers 5</a></td>
+						<td><nobr>Nov. 20, 2009</nobr></td>
+						<td>Strikeforce</td>
+												<td>Kansas City, Kansas, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/423">WEC 44: Brown vs. Aldo</a></td>
+						<td><nobr>Nov. 18, 2009</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/411">UFC 105: Couture vs. Vera</a></td>
+						<td><nobr>Nov. 14, 2009</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Manchester, England, United Kingdom</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/410">Strikeforce - Fedor vs. Rogers</a></td>
+						<td><nobr>Nov. 7, 2009</nobr></td>
+						<td>Strikeforce</td>
+												<td>Hoffman Estates, Illinois, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/409">Strikeforce Challengers 4</a></td>
+						<td><nobr>Nov. 6, 2009</nobr></td>
+						<td>Strikeforce</td>
+												<td>Fresno, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/415">DREAM 12</a></td>
+						<td><nobr>Oct. 25, 2009</nobr></td>
+						<td>DREAM</td>
+												<td>Osaka, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/316">UFC 104: Machida vs. Shogun</a></td>
+						<td><nobr>Oct. 24, 2009</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Los Angeles, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/467">Ultimate Glory 11: A Decade of Fights</a></td>
+						<td><nobr>Oct. 17, 2009</nobr></td>
+						<td>Ultimate Glory</td>
+												<td>Amsterdam, Noord-Holland, Netherlands</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/313">WEC 43: Cerrone vs. Henderson</a></td>
+						<td><nobr>Oct. 10, 2009</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>San Antonio, Texas, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/414">DREAM 11: Featherweight Grand Prix 2009 Final Round</a></td>
+						<td><nobr>Oct. 6, 2009</nobr></td>
+						<td>DREAM</td>
+												<td>Yokohama, Kanagawa, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/408">Strikeforce Challengers 3</a></td>
+						<td><nobr>Sep. 25, 2009</nobr></td>
+						<td>Strikeforce</td>
+												<td>Tulsa, Oklahoma, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/315">UFC 103: Franklin vs. Belfort</a></td>
+						<td><nobr>Sep. 19, 2009</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Dallas, Texas, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/314">UFC Fight Night 19</a></td>
+						<td><nobr>Sep. 16, 2009</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Oklahoma City, Oklahoma, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/297">UFC 102: Couture vs. Nogueira</a></td>
+						<td><nobr>Aug. 29, 2009</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Portland, Oregon, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/480">M-1 Global - Breakthrough</a></td>
+						<td><nobr>Aug. 28, 2009</nobr></td>
+						<td>M-1 Global</td>
+												<td>Kansas City, Kansas, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/407">Strikeforce - Carano vs. Cyborg</a></td>
+						<td><nobr>Aug. 15, 2009</nobr></td>
+						<td>Strikeforce</td>
+												<td>San Jose, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/312">WEC 42: Torres vs. Bowles</a></td>
+						<td><nobr>Aug. 9, 2009</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/296">UFC 101: Declaration</a></td>
+						<td><nobr>Aug. 8, 2009</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Philadelphia, Pennsylvania, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/307">DREAM 10: Welterweight Grand Prix 2009 Final Round</a></td>
+						<td><nobr>Jul. 20, 2009</nobr></td>
+						<td>DREAM</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/295">UFC 100</a></td>
+						<td><nobr>Jul. 11, 2009</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/294">UFC - TUF 9 Finale</a></td>
+						<td><nobr>Jun. 20, 2009</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/406">Strikeforce Challengers 2</a></td>
+						<td><nobr>Jun. 19, 2009</nobr></td>
+						<td>Strikeforce</td>
+												<td>Kent, Washington, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/293">UFC 99: The Comeback</a></td>
+						<td><nobr>Jun. 13, 2009</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Cologne, Nordrhein-Westfalen, Germany</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/311">WEC 41: Brown vs. Faber 2</a></td>
+						<td><nobr>Jun. 7, 2009</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Sacramento, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/405">Strikeforce - Lawler vs. Shields</a></td>
+						<td><nobr>Jun. 6, 2009</nobr></td>
+						<td>Strikeforce</td>
+												<td>St. Louis, Missouri, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/306">DREAM 9: Featherweight Grand Prix 2009 2nd Round</a></td>
+						<td><nobr>May. 26, 2009</nobr></td>
+						<td>DREAM</td>
+												<td>Yokohama, Kanagawa, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/292">UFC 98: Evans vs. Machida</a></td>
+						<td><nobr>May. 23, 2009</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/404">Strikeforce Challengers 1</a></td>
+						<td><nobr>May. 15, 2009</nobr></td>
+						<td>Strikeforce</td>
+												<td>Fresno, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/458">Jungle Fight 13</a></td>
+						<td><nobr>May. 9, 2009</nobr></td>
+						<td>Jungle Fight</td>
+												<td>Fortaleza, Ceara, Brazil</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/267">UFC 97: Redemption</a></td>
+						<td><nobr>Apr. 18, 2009</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Montreal, Quebec, Canada</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/453">WFC 8: D-Day</a></td>
+						<td><nobr>Apr. 18, 2009</nobr></td>
+						<td>World Free Fight Challenge</td>
+												<td>Ljubljana, Slovenia</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/403">Strikeforce - Shamrock vs. Diaz</a></td>
+						<td><nobr>Apr. 11, 2009</nobr></td>
+						<td>Strikeforce</td>
+												<td>San Jose, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/310">WEC 40: Torres vs. Mizugaki</a></td>
+						<td><nobr>Apr. 5, 2009</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Chicago, Illinois, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/305">DREAM 8: Welterweight Grand Prix 2009 1st Round</a></td>
+						<td><nobr>Apr. 5, 2009</nobr></td>
+						<td>DREAM</td>
+												<td>Nagoya, Aichi, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/291">UFC Fight Night 18</a></td>
+						<td><nobr>Apr. 1, 2009</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Nashville, Tennessee, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/454">Ultimate Gladiators</a></td>
+						<td><nobr>Mar. 29, 2009</nobr></td>
+						<td>Ultimate Gladiators</td>
+												<td>Nottingham, England, United Kingdom</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/481">Sengoku - Seventh Battle</a></td>
+						<td><nobr>Mar. 20, 2009</nobr></td>
+						<td>Sengoku</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/304">DREAM 7: Featherweight Grand Prix 2009 1st Round</a></td>
+						<td><nobr>Mar. 8, 2009</nobr></td>
+						<td>DREAM</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/266">UFC 96: Jackson vs. Jardine</a></td>
+						<td><nobr>Mar. 7, 2009</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Columbus, Ohio, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/309">WEC 39: Brown vs. Garcia</a></td>
+						<td><nobr>Mar. 1, 2009</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Corpus Christi, Texas, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/265">UFC 95: Sanchez vs. Stevenson</a></td>
+						<td><nobr>Feb. 21, 2009</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>London, England, United Kingdom</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/290">UFC Fight Night 17</a></td>
+						<td><nobr>Feb. 7, 2009</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Tampa, Florida, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/264">UFC 94: St. Pierre vs. Penn 2</a></td>
+						<td><nobr>Jan. 31, 2009</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/191">WEC 38: Varner vs. Cerrone</a></td>
+						<td><nobr>Jan. 25, 2009</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>San Diego, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/262">Affliction - Day of Reckoning</a></td>
+						<td><nobr>Jan. 24, 2009</nobr></td>
+						<td>Affliction</td>
+												<td>Anaheim, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/263">UFC 93: Franklin vs. Henderson</a></td>
+						<td><nobr>Jan. 17, 2009</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Dublin, Leinster, Ireland</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/482">Sengoku - no Ran 2009</a></td>
+						<td><nobr>Jan. 4, 2009</nobr></td>
+						<td>Sengoku</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/308">Dynamite!! 2008</a></td>
+						<td><nobr>Dec. 31, 2008</nobr></td>
+						<td>DREAM</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/1">UFC 92: The Ultimate 2008</a></td>
+						<td><nobr>Dec. 27, 2008</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/2">UFC - TUF 8 Finale</a></td>
+						<td><nobr>Dec. 13, 2008</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/420">Adrenaline MMA 2: Miletich vs. Denny</a></td>
+						<td><nobr>Dec. 11, 2008</nobr></td>
+						<td>Adrenaline MMA</td>
+												<td>Moline, Illinois, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/3">UFC Fight Night 16 - Fight for the Troops</a></td>
+						<td><nobr>Dec. 10, 2008</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Fayetteville, North Carolina, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/192">WEC 37: Torres vs. Tapia</a></td>
+						<td><nobr>Dec. 3, 2008</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/245">Strikeforce - Destruction</a></td>
+						<td><nobr>Nov. 21, 2008</nobr></td>
+						<td>Strikeforce</td>
+												<td>San Jose, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/4">UFC 91: Couture vs. Lesnar</a></td>
+						<td><nobr>Nov. 15, 2008</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/468">Ultimate Glory 10: The Battle of Arnhem</a></td>
+						<td><nobr>Nov. 9, 2008</nobr></td>
+						<td>Ultimate Glory</td>
+												<td>Arnhem, Gelderland, Netherlands</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/193">WEC 36: Faber vs. Brown</a></td>
+						<td><nobr>Nov. 5, 2008</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Hollywood, Florida, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/460">Sengoku - Sixth Battle</a></td>
+						<td><nobr>Nov. 1, 2008</nobr></td>
+						<td>Sengoku</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/5">UFC 90: Silva vs. Cote</a></td>
+						<td><nobr>Oct. 25, 2008</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Rosemont, Illinois, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/6">UFC 89: Bisping vs. Leben</a></td>
+						<td><nobr>Oct. 18, 2008</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Birmingham, England, United Kingdom</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/229">EliteXC - Heat</a></td>
+						<td><nobr>Oct. 4, 2008</nobr></td>
+						<td>EliteXC</td>
+												<td>Sunrise, Florida, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/246">Strikeforce - Payback</a></td>
+						<td><nobr>Oct. 3, 2008</nobr></td>
+						<td>Strikeforce</td>
+												<td>Denver, Colorado, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/483">Sengoku - Fifth Battle</a></td>
+						<td><nobr>Sep. 28, 2008</nobr></td>
+						<td>Sengoku</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/303">DREAM 6: Middleweight Grand Prix 2008 Final Round</a></td>
+						<td><nobr>Sep. 23, 2008</nobr></td>
+						<td>DREAM</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/247">Strikeforce - At the Mansion 2</a></td>
+						<td><nobr>Sep. 20, 2008</nobr></td>
+						<td>Strikeforce</td>
+												<td>Beverly Hills, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/7">UFC Fight Night 15</a></td>
+						<td><nobr>Sep. 17, 2008</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Omaha, Nebraska, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/248">Strikeforce - Young Guns 3</a></td>
+						<td><nobr>Sep. 13, 2008</nobr></td>
+						<td>Strikeforce</td>
+												<td>San Jose, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/8">UFC 88: Breakthrough</a></td>
+						<td><nobr>Sep. 6, 2008</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Atlanta, Georgia, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/9">UFC 87: Seek And Destroy</a></td>
+						<td><nobr>Aug. 9, 2008</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Minneapolis, Minnesota, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/194">WEC 35: Condit vs. Miura</a></td>
+						<td><nobr>Aug. 3, 2008</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/232">EliteXC - Unfinished Business</a></td>
+						<td><nobr>Jul. 26, 2008</nobr></td>
+						<td>EliteXC</td>
+												<td>Stockton, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/302">DREAM 5: Lightweight Grand Prix 2008 Final Round</a></td>
+						<td><nobr>Jul. 21, 2008</nobr></td>
+						<td>DREAM</td>
+												<td>Osaka, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/10">UFC Fight Night 14</a></td>
+						<td><nobr>Jul. 19, 2008</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/261">Affliction - Banned</a></td>
+						<td><nobr>Jul. 19, 2008</nobr></td>
+						<td>Affliction</td>
+												<td>Anaheim, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/11">UFC 86: Jackson vs. Griffin</a></td>
+						<td><nobr>Jul. 5, 2008</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/249">Strikeforce - Melendez vs. Thomson</a></td>
+						<td><nobr>Jun. 27, 2008</nobr></td>
+						<td>Strikeforce</td>
+												<td>San Jose, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/12">UFC - TUF 7 Finale</a></td>
+						<td><nobr>Jun. 21, 2008</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/301">DREAM 4: Middleweight Grand Prix 2008 2nd Round</a></td>
+						<td><nobr>Jun. 15, 2008</nobr></td>
+						<td>DREAM</td>
+												<td>Yokohama, Kanagawa, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/233">EliteXC - Return of the King</a></td>
+						<td><nobr>Jun. 14, 2008</nobr></td>
+						<td>EliteXC</td>
+												<td>Oahu, Hawaii, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/13">UFC 85: Bedlam</a></td>
+						<td><nobr>Jun. 7, 2008</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>London, England, United Kingdom</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/195">WEC 34: Faber vs. Pulver</a></td>
+						<td><nobr>Jun. 1, 2008</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Sacramento, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/234">EliteXC - Primetime</a></td>
+						<td><nobr>May. 31, 2008</nobr></td>
+						<td>EliteXC</td>
+												<td>Newark, New Jersey, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/14">UFC 84: Ill Will</a></td>
+						<td><nobr>May. 24, 2008</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/491">Sengoku - Second Battle</a></td>
+						<td><nobr>May. 18, 2008</nobr></td>
+						<td>Sengoku</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/268">IFL - Connecticut 2008</a></td>
+						<td><nobr>May. 16, 2008</nobr></td>
+						<td>International Fight League</td>
+												<td>Uncasville, Connecticut, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/300">DREAM 3: Lightweight Grand Prix 2008 2nd Round</a></td>
+						<td><nobr>May. 11, 2008</nobr></td>
+						<td>DREAM</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/299">DREAM 2: Middleweight Grand Prix 2008 1st Round</a></td>
+						<td><nobr>Apr. 29, 2008</nobr></td>
+						<td>DREAM</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/15">UFC 83: Serra vs. St-Pierre 2</a></td>
+						<td><nobr>Apr. 19, 2008</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Montreal, Quebec, Canada</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/16">UFC Fight Night 13</a></td>
+						<td><nobr>Apr. 2, 2008</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Broomfield, Colorado, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/250">Strikeforce - Shamrock vs. Le</a></td>
+						<td><nobr>Mar. 29, 2008</nobr></td>
+						<td>Strikeforce</td>
+												<td>San Jose, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/196">WEC 33: Marshall vs. Stann</a></td>
+						<td><nobr>Mar. 26, 2008</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/298">DREAM 1: Lightweight Grand Prix 2008 1st Round</a></td>
+						<td><nobr>Mar. 15, 2008</nobr></td>
+						<td>DREAM</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/490">Sengoku - First Battle</a></td>
+						<td><nobr>Mar. 5, 2008</nobr></td>
+						<td>Sengoku</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/387">M-1 - Slamm</a></td>
+						<td><nobr>Mar. 2, 2008</nobr></td>
+						<td>M-1 Global</td>
+												<td>Almere, Flevoland, Netherlands</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/17">UFC 82: Pride of a Champion</a></td>
+						<td><nobr>Mar. 1, 2008</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Columbus, Ohio, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/251">Strikeforce - At the Dome</a></td>
+						<td><nobr>Feb. 23, 2008</nobr></td>
+						<td>Strikeforce</td>
+												<td>Tacoma, Washington, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/237">EliteXC - Street Certified</a></td>
+						<td><nobr>Feb. 16, 2008</nobr></td>
+						<td>EliteXC</td>
+												<td>Miami, Florida, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/197">WEC 32: Condit vs. Prater</a></td>
+						<td><nobr>Feb. 13, 2008</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Rio Rancho, New Mexico, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/18">UFC 81: Breaking Point</a></td>
+						<td><nobr>Feb. 2, 2008</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/252">Strikeforce - Young Guns 2</a></td>
+						<td><nobr>Feb. 1, 2008</nobr></td>
+						<td>Strikeforce</td>
+												<td>San Jose, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/385">HCF - Destiny</a></td>
+						<td><nobr>Feb. 1, 2008</nobr></td>
+						<td>Hardcore Championship Fighting</td>
+												<td>Calgary, Alberta, Canada</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/238">EliteXC - ShoXC 4</a></td>
+						<td><nobr>Jan. 25, 2008</nobr></td>
+						<td>EliteXC</td>
+												<td>Atlantic City, New Jersey, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/19">UFC Fight Night 12</a></td>
+						<td><nobr>Jan. 23, 2008</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/20">UFC 80: Rapid Fire</a></td>
+						<td><nobr>Jan. 19, 2008</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Newcastle, England, United Kingdom</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/519">K-1 Dynamite!! 2007</a></td>
+						<td><nobr>Dec. 31, 2007</nobr></td>
+						<td>K-1 MMA</td>
+												<td>Osaka, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/389">Yarrenoka! - New Year&#039;s Eve 2007</a></td>
+						<td><nobr>Dec. 31, 2007</nobr></td>
+						<td>Yarennoka</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/21">UFC 79: Nemesis</a></td>
+						<td><nobr>Dec. 29, 2007</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/198">WEC 31: Faber vs. Curran</a></td>
+						<td><nobr>Dec. 12, 2007</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/22">UFC - TUF 6 Finale</a></td>
+						<td><nobr>Dec. 8, 2007</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/376">Fury FC 5: Final Conflict</a></td>
+						<td><nobr>Dec. 6, 2007</nobr></td>
+						<td>Fury Fighting Championship</td>
+												<td>Sao Paulo, Brazil</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/23">UFC 78: Validation</a></td>
+						<td><nobr>Nov. 17, 2007</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Newark, New Jersey, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/253">Strikeforce - Four Men Enter, One Man Survives</a></td>
+						<td><nobr>Nov. 16, 2007</nobr></td>
+						<td>Strikeforce</td>
+												<td>San Jose, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/239">EliteXC - Renegade</a></td>
+						<td><nobr>Nov. 10, 2007</nobr></td>
+						<td>EliteXC</td>
+												<td>Corpus Christi, Texas, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/272">IFL - World Grand Prix Semifinals</a></td>
+						<td><nobr>Nov. 3, 2007</nobr></td>
+						<td>International Fight League</td>
+												<td>Chicago, Illinois, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/505">K-1 Hero&#039;s Korea 2007</a></td>
+						<td><nobr>Oct. 28, 2007</nobr></td>
+						<td>K-1 MMA</td>
+												<td>Seoul, South Korea</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/24">UFC 77: Hostile Territory</a></td>
+						<td><nobr>Oct. 20, 2007</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Cincinnati, Ohio, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/386">HCF - Title Wave</a></td>
+						<td><nobr>Oct. 19, 2007</nobr></td>
+						<td>Hardcore Championship Fighting</td>
+												<td>Calgary, Alberta, Canada</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/254">Strikeforce - Playboy Mansion</a></td>
+						<td><nobr>Sep. 29, 2007</nobr></td>
+						<td>Strikeforce</td>
+												<td>Beverly Hills, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/25">UFC 76: Knockout</a></td>
+						<td><nobr>Sep. 22, 2007</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Anaheim, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/418">Cage Rage 23: Unbelievable</a></td>
+						<td><nobr>Sep. 22, 2007</nobr></td>
+						<td>Cage Rage</td>
+												<td>London, England, United Kingdom</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/273">IFL - 2007 Team Championship Final</a></td>
+						<td><nobr>Sep. 20, 2007</nobr></td>
+						<td>International Fight League</td>
+												<td>Hollywood, Florida, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/26">UFC Fight Night 11</a></td>
+						<td><nobr>Sep. 19, 2007</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/469">K-1 Hero&#039;s 10</a></td>
+						<td><nobr>Sep. 17, 2007</nobr></td>
+						<td>K-1 MMA</td>
+												<td>Yokohama, Kanagawa, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/241">EliteXC - Uprising</a></td>
+						<td><nobr>Sep. 15, 2007</nobr></td>
+						<td>EliteXC</td>
+												<td>Oahu, Hawaii, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/27">UFC 75: Champion vs. Champion</a></td>
+						<td><nobr>Sep. 8, 2007</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>London, England, United Kingdom</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/199">WEC 30: McCullough vs. Crunkilton</a></td>
+						<td><nobr>Sep. 5, 2007</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/28">UFC 74: Respect</a></td>
+						<td><nobr>Aug. 25, 2007</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/200">WEC 29: Condit vs. Larson</a></td>
+						<td><nobr>Aug. 5, 2007</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/375">Fury FC 4: High Voltage</a></td>
+						<td><nobr>Aug. 4, 2007</nobr></td>
+						<td>Fury Fighting Championship</td>
+												<td>Teresopolis, Rio de Janeiro, Brazil</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/274">IFL - 2007 Semifinals</a></td>
+						<td><nobr>Aug. 2, 2007</nobr></td>
+						<td>International Fight League</td>
+												<td>East Rutherford, New Jersey, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/243">EliteXC - ShoXC 1</a></td>
+						<td><nobr>Jul. 27, 2007</nobr></td>
+						<td>EliteXC</td>
+												<td>Santa Ynez, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/29">UFC 73: Stacked</a></td>
+						<td><nobr>Jul. 7, 2007</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Sacramento, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/30">UFC - TUF 5 Finale</a></td>
+						<td><nobr>Jun. 23, 2007</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/470">K-1 - World GP 2007 in Amsterdam</a></td>
+						<td><nobr>Jun. 23, 2007</nobr></td>
+						<td>K-1 MMA</td>
+												<td>Amsterdam, Noord-Holland, Netherlands</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/255">Strikeforce - Shamrock vs. Baroni</a></td>
+						<td><nobr>Jun. 22, 2007</nobr></td>
+						<td>Strikeforce</td>
+												<td>San Jose, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/31">UFC 72: Victory</a></td>
+						<td><nobr>Jun. 16, 2007</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Belfast, Northern Ireland, United Kingdom</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/32">UFC Fight Night 10</a></td>
+						<td><nobr>Jun. 12, 2007</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Hollywood, Florida, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/201">WEC 28: Faber vs. Farrar</a></td>
+						<td><nobr>Jun. 3, 2007</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/318">K-1 Dynamite!! USA</a></td>
+						<td><nobr>Jun. 2, 2007</nobr></td>
+						<td>K-1 MMA</td>
+												<td>Los Angeles, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/334">TKO 29</a></td>
+						<td><nobr>Jun. 1, 2007</nobr></td>
+						<td>TKO Major League MMA</td>
+												<td>Montreal, Quebec, Canada</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/33">UFC 71: Liddell vs. Jackson</a></td>
+						<td><nobr>May. 26, 2007</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/202">WEC 27: Marshall vs. McElfresh</a></td>
+						<td><nobr>May. 12, 2007</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/34">UFC 70: Nations Collide</a></td>
+						<td><nobr>Apr. 21, 2007</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Manchester, England, United Kingdom</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/419">Cage Rage 21: Judgement Day</a></td>
+						<td><nobr>Apr. 21, 2007</nobr></td>
+						<td>Cage Rage</td>
+												<td>London, England, United Kingdom</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/366">BodogFight - Clash of Nations</a></td>
+						<td><nobr>Apr. 14, 2007</nobr></td>
+						<td>BodogFight</td>
+												<td>St. Petersburg, Russia</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/123">PRIDE 34: Kamikaze</a></td>
+						<td><nobr>Apr. 8, 2007</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/279">IFL - Moline</a></td>
+						<td><nobr>Apr. 7, 2007</nobr></td>
+						<td>International Fight League</td>
+												<td>Moline, Illinois, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/35">UFC 69: Shootout</a></td>
+						<td><nobr>Apr. 7, 2007</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Houston, Texas, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/36">UFC Fight Night 9</a></td>
+						<td><nobr>Apr. 5, 2007</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/203">WEC 26: Condit vs. Alessio</a></td>
+						<td><nobr>Mar. 24, 2007</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/520">K-1 Hero&#039;s 8</a></td>
+						<td><nobr>Mar. 12, 2007</nobr></td>
+						<td>K-1 MMA</td>
+												<td>Nagoya, Aichi, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/381">Floripa Fight 4</a></td>
+						<td><nobr>Mar. 10, 2007</nobr></td>
+						<td>Floripa Fight</td>
+												<td>Florianopolis, Santa Catarina, Brazil</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/37">UFC 68: The Uprising</a></td>
+						<td><nobr>Mar. 3, 2007</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Columbus, Ohio, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/340">Pancrase - Rising 2</a></td>
+						<td><nobr>Feb. 28, 2007</nobr></td>
+						<td>Pancrase</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/124">PRIDE 33: The Second Coming</a></td>
+						<td><nobr>Feb. 24, 2007</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/488">BodogFight - Costa Rica 2/18</a></td>
+						<td><nobr>Feb. 18, 2007</nobr></td>
+						<td>BodogFight</td>
+												<td>Costa Rica</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/341">Shooto - Back to Our Roots 1</a></td>
+						<td><nobr>Feb. 17, 2007</nobr></td>
+						<td>Shooto</td>
+												<td>Yokohama, Kanagawa, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/244">EliteXC - Destiny</a></td>
+						<td><nobr>Feb. 10, 2007</nobr></td>
+						<td>EliteXC</td>
+												<td>Southaven, Mississippi, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/256">Strikeforce - Young Guns</a></td>
+						<td><nobr>Feb. 10, 2007</nobr></td>
+						<td>Strikeforce</td>
+												<td>San Jose, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/38">UFC 67: All or Nothing</a></td>
+						<td><nobr>Feb. 3, 2007</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/39">UFC Fight Night 8</a></td>
+						<td><nobr>Jan. 25, 2007</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Hollywood, Florida, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/204">WEC 25: McCullough vs. Cope</a></td>
+						<td><nobr>Jan. 20, 2007</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/125">PRIDE Shockwave 2006</a></td>
+						<td><nobr>Dec. 31, 2006</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/506">K-1 Dynamite!! 2006</a></td>
+						<td><nobr>Dec. 31, 2006</nobr></td>
+						<td>K-1 MMA</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/40">UFC 66: Liddell vs. Ortiz 2</a></td>
+						<td><nobr>Dec. 30, 2006</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/284">IFL - Championship Final</a></td>
+						<td><nobr>Dec. 29, 2006</nobr></td>
+						<td>International Fight League</td>
+												<td>Uncasville, Connecticut, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/421">BodogFight - St. Petersburg</a></td>
+						<td><nobr>Dec. 16, 2006</nobr></td>
+						<td>BodogFight</td>
+												<td>St. Petersburg, Russia</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/41">UFC Fight Night 7</a></td>
+						<td><nobr>Dec. 13, 2006</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>San Diego, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/257">Strikeforce - Triple Threat</a></td>
+						<td><nobr>Dec. 8, 2006</nobr></td>
+						<td>Strikeforce</td>
+												<td>San Jose, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/374">Fury FC 2</a></td>
+						<td><nobr>Nov. 30, 2006</nobr></td>
+						<td>Fury Fighting Championship</td>
+												<td>Sao Paulo, Brazil</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/382">Storm Samurai 12</a></td>
+						<td><nobr>Nov. 25, 2006</nobr></td>
+						<td>Storm Samurai</td>
+												<td>Curitiba, Parana, Brazil</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/42">UFC 65: Bad Intentions</a></td>
+						<td><nobr>Nov. 18, 2006</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Sacramento, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/472">2H2H - Pride &amp; Honor</a></td>
+						<td><nobr>Nov. 12, 2006</nobr></td>
+						<td>2 Hot 2 Handle</td>
+												<td>Rotterdam, Zuid-Holland, Netherlands</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/43">UFC - TUF 4 Finale</a></td>
+						<td><nobr>Nov. 11, 2006</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/378">Show Fight 5</a></td>
+						<td><nobr>Nov. 9, 2006</nobr></td>
+						<td>Show Fight</td>
+												<td>Sao Paulo, Brazil</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/126">PRIDE Bushido 13</a></td>
+						<td><nobr>Nov. 5, 2006</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Yokohama, Kanagawa, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/127">PRIDE 32: The Real Deal</a></td>
+						<td><nobr>Oct. 21, 2006</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/44">UFC 64: Unstoppable</a></td>
+						<td><nobr>Oct. 14, 2006</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/342">Shooto - Champion Carnival</a></td>
+						<td><nobr>Oct. 14, 2006</nobr></td>
+						<td>Shooto</td>
+												<td>Yokohama, Kanagawa, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/205">WEC 24: Full Force</a></td>
+						<td><nobr>Oct. 12, 2006</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Lemoore, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/45">UFC Fight Night - The Final Chapter</a></td>
+						<td><nobr>Oct. 10, 2006</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Hollywood, Florida, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/509">K-1 Hero&#039;s 7</a></td>
+						<td><nobr>Oct. 9, 2006</nobr></td>
+						<td>K-1 MMA</td>
+												<td>Yokohama, Kanagawa, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/258">Strikeforce - Tank vs. Buentello</a></td>
+						<td><nobr>Oct. 7, 2006</nobr></td>
+						<td>Strikeforce</td>
+												<td>Fresno, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/373">Fury FC 1</a></td>
+						<td><nobr>Sep. 27, 2006</nobr></td>
+						<td>Fury Fighting Championship</td>
+												<td>Sao Paulo, Brazil</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/46">UFC 63: Hughes vs. Penn</a></td>
+						<td><nobr>Sep. 23, 2006</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Anaheim, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/286">IFL - Gracie vs. Miletich</a></td>
+						<td><nobr>Sep. 23, 2006</nobr></td>
+						<td>International Fight League</td>
+												<td>Moline, Illinois, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/438">WPFC 1</a></td>
+						<td><nobr>Sep. 15, 2006</nobr></td>
+						<td>World Pro Fighting Championships</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/128">PRIDE Final Conflict Absolute</a></td>
+						<td><nobr>Sep. 10, 2006</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/129">PRIDE Bushido 12</a></td>
+						<td><nobr>Aug. 27, 2006</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Nagoya, Aichi, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/47">UFC 62: Liddell vs. Sobral</a></td>
+						<td><nobr>Aug. 26, 2006</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/48">UFC Fight Night 6</a></td>
+						<td><nobr>Aug. 17, 2006</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/510">K-1 Hero&#039;s 6</a></td>
+						<td><nobr>Aug. 5, 2006</nobr></td>
+						<td>K-1 MMA</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/360">WFA - King of the Streets</a></td>
+						<td><nobr>Jul. 22, 2006</nobr></td>
+						<td>World Fighting Alliance</td>
+												<td>Los Angeles, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/49">UFC 61: Bitter Rivals</a></td>
+						<td><nobr>Jul. 8, 2006</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/130">PRIDE Critical Countdown Absolute</a></td>
+						<td><nobr>Jul. 1, 2006</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/50">UFC Fight Night 5</a></td>
+						<td><nobr>Jun. 28, 2006</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/51">UFC - TUF 3 Finale</a></td>
+						<td><nobr>Jun. 24, 2006</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/208">WEC 21: Tapout</a></td>
+						<td><nobr>Jun. 15, 2006</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Highland, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/439">WEF 6/10</a></td>
+						<td><nobr>Jun. 10, 2006</nobr></td>
+						<td>World Extreme Fighting</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/259">Strikeforce - Revenge</a></td>
+						<td><nobr>Jun. 9, 2006</nobr></td>
+						<td>Strikeforce</td>
+												<td>San Jose, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/131">PRIDE Bushido 11</a></td>
+						<td><nobr>Jun. 4, 2006</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/52">UFC 60: Hughes vs. Gracie</a></td>
+						<td><nobr>May. 27, 2006</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Los Angeles, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/209">WEC 20: Cinco de Mayhem</a></td>
+						<td><nobr>May. 5, 2006</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Lemoore, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/132">PRIDE Total Elimination Absolute</a></td>
+						<td><nobr>May. 5, 2006</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Osaka, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/511">K-1 Hero&#039;s 5</a></td>
+						<td><nobr>May. 3, 2006</nobr></td>
+						<td>K-1 MMA</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/369">Jungle Fight 6</a></td>
+						<td><nobr>Apr. 29, 2006</nobr></td>
+						<td>Jungle Fight</td>
+												<td>Manaus, Amazonas, Brazil</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/289">IFL - Legends Championship 2006</a></td>
+						<td><nobr>Apr. 29, 2006</nobr></td>
+						<td>International Fight League</td>
+												<td>Atlantic City, New Jersey, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/337">Cage Rage 16: Critical Condition</a></td>
+						<td><nobr>Apr. 22, 2006</nobr></td>
+						<td>Cage Rage</td>
+												<td>London, England, United Kingdom</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/489">ROTR 9</a></td>
+						<td><nobr>Apr. 21, 2006</nobr></td>
+						<td>Rumble on the Rock</td>
+												<td>Honolulu, Hawaii, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/53">UFC 59: Reality Check</a></td>
+						<td><nobr>Apr. 15, 2006</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Anaheim, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/54">UFC Fight Night 4</a></td>
+						<td><nobr>Apr. 6, 2006</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/133">PRIDE Bushido 10</a></td>
+						<td><nobr>Apr. 2, 2006</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/471">WCFC - No Guts, No Glory</a></td>
+						<td><nobr>Mar. 18, 2006</nobr></td>
+						<td>World Cage Fighting Championships</td>
+												<td>Manchester, England, United Kingdom</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/210">WEC 19: Undisputed</a></td>
+						<td><nobr>Mar. 17, 2006</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Lemoore, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/512">K-1 Hero&#039;s 4</a></td>
+						<td><nobr>Mar. 15, 2006</nobr></td>
+						<td>K-1 MMA</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/260">Strikeforce - Shamrock vs. Gracie</a></td>
+						<td><nobr>Mar. 10, 2006</nobr></td>
+						<td>Strikeforce</td>
+												<td>San Jose, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/55">UFC 58: USA vs. Canada</a></td>
+						<td><nobr>Mar. 4, 2006</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/134">PRIDE 31: Unbreakable</a></td>
+						<td><nobr>Feb. 26, 2006</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/56">UFC 57: Liddell vs. Couture 3</a></td>
+						<td><nobr>Feb. 4, 2006</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/363">ROTR 8</a></td>
+						<td><nobr>Jan. 20, 2006</nobr></td>
+						<td>Rumble on the Rock</td>
+												<td>Honolulu, Hawaii, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/57">UFC Fight Night 3</a></td>
+						<td><nobr>Jan. 16, 2006</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/135">PRIDE Shockwave 2005</a></td>
+						<td><nobr>Dec. 31, 2005</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/384">Shooto Brazil 9</a></td>
+						<td><nobr>Dec. 3, 2005</nobr></td>
+						<td>Shooto Americas</td>
+												<td>Brazil</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/336">Cage Rage 14: Punishment</a></td>
+						<td><nobr>Dec. 3, 2005</nobr></td>
+						<td>Cage Rage</td>
+												<td>London, England, United Kingdom</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/391">DEEP 22</a></td>
+						<td><nobr>Dec. 2, 2005</nobr></td>
+						<td>DEEP</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/402">CWFC - Strike Force 4</a></td>
+						<td><nobr>Nov. 26, 2005</nobr></td>
+						<td>Cage Warriors Fighting Championships</td>
+												<td>Coventry, England, United Kingdom</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/58">UFC 56: Full Force</a></td>
+						<td><nobr>Nov. 19, 2005</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/344">Shooto 2005 11/6</a></td>
+						<td><nobr>Nov. 6, 2005</nobr></td>
+						<td>Shooto</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/59">UFC - TUF 2 Finale</a></td>
+						<td><nobr>Nov. 5, 2005</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/513">K-1 Hero&#039;s Seoul</a></td>
+						<td><nobr>Nov. 5, 2005</nobr></td>
+						<td>K-1 MMA</td>
+												<td>Seoul, South Korea</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/136">PRIDE 30: Fully Loaded</a></td>
+						<td><nobr>Oct. 23, 2005</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/514">K-1 World MAX 2005 Champions Challenge</a></td>
+						<td><nobr>Oct. 12, 2005</nobr></td>
+						<td>K-1 MMA</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/388">Bushido Europe - Rotterdam Rumble</a></td>
+						<td><nobr>Oct. 9, 2005</nobr></td>
+						<td>Bushido Europe</td>
+												<td>Rotterdam, Zuid-Holland, Netherlands</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/60">UFC 55: Fury</a></td>
+						<td><nobr>Oct. 7, 2005</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Uncasville, Connecticut, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/61">UFC Fight Night 2</a></td>
+						<td><nobr>Oct. 3, 2005</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/401">CWFC - Strike Force 3</a></td>
+						<td><nobr>Oct. 1, 2005</nobr></td>
+						<td>Cage Warriors Fighting Championships</td>
+												<td>Coventry, England, United Kingdom</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/137">PRIDE Bushido 9: The Tournament</a></td>
+						<td><nobr>Sep. 25, 2005</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/377">Predator FC 1</a></td>
+						<td><nobr>Sep. 10, 2005</nobr></td>
+						<td>Predator Fighting Championship</td>
+												<td>Sao Paulo, Brazil</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/138">PRIDE Final Conflict 2005</a></td>
+						<td><nobr>Aug. 28, 2005</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/62">UFC 54: Boiling Point</a></td>
+						<td><nobr>Aug. 20, 2005</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/63">UFC Fight Night 1</a></td>
+						<td><nobr>Aug. 6, 2005</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/139">PRIDE Bushido 8</a></td>
+						<td><nobr>Jul. 17, 2005</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Nagoya, Aichi, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/400">CWFC - Strike Force 2</a></td>
+						<td><nobr>Jul. 16, 2005</nobr></td>
+						<td>Cage Warriors Fighting Championships</td>
+												<td>Coventry, England, United Kingdom</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/321">K-1 World Grand Prix Hawaii</a></td>
+						<td><nobr>Jul. 9, 2005</nobr></td>
+						<td>K-1 MMA</td>
+												<td>Honolulu, Hawaii, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/399">Freedom Fight - Canada vs. USA</a></td>
+						<td><nobr>Jul. 9, 2005</nobr></td>
+						<td>Freedom Fight</td>
+												<td>Hull, Quebec, Canada</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/515">K-1 Hero&#039;s 2</a></td>
+						<td><nobr>Jul. 6, 2005</nobr></td>
+						<td>K-1 MMA</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/140">PRIDE Critical Countdown 2005</a></td>
+						<td><nobr>Jun. 26, 2005</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/64">UFC 53: Heavy Hitters</a></td>
+						<td><nobr>Jun. 4, 2005</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Atlantic City, New Jersey, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/141">PRIDE Bushido 7</a></td>
+						<td><nobr>May. 22, 2005</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/335">Cage Rage 11: Face Off</a></td>
+						<td><nobr>Apr. 30, 2005</nobr></td>
+						<td>Cage Rage</td>
+												<td>London, England, United Kingdom</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/142">PRIDE Total Elimination 2005</a></td>
+						<td><nobr>Apr. 23, 2005</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Osaka, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/65">UFC 52: Couture vs Liddell 2</a></td>
+						<td><nobr>Apr. 16, 2005</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/66">UFC - TUF Finale</a></td>
+						<td><nobr>Apr. 9, 2005</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/143">PRIDE Bushido 6</a></td>
+						<td><nobr>Apr. 3, 2005</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Yokohama, Kanagawa, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/319">K-1 Hero&#039;s 1</a></td>
+						<td><nobr>Mar. 26, 2005</nobr></td>
+						<td>K-1 MMA</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/144">PRIDE 29: Fists Of Fire</a></td>
+						<td><nobr>Feb. 20, 2005</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/67">UFC 51: Super Saturday</a></td>
+						<td><nobr>Feb. 5, 2005</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/333">TKO 19</a></td>
+						<td><nobr>Jan. 29, 2005</nobr></td>
+						<td>TKO Major League MMA</td>
+												<td>Montreal, Quebec, Canada</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/343">Shooto 2005 1/29</a></td>
+						<td><nobr>Jan. 29, 2005</nobr></td>
+						<td>Shooto</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/216">WEC 13: Heavyweight Explosion</a></td>
+						<td><nobr>Jan. 22, 2005</nobr></td>
+						<td>World Extreme Cagefighting</td>
+												<td>Lemoore, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/516">K-1 Dynamite!! 2004</a></td>
+						<td><nobr>Dec. 31, 2004</nobr></td>
+						<td>K-1 MMA</td>
+												<td>Osaka, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/145">PRIDE Shockwave 2004</a></td>
+						<td><nobr>Dec. 31, 2004</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/365">SuperBrawl 38</a></td>
+						<td><nobr>Dec. 12, 2004</nobr></td>
+						<td>SuperBrawl</td>
+												<td>Honolulu, Hawaii, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/362">ROTR 6</a></td>
+						<td><nobr>Nov. 20, 2004</nobr></td>
+						<td>Rumble on the Rock</td>
+												<td>Honolulu, Hawaii, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/146">PRIDE 28: High Octane</a></td>
+						<td><nobr>Oct. 31, 2004</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/390">DEEP 16</a></td>
+						<td><nobr>Oct. 30, 2004</nobr></td>
+						<td>DEEP</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/68">UFC 50: The War Of &#039;04</a></td>
+						<td><nobr>Oct. 22, 2004</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Atlantic City, New Jersey, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/147">PRIDE Bushido 5</a></td>
+						<td><nobr>Oct. 14, 2004</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Osaka, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/339">Cage Rage 8: Knights of the Octagon</a></td>
+						<td><nobr>Sep. 11, 2004</nobr></td>
+						<td>Cage Rage</td>
+												<td>London, England, United Kingdom</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/69">UFC 49: Unfinished Business</a></td>
+						<td><nobr>Aug. 21, 2004</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/148">PRIDE Final Conflict 2004</a></td>
+						<td><nobr>Aug. 15, 2004</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/149">PRIDE Bushido 4</a></td>
+						<td><nobr>Jul. 19, 2004</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Nagoya, Aichi, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/493">AFC 1</a></td>
+						<td><nobr>Jul. 14, 2004</nobr></td>
+						<td>Alaska Fighting Championship</td>
+												<td>Anchorage, Alaska, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/380">Gladiator FC - Day 2</a></td>
+						<td><nobr>Jun. 27, 2004</nobr></td>
+						<td>Gladiator Fighting Championships</td>
+												<td>South Korea</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/150">PRIDE Critical Countdown 2004</a></td>
+						<td><nobr>Jun. 20, 2004</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/70">UFC 48: Payback</a></td>
+						<td><nobr>Jun. 19, 2004</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/330">KOTC 36: Unfinished Business</a></td>
+						<td><nobr>Jun. 12, 2004</nobr></td>
+						<td>King of the Cage</td>
+												<td>San Jacinto, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/394">GC 27</a></td>
+						<td><nobr>Jun. 3, 2004</nobr></td>
+						<td>Gladiator Challenge</td>
+												<td>Colusa, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/393">GC 26</a></td>
+						<td><nobr>Jun. 2, 2004</nobr></td>
+						<td>Gladiator Challenge</td>
+												<td>Colusa, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/151">PRIDE Bushido 3</a></td>
+						<td><nobr>May. 23, 2004</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Yokohama, Kanagawa, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/332">TKO 16</a></td>
+						<td><nobr>May. 22, 2004</nobr></td>
+						<td>TKO Major League MMA</td>
+												<td>Quebec City, Quebec, Canada</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/320">K-1 ROMANEX</a></td>
+						<td><nobr>May. 22, 2004</nobr></td>
+						<td>K-1 MMA</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/473">Jungle Fight 2</a></td>
+						<td><nobr>May. 15, 2004</nobr></td>
+						<td>Jungle Fight</td>
+												<td>Manaus, Amazonas, Brazil</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/392">FFC 9</a></td>
+						<td><nobr>May. 14, 2004</nobr></td>
+						<td>Freestyle Fighting Championships</td>
+												<td>Biloxi, Mississippi, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/152">PRIDE Total Elimination 2004</a></td>
+						<td><nobr>Apr. 25, 2004</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/364">SuperBrawl 35</a></td>
+						<td><nobr>Apr. 16, 2004</nobr></td>
+						<td>SuperBrawl</td>
+												<td>Honolulu, Hawaii, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/71">UFC 47: It&#039;s On!</a></td>
+						<td><nobr>Apr. 2, 2004</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/317">K-1 Beast 2004</a></td>
+						<td><nobr>Mar. 14, 2004</nobr></td>
+						<td>K-1 MMA</td>
+												<td>Niigata, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/398">Mass Destruction 15</a></td>
+						<td><nobr>Feb. 21, 2004</nobr></td>
+						<td>Mass Destruction</td>
+												<td>Boston, Massachusetts, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/329">KOTC 33: After Shock</a></td>
+						<td><nobr>Feb. 20, 2004</nobr></td>
+						<td>King of the Cage</td>
+												<td>San Jacinto, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/153">PRIDE Bushido 2</a></td>
+						<td><nobr>Feb. 15, 2004</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Yokohama, Kanagawa, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/154">PRIDE 27: Inferno</a></td>
+						<td><nobr>Feb. 1, 2004</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Osaka, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/72">UFC 46: Supernatural</a></td>
+						<td><nobr>Jan. 31, 2004</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/367">Inoki Bom-Ba-Ye 2003</a></td>
+						<td><nobr>Dec. 31, 2003</nobr></td>
+						<td>Inoki Bom-Ba-Ye</td>
+												<td>Kobe, Hyogo, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/155">PRIDE Shockwave 2003</a></td>
+						<td><nobr>Dec. 31, 2003</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/397">Heat FC 2</a></td>
+						<td><nobr>Dec. 18, 2003</nobr></td>
+						<td>Heat Fighting Championships</td>
+												<td>Natal, Rio Grande do Norte, Brazil</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/331">TKO 14</a></td>
+						<td><nobr>Nov. 29, 2003</nobr></td>
+						<td>TKO Major League MMA</td>
+												<td>Victoriaville, Quebec, Canada</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/73">UFC 45: Revolution</a></td>
+						<td><nobr>Nov. 21, 2003</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Uncasville, Connecticut, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/156">PRIDE Final Conflict 2003</a></td>
+						<td><nobr>Nov. 9, 2003</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/361">ROTR 4</a></td>
+						<td><nobr>Oct. 10, 2003</nobr></td>
+						<td>Rumble on the Rock</td>
+												<td>Honolulu, Hawaii, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/157">PRIDE Bushido 1</a></td>
+						<td><nobr>Oct. 5, 2003</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/74">UFC 44: Undisputed</a></td>
+						<td><nobr>Sep. 26, 2003</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/368">Jungle Fight 1</a></td>
+						<td><nobr>Sep. 13, 2003</nobr></td>
+						<td>Jungle Fight</td>
+												<td>Manaus, Amazonas, Brazil</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/371">IFC - Global Domination</a></td>
+						<td><nobr>Sep. 6, 2003</nobr></td>
+						<td>International Fighting Championship</td>
+												<td>Denver, Colorado, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/158">PRIDE Total Elimination 2003</a></td>
+						<td><nobr>Aug. 10, 2003</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/359">Meca 9</a></td>
+						<td><nobr>Aug. 1, 2003</nobr></td>
+						<td>Meca World Vale Tudo</td>
+												<td>Teresopolis, Rio de Janeiro, Brazil</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/328">KOTC 24: Mayhem</a></td>
+						<td><nobr>Jun. 14, 2003</nobr></td>
+						<td>King of the Cage</td>
+												<td>Albuquerque, New Mexico, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/159">PRIDE 26: Bad to the Bone</a></td>
+						<td><nobr>Jun. 8, 2003</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Yokohama, Kanagawa, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/75">UFC 43: Meltdown</a></td>
+						<td><nobr>Jun. 6, 2003</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/358">Meca 8</a></td>
+						<td><nobr>May. 16, 2003</nobr></td>
+						<td>Meca World Vale Tudo</td>
+												<td>Curitiba, Parana, Brazil</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/327">KOTC 23: Sin City</a></td>
+						<td><nobr>May. 16, 2003</nobr></td>
+						<td>King of the Cage</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/476">NJPW - Ultimate Crush</a></td>
+						<td><nobr>May. 2, 2003</nobr></td>
+						<td>New Japan Pro Wrestling</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/76">UFC 42: Sudden Impact</a></td>
+						<td><nobr>Apr. 25, 2003</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Miami, Florida, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/475">WAFF 2</a></td>
+						<td><nobr>Mar. 22, 2003</nobr></td>
+						<td>World Absolute Fight Federation</td>
+												<td>Marrakech, Morocco</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/160">PRIDE 25: Body Blow</a></td>
+						<td><nobr>Mar. 16, 2003</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Yokohama, Kanagawa, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/77">UFC 41: Onslaught</a></td>
+						<td><nobr>Feb. 28, 2003</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Atlantic City, New Jersey, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/349">UCC 12</a></td>
+						<td><nobr>Jan. 25, 2003</nobr></td>
+						<td>Ultimate Combat Challenge</td>
+												<td>Montreal, Quebec, Canada</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/501">Inoki Bom-Ba-Ye 2002</a></td>
+						<td><nobr>Dec. 31, 2002</nobr></td>
+						<td>Inoki Bom-Ba-Ye</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/161">PRIDE 24: Cold Fury 3</a></td>
+						<td><nobr>Dec. 23, 2002</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Fukuoka, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/326">KOTC 20: Crossroads</a></td>
+						<td><nobr>Dec. 15, 2002</nobr></td>
+						<td>King of the Cage</td>
+												<td>Bernalillo, New Mexico, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/162">PRIDE 23: Championship Chaos 2</a></td>
+						<td><nobr>Nov. 24, 2002</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/583">WFA 3</a></td>
+						<td><nobr>Nov. 23, 2002</nobr></td>
+						<td>World Fighting Alliance</td>
+												<td></td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/78">UFC 40: Vendetta</a></td>
+						<td><nobr>Nov. 22, 2002</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/357">Meca 7</a></td>
+						<td><nobr>Nov. 8, 2002</nobr></td>
+						<td>Meca World Vale Tudo</td>
+												<td>Curitiba, Parana, Brazil</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/325">KOTC 17: San Jacinto</a></td>
+						<td><nobr>Oct. 19, 2002</nobr></td>
+						<td>King of the Cage</td>
+												<td>San Jacinto, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/348">UCC 11</a></td>
+						<td><nobr>Oct. 11, 2002</nobr></td>
+						<td>Ultimate Combat Challenge</td>
+												<td>Montreal, Quebec, Canada</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/164">PRIDE 22: Beasts from the East 2</a></td>
+						<td><nobr>Sep. 29, 2002</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Nagoya, Aichi, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/79">UFC 39: The Warriors Return</a></td>
+						<td><nobr>Sep. 27, 2002</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Uncasville, Connecticut, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/351">UCC Hawaii</a></td>
+						<td><nobr>Sep. 17, 2002</nobr></td>
+						<td>Ultimate Combat Challenge</td>
+												<td>Honolulu, Hawaii, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/165">PRIDE Shockwave 2002</a></td>
+						<td><nobr>Aug. 28, 2002</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/379">UFO - Legend</a></td>
+						<td><nobr>Aug. 8, 2002</nobr></td>
+						<td>UFO</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/166">PRIDE The Best Vol.2</a></td>
+						<td><nobr>Jul. 20, 2002</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/80">UFC 38: Brawl at the Hall</a></td>
+						<td><nobr>Jul. 13, 2002</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>London, England, United Kingdom</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/582">WFA 2</a></td>
+						<td><nobr>Jul. 5, 2002</nobr></td>
+						<td>World Fighting Alliance</td>
+												<td></td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/167">PRIDE 21: Demolition</a></td>
+						<td><nobr>Jun. 23, 2002</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/324">KOTC 15: Bad Intentions</a></td>
+						<td><nobr>Jun. 22, 2002</nobr></td>
+						<td>King of the Cage</td>
+												<td>San Jacinto, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/81">UFC 37.5: As Real As It Gets</a></td>
+						<td><nobr>Jun. 22, 2002</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/323">KOTC 14</a></td>
+						<td><nobr>Jun. 19, 2002</nobr></td>
+						<td>King of the Cage</td>
+												<td>Bernalillo, New Mexico, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/347">UCC 10</a></td>
+						<td><nobr>Jun. 15, 2002</nobr></td>
+						<td>Ultimate Combat Challenge</td>
+												<td>Hull, Quebec, Canada</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/82">UFC 37: High Impact</a></td>
+						<td><nobr>May. 10, 2002</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Bossier City, Louisiana, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/168">PRIDE 20: Armed and Ready</a></td>
+						<td><nobr>Apr. 28, 2002</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Yokohama, Kanagawa, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/83">UFC 36: Worlds Collide</a></td>
+						<td><nobr>Mar. 22, 2002</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/169">PRIDE 19: Bad Blood</a></td>
+						<td><nobr>Feb. 24, 2002</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/356">Meca 6</a></td>
+						<td><nobr>Jan. 31, 2002</nobr></td>
+						<td>Meca World Vale Tudo</td>
+												<td>Curitiba, Parana, Brazil</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/350">UCC 7</a></td>
+						<td><nobr>Jan. 25, 2002</nobr></td>
+						<td>Ultimate Combat Challenge</td>
+												<td>Montreal, Quebec, Canada</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/84">UFC 35: Throwdown</a></td>
+						<td><nobr>Jan. 11, 2002</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Uncasville, Connecticut, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/499">Inoki Bom-Ba-Ye 2001</a></td>
+						<td><nobr>Dec. 31, 2001</nobr></td>
+						<td>Inoki Bom-Ba-Ye</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/171">PRIDE 18: Cold Fury 2</a></td>
+						<td><nobr>Dec. 23, 2001</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Fukuoka, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/417">WFA 1</a></td>
+						<td><nobr>Nov. 3, 2001</nobr></td>
+						<td>World Fighting Alliance</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/172">PRIDE 17: Championship Chaos</a></td>
+						<td><nobr>Nov. 3, 2001</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/85">UFC 34: High Voltage</a></td>
+						<td><nobr>Nov. 2, 2001</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/86">UFC 33: Victory in Vegas</a></td>
+						<td><nobr>Sep. 28, 2001</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Las Vegas, Nevada, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/173">PRIDE 16: Beasts from the East</a></td>
+						<td><nobr>Sep. 24, 2001</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Osaka, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/346">Shooto - To the Top 7</a></td>
+						<td><nobr>Aug. 26, 2001</nobr></td>
+						<td>Shooto</td>
+												<td>Osaka, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/395">GC 5</a></td>
+						<td><nobr>Aug. 19, 2001</nobr></td>
+						<td>Gladiator Challenge</td>
+												<td>Denver, Colorado, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/500">K-1 2001 Japan GP Final</a></td>
+						<td><nobr>Aug. 19, 2001</nobr></td>
+						<td>K-1 MMA</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/174">PRIDE 15: Raging Rumble</a></td>
+						<td><nobr>Jul. 29, 2001</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/87">UFC 32: Showdown in the Meadowlands</a></td>
+						<td><nobr>Jun. 29, 2001</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>East Rutherford, New Jersey, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/355">Meca 5</a></td>
+						<td><nobr>Jun. 9, 2001</nobr></td>
+						<td>Meca World Vale Tudo</td>
+												<td>Curitiba, Parana, Brazil</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/175">PRIDE 14: Clash of the Titans</a></td>
+						<td><nobr>May. 27, 2001</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Yokohama, Kanagawa, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/88">UFC 31: Locked and Loaded</a></td>
+						<td><nobr>May. 4, 2001</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Atlantic City, New Jersey, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/176">PRIDE 13: Collision Course</a></td>
+						<td><nobr>Mar. 25, 2001</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/345">Shooto - To the Top 2</a></td>
+						<td><nobr>Mar. 2, 2001</nobr></td>
+						<td>Shooto</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/89">UFC 30: Battle on the Boardwalk</a></td>
+						<td><nobr>Feb. 23, 2001</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Atlantic City, New Jersey, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/372">IFC - Warriors Challenge 11</a></td>
+						<td><nobr>Jan. 13, 2001</nobr></td>
+						<td>International Fighting Championship</td>
+												<td>Fresno, California, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/90">UFC 29: Defense of the Belts</a></td>
+						<td><nobr>Dec. 16, 2000</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/354">Meca 4</a></td>
+						<td><nobr>Dec. 16, 2000</nobr></td>
+						<td>Meca World Vale Tudo</td>
+												<td>Curitiba, Parana, Brazil</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/177">PRIDE 12: Cold Fury</a></td>
+						<td><nobr>Dec. 9, 2000</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/91">UFC 28: High Stakes</a></td>
+						<td><nobr>Nov. 17, 2000</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Atlantic City, New Jersey, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/178">PRIDE 11: Battle of the Rising Sun</a></td>
+						<td><nobr>Oct. 31, 2000</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Osaka, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/92">UFC 27: Ultimate Bad Boyz</a></td>
+						<td><nobr>Sep. 22, 2000</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>New Orleans, Louisiana, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/179">PRIDE 10: Return of the Warriors</a></td>
+						<td><nobr>Aug. 27, 2000</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Saitama, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/353">Meca 2</a></td>
+						<td><nobr>Aug. 12, 2000</nobr></td>
+						<td>Meca World Vale Tudo</td>
+												<td>Curitiba, Parana, Brazil</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/370">EC 35</a></td>
+						<td><nobr>Jun. 29, 2000</nobr></td>
+						<td>Extreme Challenge</td>
+												<td>Davenport, Iowa, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/93">UFC 26: Ultimate Field Of Dreams</a></td>
+						<td><nobr>Jun. 9, 2000</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Cedar Rapids, Iowa, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/180">PRIDE 9: New Blood</a></td>
+						<td><nobr>Jun. 4, 2000</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Nagoya, Aichi, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/352">Meca 1</a></td>
+						<td><nobr>May. 27, 2000</nobr></td>
+						<td>Meca World Vale Tudo</td>
+												<td>Curitiba, Parana, Brazil</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/181">PRIDE Grand Prix 2000 Finals</a></td>
+						<td><nobr>May. 1, 2000</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/94">UFC 25: Ultimate Japan 3</a></td>
+						<td><nobr>Apr. 14, 2000</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/95">UFC 24: First Defense</a></td>
+						<td><nobr>Mar. 10, 2000</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Lake Charles, Louisiana, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/182">PRIDE Grand Prix 2000 Opening Round</a></td>
+						<td><nobr>Jan. 30, 2000</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/183">PRIDE 8</a></td>
+						<td><nobr>Nov. 21, 1999</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/96">UFC 23: Ultimate Japan 2</a></td>
+						<td><nobr>Nov. 19, 1999</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Chiba, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/322">KOTC 1</a></td>
+						<td><nobr>Oct. 30, 1999</nobr></td>
+						<td>King of the Cage</td>
+												<td>San Jacinto, California, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/97">UFC 22: Only One Can be Champion</a></td>
+						<td><nobr>Sep. 24, 1999</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Lake Charles, Louisiana, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/184">PRIDE 7</a></td>
+						<td><nobr>Sep. 12, 1999</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Yokohama, Kanagawa, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/98">UFC 21: Return of the Champions</a></td>
+						<td><nobr>Jul. 16, 1999</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Cedar Rapids, Iowa, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/185">PRIDE 6</a></td>
+						<td><nobr>Jul. 4, 1999</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Yokohama, Kanagawa, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/383">BRI 3</a></td>
+						<td><nobr>Jun. 1, 1999</nobr></td>
+						<td>Bas Rutten Invitational</td>
+												<td>Littleton, Colorado, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/99">UFC 20: Battle for the Gold</a></td>
+						<td><nobr>May. 7, 1999</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Birmingham, Alabama, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/186">PRIDE 5</a></td>
+						<td><nobr>Apr. 29, 1999</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Nagoya, Aichi, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/100">UFC 19: Ultimate Young Guns</a></td>
+						<td><nobr>Mar. 5, 1999</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Bay St. Louis, Mississippi, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/101">UFC 18: The Road to the Heavyweight Title</a></td>
+						<td><nobr>Jan. 8, 1999</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>New Orleans, Louisiana, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/532">Vale Tudo Japan 1998</a></td>
+						<td><nobr>Oct. 25, 1998</nobr></td>
+						<td>Vale Tudo Japan</td>
+												<td>Urayasu, Chiba, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/102">UFC - Ultimate Brazil</a></td>
+						<td><nobr>Oct. 16, 1998</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Sao Paulo, Brazil</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/187">PRIDE 4</a></td>
+						<td><nobr>Oct. 11, 1998</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/188">PRIDE 3</a></td>
+						<td><nobr>Jun. 24, 1998</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/103">UFC 17: Redemption</a></td>
+						<td><nobr>May. 15, 1998</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Mobile, Alabama, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/104">UFC 16: Battle in the Bayou</a></td>
+						<td><nobr>Mar. 13, 1998</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>New Orleans, Louisiana, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/189">PRIDE 2</a></td>
+						<td><nobr>Mar. 5, 1998</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Yokohama, Kanagawa, Japan</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/105">UFC - Ultimate Japan</a></td>
+						<td><nobr>Dec. 21, 1997</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Yokohama, Kanagawa, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/106">UFC 15: Collision Course</a></td>
+						<td><nobr>Oct. 17, 1997</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Bay St. Louis, Mississippi, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/190">PRIDE 1</a></td>
+						<td><nobr>Oct. 11, 1997</nobr></td>
+						<td>Pride Fighting Championship</td>
+												<td>Tokyo, Japan</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/107">UFC 14: Showdown</a></td>
+						<td><nobr>Jul. 27, 1997</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Birmingham, Alabama, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/396">Brazil Open &#039;97</a></td>
+						<td><nobr>Jun. 15, 1997</nobr></td>
+						<td>Brazil Open Fight</td>
+												<td>Brazil</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/108">UFC 13: The Ultimate Force</a></td>
+						<td><nobr>May. 30, 1997</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Augusta, Georgia, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/109">UFC 12: Judgement Day</a></td>
+						<td><nobr>Feb. 7, 1997</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Dothan, Alabama, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/110">UFC - Ultimate Ultimate &#039;96</a></td>
+						<td><nobr>Dec. 7, 1996</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Birmingham, Alabama, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/111">UFC 11: The Proving Ground</a></td>
+						<td><nobr>Sep. 20, 1996</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Augusta, Georgia, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/112">UFC 10: The Tournament</a></td>
+						<td><nobr>Jul. 12, 1996</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Birmingham, Alabama, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/113">UFC 9: Motor City Madness</a></td>
+						<td><nobr>May. 17, 1996</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Detroit, Michigan, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/114">UFC 8: David vs. Goliath</a></td>
+						<td><nobr>Feb. 16, 1996</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>San Juan, Puerto Rico</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/115">UFC - Ultimate Ultimate &#039;95</a></td>
+						<td><nobr>Dec. 16, 1995</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Denver, Colorado, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/116">UFC 7: The Brawl in Buffalo</a></td>
+						<td><nobr>Sep. 8, 1995</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Buffalo, New York, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/117">UFC 6: Clash of the Titans</a></td>
+						<td><nobr>Jul. 14, 1995</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Casper, Wyoming, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/118">UFC 5: The Return of the Beast</a></td>
+						<td><nobr>Apr. 7, 1995</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Charlotte, North Carolina, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/119">UFC 4: Revenge of the Warriors</a></td>
+						<td><nobr>Dec. 16, 1994</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Tulsa, Oklahoma, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/120">UFC 3: The American Dream</a></td>
+						<td><nobr>Sep. 9, 1994</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Charlotte, North Carolina, USA</td>
+					</tr>
+									<tr >
+						<td class="left_border"><a href="/events/details/121">UFC 2: No Way Out</a></td>
+						<td><nobr>Mar. 11, 1994</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Denver, Colorado, USA</td>
+					</tr>
+									<tr class="dark">
+						<td class="left_border"><a href="/events/details/122">UFC 1: The Beginning</a></td>
+						<td><nobr>Nov. 12, 1993</nobr></td>
+						<td>Ultimate Fighting Championship</td>
+												<td>Denver, Colorado, USA</td>
+					</tr>
+							</table>
+		</div>
+		<div class="pagination">
+	VIEW: ALL <a href="/events/index/date/desc/1/pages">PAGES</a></div>
+<div class="clr"></div></div>
+
+<script type="text/javascript">
+	// <![CDATA[
+	jQuery(function($) {
+		$('.events_completed_type input').click(function() {			
+			var order
+			if ($(this).val() == 1) 
+				{ order = 'desc'; 
+			} else {
+				order = 'asc';
+			}
+			window.location = 'http://hosteddb.fightmetric.com/events/index/date/'+order+'/'+$(this).val()+'/all/';
+		});
+		$('#autocomplete').autocomplete({ 
+			serviceUrl: 'http://hosteddb.fightmetric.com/events/autocomplete/',
+			minChars: 2,
+			deferRequestBy: 300,
+			width: 300,
+			maxHeight: 400
+		});
+		$('.text_field').focus(function() {
+			if ($(this).val() == 'Enter Event or Organization')
+				$(this).val('');
+		});
+		$('.text_field').blur(function() {
+			if ($(this).val() == '')
+				$(this).val('Enter Event or Organization');
+		});
+	});
+	// ]]>
+</script></div>                  </div>
+                    <p>&nbsp;</p></td>
+                  </tr>
+              </table>
+		      </td>
+			</tr>
+		</table>
+	  </div><!-- InstanceEndEditable --></div></td>
+    <td rowspan="2" valign="top"><p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <!-- InstanceBeginEditable name="AdSpace" -->
+      <div align="right">
+        <!--BEGIN BLS CODE-->
+        <script>
+document.write('<scr' + 'ipt src=http://ad.doubleclick.net/adj/fightmetric.fsv/ros;sect=ros;fantasy=no;game=no;tile=2;sz=160x600;ord=' + random_number + '?></scr' + 'ipt>');
+      </script>
+        <noscript>
+        <a href="http://ad.doubleclick.net/jump/fightmetric.fsv/ros;sect=ros;fantasy=no;game=no;tile=2;sz=160x600;ord='+random_number+'?" > <img src="http://ad.doubleclick.net/ad/fightmetric.fsv/ros;sect=ros;fantasy=no;game=no;tile=2;sz=160x600;ord='+random_number+'?" border="0" height="600" width="160" /></a>
+        </noscript>
+        <!--END BLS CODE-->
+      </div>
+    <!-- InstanceEndEditable --></td>
+  </tr>
+  <tr>
+    <td width="185" valign="top"><div align="center"><a href="http://www.fightmetric.com/aboutthecompany.html"></a></div></td>
+    <td width="15">&nbsp;</td>
+    <td><div id="footer">
+      <table width="635" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="20%" valign="top" class="sitemap"><p><a href="http://www.fightmetric.com/index.html">HOME</a><br />
+              <a href="http://hosteddb.fightmetric.com">STATISTICS</a><br />
+              <a href="http://hosteddb.fightmetric.com/events">.Events &amp; Fights</a><br />
+              <a href="http://hosteddb.fightmetric.com/fighters">.Fighters</a><br />
+              <a href="http://www.fightmetric.com/ufcrecords.html">.UFC Records</a><br />
+              <a href="http://www.fightmetric.com/aboutthestats.html">.About the Stats</a><br />
+          </p>            </td>
+          <td width="20%" valign="top" class="sitemap"><p>PRODUCTS<br />
+              <a href="http://www.fightmetric.com/datafeeds.html">.Data Feeds</a><a href="http://www.fightmetric.com/hosteddb.html"><br />
+.Hosted DB</a><span class="graytext"><br />
+</span> <a href="http://www.fightmetric.com/fantasy.html"> .Fantasy</a><br />
+            <a href="http://www.fightmetric.com/consulting.html"> .Consulting<br />
+              </a><a href="http://blog.fightmetric.com"><br />
+              </a><br />
+              </p>            </td>
+          <td width="20%" valign="top" class="sitemap"><a href="http://www.fightmetric.com/aboutthecompany.html">ABOUT THE COMPANY</a><br />
+            <a href="http://blog.fightmetric.com"> .Blog (News / Reports)</a><a href="http://www.fightmetric.com/contactus.html">              
+CONTACT US</a><br />
+<br /></td>
+          <td width="25%" valign="top" class="sitemap"><div align="right"><img src="http://www.fightmetric.com/beta/_images/FM-winner-best-pitch-blk.png" alt="fsta" width="202" height="40" /><br />
+                <img src="http://www.fightmetric.com/beta/_images/spacer.gif" alt="spacer" width="235" height="10" /></div></td>
+        </tr>
+      </table>
+      <br />
+      <br />
+        <br />
+        <div class="sitemap">          <span class="leftmenuTD"><a href="http://feeds.feedburner.com/Fightmetric"><img src="http://www.fightmetric.com/_images/rss-logo.png" alt="rss" width="16" height="16" border="0" /></a>&nbsp;<a href="http://www.twitter.com/fightmetric"><img src="http://www.fightmetric.com/_images/twitter-logo.png" alt="twitter" width="16" height="16" border="0" /></a> <a href="http://www.facebook.com/FightMetric"><img src="http://www.fightmetric.com/_images/facebook.png" alt="facebook" width="16" height="16" border="0" /></a></span><br />
+          CSS3 Browser Optimized. <em><br />
+        </em>&copy; 2011 FightMetric LLC. All Rights Reserved | <a href="http://www.fightmetric.com/termsofuse.html">Terms of Use</a> | <a href="http://www.fightmetric.com/privacypolicy.html">Privacy Policy</a></div>
+        </p>
+        
+      </div></td>
+  </tr>
+</table>
+	<script type="text/javascript">
+					// <![CDATA[
+					jQuery(function($) {
+						$('.data_table tr:gt(0)').mouseover(function() {
+							$(this).addClass('select_item');
+							if ($('.data_table .rowspan').length) {
+								if ($(this).find('.rowspan').length)
+									$(this).next('tr').addClass('select_item');
+								else
+									$(this).prev('tr').addClass('select_item');
+							}
+						});
+						$('.data_table tr:gt(0)').mouseout(function() {
+							$(this).removeClass('select_item');
+							if ($('.data_table .rowspan').length) {
+								if ($(this).find('.rowspan').length)
+									$(this).next('tr').removeClass('select_item');
+								else
+									$(this).prev('tr').removeClass('select_item');
+							}
+						});
+						$('.row_is_link tr:gt(0):not(.block_auto_link)').click(function() {
+							if ($(this).find('.rowspan').length || !$('.row_is_link .rowspan').length)
+								window.location = 'http://hosteddb.fightmetric.com'+$(this).find('a').attr('href');
+							else
+								window.location = 'http://hosteddb.fightmetric.com'+$(this).prev('tr').find('a').attr('href');
+						});
+					});
+					// ]]>
+				</script>
+				</body>
+			
+<!-- InstanceEnd --></html>
