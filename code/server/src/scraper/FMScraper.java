@@ -2,12 +2,9 @@ package scraper;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.Locale;
 import java.util.Stack;
 
@@ -16,11 +13,10 @@ import settings.Settings;
 import util.Logger;
 
 public class FMScraper implements Runnable {
-	Stack<FMScraperTask> tasks;
+	Stack<FMScraperTask> tasks = new Stack<FMScraperTask>();
 
-	public FMScraper() throws MalformedURLException, IOException {
-		tasks.push(new DbComparator("DbEvents", tasks));
-		tasks.push(new RootScraperTask("completed-events"));
+	public FMScraper() throws MalformedURLException, IOException {		
+//		tasks.push(new RootScraperTask("completed-events"));
 		tasks.push(new RootScraperTask("upcoming-events"));		
 	}
 
@@ -28,6 +24,7 @@ public class FMScraper implements Runnable {
 	public void run() {
 		while (!tasks.isEmpty())
 			try {
+				System.out.println("popping stack");
 				tasks.pop().doTask();
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
@@ -84,14 +81,15 @@ class RootScraperTask extends FMScraperTask {
 
 	@Override
 	public void doTask() throws Exception {
-		htmlContent = Scraper.textFromUrl(url);
-		splitContent = htmlContent.split(delimiter);
+//		htmlContent = Scraper.textFromUrl(url);
+		htmlContent = util.IO.fileToString("E:\\projekt\\MMAFL\\code\\server\\www\\fm_u_events.htm");		
+		splitContent = Scraper.findFirst(htmlContent, Settings.getNodeText("scrapers:upcoming-events:table-regex")[0]).split(delimiter);
 		
 		db.setAutoCommit(false);
-		for (int i = 0; i < splitContent.length; i++) {
+		for (int i = 1; i < splitContent.length; i++) {
 			String[] matches = Scraper.scrapeFirst(splitContent[i], regexes);
 			Object[] converted = FMScraper.stringToObject(matches, types);
-			db.executePs("insert", "tmp_events", converted);
+			db.executePs("insert", converted);
 		}
 		db.setAutoCommit(true);
 	}
@@ -102,8 +100,7 @@ class LinkedIndexScraperTask extends FMScraperTask {
 	String updateString, childTask;
 	public LinkedIndexScraperTask(String taskName, Stack<FMScraperTask> tasks) {
 		super(taskName);
-		updateString = Settings.getScraperSetting(taskName, "update-statement");
-		childTask = Settings.getScraperSetting(taskName, "child-scraper-task");
+
 	}
 
 }
@@ -113,8 +110,7 @@ class IndexScraperTask extends FMScraperTask{
 
 	public IndexScraperTask(String taskName, String url, String foreignKey) {
 		super(taskName);
-		updateString = Settings.getScraperSetting(taskName, "update-statement");
-		delimiter = Settings.getScraperSetting(taskName, "index-delimiter");
+
 
 	}
 
@@ -124,7 +120,7 @@ class DetailsScraperTask extends FMScraperTask{
 	String updateString;
 	public DetailsScraperTask(String taskName, String url, String foreignKey) {
 		super(taskName);
-		updateString = Settings.getScraperSetting(taskName, "update-statement");
+
 	}	
 }
 

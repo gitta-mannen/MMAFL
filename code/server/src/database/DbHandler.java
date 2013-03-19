@@ -7,17 +7,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map.Entry;
-
-import settings.Column;
-import settings.Constants.DbType;
-import settings.Schema;
 import settings.Settings;
-import settings.Table;
 import util.Logger;
 import util.Pair;
 
@@ -29,10 +19,11 @@ import util.Pair;
 public class DbHandler {
 	private Connection connection = null;
 	private final HashMap<String, PreparedStatement> ps = new HashMap<String, PreparedStatement>();
-	private ResultSet rs = null;
+//	private ResultSet rs = null;
 	
 	static {
 		// create tables on first use
+		System.out.println("static constructor"); 
 		buildTables(false);
 	}
 	
@@ -45,7 +36,7 @@ public class DbHandler {
 
 			// get prepared statements from settings
 			for (int i = 0; i < pStatement.length; i++) {
-				System.out.println("prepared statement added: " + pStatement[i]);
+				System.out.println("prepared statement added: " + pStatement[i].getA() + " = " + pStatement[i].getB());
 				ps.put(pStatement[i].getA(), connection.prepareStatement(pStatement[i].getB()) );
 			}
 					
@@ -64,26 +55,39 @@ public class DbHandler {
 		}
 	}
 	
-	public static synchronized void buildTables(boolean replace) {
+	public static void buildTables(boolean replace) {
+		System.out.println("build table method");
 		try {
 			Class.forName("org.sqlite.JDBC");
 			Connection con = DriverManager.getConnection("jdbc:sqlite:stats.db");
 			Statement statement = con.createStatement();
 			statement.setQueryTimeout(10);
+			con.setAutoCommit(false);
 			
-			if (replace) {
-				Iterator<String> tables = Settings.getTables();
-				while (tables.hasNext()) {
-					statement.execute("DROP TABLE IF EXISTS " + tables.next());
+			String[] tables = Settings.getNodeText("database:tables:table");
+			System.out.println("table count: " + tables.length);
+			
+			for (int i = 0; i < tables.length; i++) {
+				System.out.println("building table: " + tables[i]); 
+				if (replace) {
+					statement.execute("DROP TABLE IF EXISTS " + tables[i]);
 				}
+				
+				String primaryKey =  Settings.getNodeText("database:tables:" + tables[i] + ":primary-key")[0];
+				String[] columns =  Settings.getNodeText("database:tables:" + tables[i] + ":column:name");
+				String[] types =  Settings.getNodeText("database:tables:" + tables[i] + ":column:dbtype");
+				
+				StringBuilder sb = new StringBuilder("CREATE TABLE IF NOT EXISTS " + tables[i] + " (");
+				for (int c = 0; c < columns.length; c++) {
+					sb.append("'" + columns[c] + "' " + types[c]);
+					sb.append( c + 1 == columns.length ? ", PRIMARY KEY (" + "'" + primaryKey + "'" + "))" : ", " );
+				}
+				
+				System.out.println("table build statement: " + sb.toString()); 
+				statement.execute(sb.toString());
 			}
-			
-			Iterator<String> tableDefs = Settings.getTableDefs();
-			while (tableDefs.hasNext()) {
-				String s = tableDefs.next();
-				System.out.println(s);
-				statement.execute(s);
-			}
+					
+			con.setAutoCommit(true);
 			con.close();
 			
 		} catch (SQLException | ClassNotFoundException e) {
@@ -96,11 +100,11 @@ public class DbHandler {
 		connection.setAutoCommit(auto);
 	}
 	
-	public void executePs (String stName, String table, Object[] params) {
+	public void executePs (String stName, Object[] params) {
 		try {
-			PreparedStatement s = ps.get(stName + ":" + table);
+			PreparedStatement s = ps.get(stName);
 			if (s == null) {
-				throw new Exception("prepared statement " + stName + ":" + table + " not found.");
+				throw new Exception("prepared statement " + stName + " not found.");
 			}
 			
 			if (params != null) {
@@ -119,86 +123,6 @@ public class DbHandler {
 			e.printStackTrace(System.out);
 		}
 	}
-	
-	/**
-	 * Creates the tables based on the schema in the settings Object
-	 * 
-	 * @param dropExisting indicates if existing tables should be rebuilt.
-	 */
-//	public void resetTables (boolean dropExisting) {
-//		try {	
-//			Statement statement = connection.createStatement();						
-//			statement.setQueryTimeout(30);			
-//			
-//			Settings.getInstance();
-//			Schema schema = Settings.getSchema();
-//			
-//			statement.executeUpdate("BEGIN");
-//			Iterator<Entry<String, Table>> tItr = schema.getTables().entrySet().iterator();			
-//			while(tItr.hasNext()) {
-//				Entry<String, Table> tableEntry = tItr.next();
-//				if (dropExisting) {
-//					statement.executeUpdate("DROP TABLE IF EXISTS " + tableEntry.getKey());
-//				}
-//				
-//				//build the sql command
-//				Iterator<Entry<String, Column>> cItr = tableEntry.getValue().getColumns().entrySet().iterator();
-//				StringBuilder columnDef = new StringBuilder("CREATE TABLE IF NOT EXISTS " + tableEntry.getKey() + " (");				
-//				while(cItr.hasNext()) {
-//					Entry<String, Column> columnEntry = cItr.next();
-//					columnDef.append("'" + columnEntry.getValue().dbname + "'" + " " + columnEntry.getValue().dbtype + " " + columnEntry.getValue().constraint);
-//					if(cItr.hasNext()) {						
-//						columnDef.append(", ");
-//					}
-//				}
-//				columnDef.append(")");
-//				// Create the table
-//				statement.execute(columnDef.toString());
-//			}						
-//			statement.execute("COMMIT");
-//		} catch (Exception e) {
-//			Logger.log(e.getMessage(), true);
-//		}
-//	}
-	
-//	public void update (String table, HashMap<String, Object> columnValuePair) {	
-//		try {
-//			StringBuilder params = new StringBuilder("(");
-//			LinkedList<Object> vals = new LinkedList<Object>();
-//			StringBuilder cols = new StringBuilder("(");
-//			Iterator<Entry<String, Object>> itr = columnValuePair.entrySet().iterator();
-//						
-//			while(itr.hasNext()) {
-//				Entry<String, Object> entry = itr.next();								
-//				Settings.getInstance();
-//				String dbColumn = Settings.getSchema().getTable(table).getColumn(entry.getKey()).dbname;
-//				
-//				if (dbColumn == null) {
-//					Logger.log("Reference to table: " + table + " column: " + entry.getKey() + " not found in schema", true);
-//				} else {				
-//					params.append("?");					
-//					cols.append(dbColumn);
-//					vals.add(entry.getValue());
-//				}
-//				
-//				params.append(itr.hasNext() ? ", " : ")");
-//				cols.append(itr.hasNext() ? ", " : ")");
-//			}
-//				final PreparedStatement pStmt = connection.prepareStatement("insert or replace into " + table + " " + cols.toString() + " values " + params.toString());
-//				
-//				//System.out.println(vals.size());
-//				
-//				int i = 1;
-//				for (Object o : vals) {
-//					//System.out.println(i + ": " + o.toString());
-//					pStmt.setObject(i++, o);
-//				}				
-//				pStmt.executeUpdate();								
-//				
-//		} catch (SQLException e) {
-//			Logger.log(e.getMessage(), true);
-//		}			
-//	}
 	
 	/**
 	 * Takes a table name and return the tables contents, as well as column names

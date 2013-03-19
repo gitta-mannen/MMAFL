@@ -29,7 +29,8 @@ public class Pair<K, V> {
     }
 
     public static <K, V> Pair<K, V>[] merge(K[] a, V[] b) {
-    	Pair<K, V>[] result = null; 
+    	@SuppressWarnings("unchecked")
+		Pair<K, V>[] result = new Pair[a.length]; 
     	if (a.length != b.length) {
     		throw new IndexOutOfBoundsException();
     	}
@@ -39,15 +40,7 @@ public class Pair<K, V> {
     	}
     	return result;
     }
-    
-    public static <K, V> K[] splitA(Pair<K, V>[] in) {
-    	K[] out = null;
-    	for (int i = 0; i < in.length; i++) {
-    		out[i] = in[i].getA();
-    	}
-    	return out;
-    }
-    
+        
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -68,7 +61,7 @@ public class Pair<K, V> {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		Pair other = (Pair) obj;
+		Pair<?, ?> other = (Pair<?, ?>) obj;
 		if (a == null) {
 			if (other.a != null) {
 				return false;

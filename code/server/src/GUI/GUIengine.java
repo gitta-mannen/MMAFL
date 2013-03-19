@@ -8,12 +8,6 @@ import util.Logger;
 public class GUIengine {
 	public static void main(String[] args) { 
 		 try {			 	
-			 	// reset the tables on startup			 	
-			 	// parameter false means that existing tables aren't overwritten
-			 	DbHandler db = new DbHandler();
-			 	db.resetTables(false);
-			 	db.close();
-			 	
 			 	// Run http server
 				HttpServer httpServer = new HttpServer();
 	            Thread thread = new Thread( httpServer );

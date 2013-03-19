@@ -3,145 +3,119 @@
 <!-- -->
 <settings>
 	<database name="stats">
-		<table name="events">
-			<table-definition name="primarykey"><![CDATA[id]]></table-definition>
-			<column name="id" dbtype="integer" />
-			<column name="name" dbtype="text" />
-			<column name="date" dbtype="text" />
-			<column name="organization" dbtype="text" />
-			<column name="location" dbtype="text" />
-			<column name="attendance" dbtype="integer" />
-			<column name="completed" dbtype="integer" />
-			<column name="child_url" dbtype="text" />
-			<column name="child_updated" dbtype="integer" />
-		</table>
+		<tables>
+			<table>events</table> 
+			<events>
+				<primary-key><![CDATA[id]]></primary-key>
+				<column>
+					<name>id</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>name</name>
+					<dbtype>text</dbtype>
+				</column>
+				<column>
+					<name>date</name>
+					<dbtype>text</dbtype>
+				</column>
+				<column>
+					<name>organization</name>
+					<dbtype>text</dbtype>
+				</column>
+				<column>
+					<name>location</name>
+					<dbtype>text</dbtype>
+				</column>
+				<column>
+					<name>attendance</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>completed</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>child_url</name>
+					<dbtype>text</dbtype>
+				</column>
+				<column>
+					<name>child_updated</name>
+					<dbtype>integer</dbtype>
+				</column>		
+			</events>
 
-		<table name="tmp_events">
-			<table-definition name="primarykey"><![CDATA[id]]></table-definition>
-			<column name="id" dbtype="integer" />
-			<column name="completed" dbtype="integer" />
-			<column name="child_url" dbtype="text" />
-		</table>
-
-		<!--
-		<prepared-statement name="clear" table="tmp_events"><![CDATA[DELETE * FROM tmp_events]]></prepared-statement>
-		<prepared-statement name="select-all" table="events"><![CDATA[SELECT * FROM events]]></prepared-statement>
-		<prepared-statement name="insert" table="tmp_events"><![CDATA[INSERT OR REPLACE INTO tmp_events (id, completed, child_url) VALUES (?, ?, ?)]]></prepared-statement>
-		
-		<prepared-statement name="select-trigger" table="events"><![CDATA[SELECT id, completed FROM events]]></prepared-statement>
-		<prepared-statement name="insert-event-index" table="events"><![CDATA[INSERT OR REPLACE INTO events (id, name, date, organization, location, completed, child_url, child_updated) VALUES (?, ?, ?, ?, ?, ?, ?, 0)]]></prepared-statement>
-		<prepared-statement name="set-child-updated" table="events"><![CDATA[UPDATE events SET child_updated = '1' where id = ?]]></prepared-statement>
-		<prepared-statement name="select-not-updated" table="events"><![CDATA[SELECT id FROM events where child_updated = '0']]></prepared-statement>
-		<prepared-statement name="test-insert" table="events"><![CDATA[INSERT OR REPLACE INTO events (id, name, child_updated) VALUES (?, ?, 0)]]></prepared-statement>
-
-		<prepared-statement name="drop" table="events_temp"><![CDATA[DROP IF EXISTS TABLE events_temp]]></prepared-statement>
-		<prepared-statement name="insert-temp" table="events"><![CDATA[INSERT OR REPLACE INTO events a id,completed FROM events_temp b WHERE NOT EXISTS (SELECT id,completed FROM events WHERE a.id=b.id AND a.completed=b.completed)]]></prepared-statement>
-
-
-		<prepared-statement name="select-all" table="fights"><![CDATA[SELECT * FROM events]]></prepared-statement>
-		<prepared-statement name="select-trigger" table="fights"><![CDATA[SELECT id, completed FROM events]]></prepared-statement>-->
-
+			<table>tmp_events</table>
+			<tmp_events>
+				<primary-key><![CDATA[id]]></primary-key>
+				<column>
+					<name>id</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>completed</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>child_url</name>
+					<dbtype>text</dbtype>
+				</column>
+			</tmp_events>
+		</tables>
 	</database>
 
+	<!-- scraper tasks settings -->
 	<scrapers>
 		<completed-events>
 			<prepared-statement>
 				<name>clear</name>
-				<statement><![CDATA[DELETE * FROM tmp_events]]></statement>
+				<statement><![CDATA[DELETE FROM tmp_events]]></statement>
 			</prepared-statement>
 			<prepared-statement>
 				<name>insert</name>
 				<statement><![CDATA[INSERT OR REPLACE INTO tmp_events (id, completed, child_url) VALUES (?, 1, ?)]]></statement>
 			</prepared-statement>
 
-			<index-delimiter><![CDATA[**row split regex**]]></index-delimiter>
+			<table-regex><![CDATA[(<div[\s]class="events_table[\s]data_table[\s]row_is_link">)([\w\W]*?)(</div>)]]></table-regex>
+			<index-delimiter><![CDATA[</tr>[\w\W]*?<tr.+?>]]></index-delimiter>
 			<source-url><![CDATA[http://hosteddb.fightmetric.com/events/index/date/desc/1/all]]></source-url>
 
 			<scrape-field>
 				<name>id</name>
 				<apptype>integer</apptype>
-				<regex><![CDATA[()()()]]></regex>
-			</scrape-field>
-			<scrape-field>
-				<name>completed</name> 
-				<apptype>integer</apptype>
-				<regex><![CDATA[()()()]]></regex>
+				<regex><![CDATA[(.events.details.)(\d+)(\D)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>child_url</name> 
 				<apptype>string</apptype>
-				<regex><![CDATA[()()()]]></regex>
+				<regex><![CDATA[(<td[\s]class="left_border"><a href=")(.*)(">)]]></regex>
 			</scrape-field>
 		</completed-events>
 
 		<upcoming-events>
 			<prepared-statement>
 				<name>clear</name>
-				<statement><![CDATA[DELETE * FROM tmp_events]]></statement>
+				<statement><![CDATA[DELETE FROM tmp_events]]></statement>
 			</prepared-statement>
 			<prepared-statement>
 				<name>insert</name>
 				<statement><![CDATA[INSERT OR REPLACE INTO tmp_events (id, completed, child_url) VALUES (?, 0, ?)]]></statement>
 			</prepared-statement>
-
-			<index-delimiter><![CDATA[**row split regex**]]></index-delimiter>
+			
+			<table-regex><![CDATA[(<div[\s]class="events_table[\s]data_table[\s]row_is_link">)([\w\W]*?)(</div>)]]></table-regex>
+			<index-delimiter><![CDATA[</tr>[\w\W]*?<tr.+?>]]></index-delimiter>
 			<source-url><![CDATA[http://hosteddb.fightmetric.com/events/index/date/asc/0/all/]]></source-url>
 
 			<scrape-field>
 				<name>id</name>
 				<apptype>integer</apptype>
-				<regex><![CDATA[()()()]]></regex>
-			</scrape-field>
-			<scrape-field>
-				<name>completed</name> 
-				<apptype>integer</apptype>
-				<regex><![CDATA[()()()]]></regex>
+				<regex><![CDATA[(.events.details.)(\d+)(\D)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>child_url</name> 
 				<apptype>string</apptype>
-				<regex><![CDATA[()()()]]></regex>
+				<regex><![CDATA[(<td[\s]class="left_border"><a href=")(.*)(">)]]></regex>
 			</scrape-field>
 		</upcoming-events>
 	</scrapers>
-<!--
-	<scraper>
-		<scraper-task name="completed-events">
-			
-			<scraper-setting name="index-delimiter"><![CDATA[**row split regex**]]></scraper-setting>
-			<scraper-setting name="child-scraper-task"><![CDATA[compare-events]]></scraper-setting>
-		<scraper-setting name="source"><![CDATA[http://hosteddb.fightmetric.com/events/index/date/desc/1/all/]]></scraper-setting>			
-			<scraper-setting name="child-key"><![CDATA[id]]></scraper-setting>
-			<scraper-setting name="child-scraper-base-url"><![CDATA[http://hosteddb.fightmetric.com]]></scraper-setting>
-			<scraper-setting name="child-scraper-url"><![CDATA[child_url]]></scraper-setting>
-			<scraper-setting name="trigger"><![CDATA[id, completed]]></scraper-setting>
-			<scraper-setting name="trigger-statement"><![CDATA[select-trigger]]></scraper-setting>
-			<scraper-setting name="trigger-type"><![CDATA[insert-replace]]></scraper-setting>
-
-			<scrape-data name="id" apptype="integer"><![CDATA[()()()]]></scrape-data>
-			<scrape-data name="name" apptype="string"><![CDATA[()()()]]></scrape-data>
-			<scrape-data name="date" apptype="date"><![CDATA[()()()]]></scrape-data>
-			<scrape-data name="organization" apptype="string"><![CDATA[()()()]]></scrape-data>
-			<scrape-data name="location" apptype="string"><![CDATA[()()()]]></scrape-data>
-			<scrape-data name="completed" apptype="boolean"><![CDATA[]]></scrape-data>
-			<scrape-data name="child_url" apptype="string"><![CDATA[()()()]]></scrape-data>
-		</scraper-task>
-
-		<scraper-task name="future-events">
-		</scraper-task>
-		<scraper-task name="event-time">
-		</scraper-task>
-		<scraper-task name="event-details">
-		</scraper-task>
-		<scraper-task name="fights">
-		</scraper-task>
-		<scraper-task name="fight-details">
-		</scraper-task>
-		<scraper-task name="rounds">
-		</scraper-task>
-		<scraper-task name="fighters">
-		</scraper-task>
-		<scraper-task name="fighter-details">
-		</scraper-task>
-	</scraper>
-</settings> -->
+</settings> 

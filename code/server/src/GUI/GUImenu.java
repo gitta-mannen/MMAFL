@@ -52,9 +52,9 @@ public GUImenu() {
 	        content.setBackground(Color.white);
 	        content.setLayout(new GridBagLayout()); 
 	        
-	        Iterator<String> tables = Settings.getInstance().getSchema().getTables().keySet().iterator();
-	        while (tables.hasNext()) {
-	        	final JButton button = new JButton(tables.next());
+	        String[] tables = Settings.getNodeText("database:tables:table");
+	        for (int i = 0; i < tables.length; i++) {
+	        	final JButton button = new JButton(tables[i]);
 	        	button.addActionListener(new ActionListener() {
 	                @Override
 	                public void actionPerformed(ActionEvent e) {
