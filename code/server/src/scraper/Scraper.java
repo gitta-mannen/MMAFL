@@ -57,6 +57,7 @@ abstract class Scraper {
 	 * @param group
 	 * @return
 	 */
+	@Deprecated
 	public static LinkedList<String> findAll (String text, String regex) {
 		LinkedList<String> list = new LinkedList<String>();
 		Matcher matcher = Pattern.compile(regex, Pattern.MULTILINE).matcher(text);

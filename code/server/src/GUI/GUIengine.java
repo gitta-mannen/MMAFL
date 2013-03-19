@@ -7,7 +7,11 @@ import util.Logger;
 
 public class GUIengine {
 	public static void main(String[] args) { 
-		 try {			 	
+		 try {	
+			 
+			 	// Run scraper
+			 		//scheduledExecutorService...
+			 
 			 	// Run http server
 				HttpServer httpServer = new HttpServer();
 	            Thread thread = new Thread( httpServer );

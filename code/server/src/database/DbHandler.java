@@ -19,7 +19,6 @@ import util.Pair;
 public class DbHandler {
 	private Connection connection = null;
 	private final HashMap<String, PreparedStatement> ps = new HashMap<String, PreparedStatement>();
-//	private ResultSet rs = null;
 	
 	static {
 		// create tables on first use
@@ -46,7 +45,6 @@ public class DbHandler {
 	
 	public DbHandler () {
 		try {
-
 			Class.forName("org.sqlite.JDBC");						
 			this.connection = DriverManager.getConnection("jdbc:sqlite:stats.db");				
 		} catch (Exception e) {
@@ -132,6 +130,7 @@ public class DbHandler {
 	 *  Return null if query return an empty record.
 	 *   
 	 */
+	@Deprecated
 	public Pair<String[], Object[][]> getTable(String table) {	
 		Object[][] resultArray = null;
 		String[] headerArray = null;

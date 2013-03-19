@@ -31,7 +31,6 @@ public class FMScraper implements Runnable {
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}	
 	}
@@ -125,6 +124,7 @@ class DetailsScraperTask extends FMScraperTask{
 }
 
 class DbComparator extends FMScraperTask{
+	// ** fult att ge den en referens till stacken, gör om, gör rätt **
 	public DbComparator(String taskName, Stack<FMScraperTask> tasks) {
 		super(taskName);
 		// TODO Auto-generated constructor stub
