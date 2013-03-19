@@ -1,0 +1,484 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/FMShell.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<!-- InstanceBeginEditable name="doctitle" -->
+<title>FightMetric - MMA Statistics : SQL/XML Data Feeds</title>
+<link href="http://www.fightmetric.com/Assets/saasbeta.css"  rel="stylesheet" type="text/css"> 
+<!-- InstanceEndEditable -->
+<link href="http://www.fightmetric.com/css/fightmetric.css" rel="stylesheet" type="text/css" />
+<LINK REL="SHORTCUT ICON" HREF="/images/favicon.ico">
+<style type="text/css">
+<!--
+.style1 {font-size: 0.9em}
+body,td,th {
+	font-size: 12px;
+}
+-->
+</style>
+<!-- InstanceBeginEditable name="head" -->
+<script type="text/javascript" src="http://www.fightmetric.com/js/prototype.js"></script>
+<script type="text/javascript" src="http://www.fightmetric.com/js/scriptaculous.js?load=effects,builder"></script>
+<script type="text/javascript" src="http://www.fightmetric.com/js/lightbox.js"></script>
+<link rel="stylesheet" href="http://www.fightmetric.com/css/lightbox.css" type="text/css" media="screen" />
+<!-- InstanceEndEditable -->
+<script type="text/javascript">
+ 
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-2855164-1']);
+  _gaq.push(['_setDomainName', '.fightmetric.com']);
+  _gaq.push(['_trackPageview']);
+ 
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+ 
+</script>
+<!-- BigLeadSports Ad Code -->
+<SCRIPT> 
+var a = Math.floor(Math.random()*9999999999+1) 
+var random_number = a; 
+</SCRIPT>
+<!-- Begin comScore Tag -->
+<script>
+    document.write(unescape("%3Cscript src="http://www.fightmetric.com/ + (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js' %3E%3C/script%3E"));
+</script>
+<script>
+  COMSCORE.beacon({
+    c1:2,
+    c2:"6035210",
+    c3:"",
+    c4:"www.fightmetric.com",
+    c5:"",
+    c6:"",
+    c15:""
+  });
+</script>
+<noscript>
+  <img src="http://b.scorecardresearch.com/b?c1=2&c2=6035210&c3=&c4=www.fightmetric.com&c5=&c6=&c15=&cv=1.3&cj=1" style="display:none" width="0" height="0" alt="" />
+</noscript>
+<!-- End comScore Tag -->
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">google.load("jquery", "1");</script>
+<script type='text/javascript'>$.noConflict();</script>
+<link rel="stylesheet" type="text/css" href="http://hosteddb.fightmetric.com/css/style.css" />
+<link rel="stylesheet" type="text/css" href="http://hosteddb.fightmetric.com/css/autocomplete.css" />
+<script type="text/javascript" src="http://hosteddb.fightmetric.com/js/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="http://hosteddb.fightmetric.com/js/jquery.qtip.min.js"></script>
+
+</head>
+<body>
+<table width="857" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="185"><span class="style1"></span></td>
+    <td width="15"><span class="style1"><img src="http://www.fightmetric.com/beta/_images/spacer.gif" name="spacer" width="15" height="45" id="spacer" /></span></td>
+    <td width="656" valign="bottom"><img src="http://www.fightmetric.com/beta/_images/UFC-stats-provider.png" alt="Official Stats Provider UFC" width="258" height="46" align="right" /></td>
+    <td width="656"><img src="http://www.fightmetric.com/beta/_images/spacer.gif" alt="spacer" width="135" height="20" /> </td>
+  </tr>
+  <tr>
+    <td width="185" height="725" valign="top"><a href="http://www.fightmetric.com/index.html"><img src="http://www.fightmetric.com/beta/_images/FMlogo.png" alt="fightmetric logo" width="185" height="46" border="0" /></a><br />
+      <br />
+      <table width="184" border="0" cellspacing="0" cellpadding="3">
+        <tr>
+          <td class="leftmenuTD"><a href="http://www.fightmetric.com/index.html">home</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTD"><a href="http://hosteddb.fightmetric.com">STATISTICS</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub">&nbsp;&nbsp;<a href="http://hosteddb.fightmetric.com/events">&nbsp;&nbsp;&nbsp;. Events &amp; Fights</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub">&nbsp;&nbsp;<a href="http://hosteddb.fightmetric.com/fighters">&nbsp;&nbsp;&nbsp;. Fighters</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub">&nbsp;&nbsp;<a href="http://www.fightmetric.com/ufcrecords.html">&nbsp;&nbsp;&nbsp;. UFC Records</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub"><a href="http://www.fightmetric.com/aboutthestats.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;. About The Stats</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTD"><a href="http://www.fightmetric.com/datafeeds.html"> Products</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub"><a href="http://www.fightmetric.com/datafeeds.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;. Data Feeds</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub"><a href="http://www.fightmetric.com/hosteddb.html"> </a><a href="http://www.fightmetric.com/datafeeds.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.</a> <a href="http://www.fightmetric.com/hosteddb.html">Hosted DB</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub"><a href="http://www.fightmetric.com/datafeeds.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.</a> <a href="http://www.fightmetric.com/fantasy.html">Fantasy</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub"><a href="http://www.fightmetric.com/consulting.html"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.Consulting</a></td>
+        </tr>
+        
+        <tr>
+          <td class="leftmenuTD"><a href="http://www.fightmetric.com/aboutthecompany.html">About The Company</a> </td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub">&nbsp;&nbsp;<a href="http://blog.fightmetric.com">&nbsp;&nbsp;&nbsp;. Blog </a></td>
+        </tr>
+        
+        <tr>
+          <td class="leftmenuTD"><a href="http://www.fightmetric.com/contactus.html">contact us</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTD"><a href="http://feeds.feedburner.com/Fightmetric"><img src="http://www.fightmetric.com/_images/rss-logo.png" alt="rss" width="16" height="16" border="0" /></a>&nbsp;<a href="http://www.twitter.com/fightmetric"><img src="http://www.fightmetric.com/_images/twitter-logo.png" alt="twitter" width="16" height="16" border="0" /></a> <a href="http://www.facebook.com/FightMetric"><img src="http://www.fightmetric.com/_images/facebook.png" alt="facebook" width="16" height="16" border="0" /></a></td>
+        </tr>
+    </table>
+    <p align="center">&nbsp;</p>
+    </td>
+    <td width="15"><p class="style1"><img src="http://www.fightmetric.com/beta/_images/spacer.gif" alt="spacer" name="spacer" width="15" height="15" id="spacer" /></p>    </td>
+    <td valign="top"><div id="main-content"><!-- InstanceBeginEditable name="CenterContent" --><div id="dataproductstab">
+        data products        </div>
+	  <div id="gradientbox">
+	    <table width="600" height="49" border="0" cellpadding="0" cellspacing="0">
+		  <tr>
+			<td height="49" valign="top">
+			  <table width="600" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td width="450"><div class="pagetitle">RESULTS &amp; STATS</div>                  </td>
+                  <td width="150"><div class="contactbox" id="contactbox"><a href="http://www.fightmetric.com/contactus.html"><img src="http://www.fightmetric.com/_images/sm-arrow.png" alt="small arrow" width="13" height="21" border="0" align="right" />Contact Us to Get <br />
+                    Your Hosted DB</a></div></td>
+                </tr>
+                <tr>
+                  <td colspan="2"><table width="400" border="1" cellpadding="5" cellspacing="0" bordercolor="#8B0303">
+                    <tr>
+                      <td width="120" align="center" bordercolor="#8B0303" bgcolor="#4A0404"><a href="http://hosteddb.fightmetric.com/events" style="color:white; text-decoration:none"><strong>Events &amp; Fights</strong></a></td>
+                      <td width="80" align="center" bordercolor="#8B0303" bgcolor="#4A0404"><a href="http://hosteddb.fightmetric.com/fighters" style="color:white; text-decoration:none"><strong>Fighters</strong></a></td>
+                      <td width="80" align="center" bordercolor="#8B0303" bgcolor="#4A0404"><a href="http://hosteddb.fightmetric.com/judges" style="color:white; text-decoration:none"><strong>Judges</strong></a></td>
+                      <td width="80" align="center" bordercolor="#8B0303" bgcolor="#4A0404"><a href="http://hosteddb.fightmetric.com/referees" style="color:white; text-decoration:none"><strong>Referees</strong></a></td>
+                    </tr>
+                  </table></td>
+                </tr>
+                
+                <tr>
+                  <td colspan="2"><br />
+				  <div id="saasbeta"> <div class="fightmetric"><div class="breadcrumbs">
+	<a href="/events/">Events</a> > <a href="/events/details/619">UFC 158: St-Pierre vs. Diaz</a> > St-Pierre vs. Diaz</div>
+<div class="fight_details">
+	<div class="header">
+		<h1 class="fight_details_h1">UFC 158: St-Pierre vs. Diaz</h1>
+		<hr />
+        <img src="/img/belt.gif" alt="" /> UFC WELTERWEIGHT TITLE MATCH	</div>
+			<div class="fight_details_name">
+			<div class="icon">
+				W			</div>
+			<div class="name">
+				<h2><a href="/fighters/details/439">Georges St-Pierre</a></h2>
+				"RUSH"                			</div>
+			<div class="clr"></div>
+		</div>
+		<div class="fight_details_name">
+			<div class="icon">
+				L			</div>
+			<div class="name">
+				<h2><a href="/fighters/details/506">Nick Diaz</a></h2>
+				                			</div>
+			<div class="clr"></div>
+		</div>
+		<div class="clr"></div>
+       
+        <table class="fight_details_info">
+            <tr>
+                <td class="title_text">METHOD</td>
+                <td class="title_text">ROUND</td>
+                <td class="title_text">TIME</td>
+                <td class="title_text">TIME FORMAT</td>
+                <td class="title_text">REFEREE</td>
+            </tr>
+            <tr>
+                                <td>Unan. Dec.</td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5</td>
+                <td>
+                    5:00                </td>
+                <td>5 Rnd (5-5-5-5-5)</td>
+                <td><a href="/referees/details/Yves Lavigne">Yves Lavigne</a></td>
+            </tr>
+            <tr>
+                <td colspan="5"></td>
+            </tr>
+            <tr>
+                <td colspan="5" class="title_text">DETAILS</td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <a href="/judges/details/Richard_Bertrand">Richard Bertrand</a>: 50 - 45<br /><a href="/judges/details/Sal_D&#039;amato">Sal D&#039;amato</a>: 50 - 45<br /><a href="/judges/details/David_Therien">David Therien</a>: 50 - 45<br />                </td>
+            </tr>
+        </table>
+                    <table class="rounds_table">
+                <tr>
+                    <th class="left_border" align="left">Fighter</th>
+                    <th align="center">KD</th>
+                    <th align="center">Sig. Str.</th>
+                    <th align="center">Sig. Str. %</th>
+                    <th align="center">Total Str.</th>
+                    <th align="center">TD</th>
+                    <th align="center">TD %</th>
+                    <th align="center">Sub. Att.</th>
+                    <th align="center">Pass</th>
+                    <th align="center" class="right_border">Rev.</th>
+                </tr>
+                <tr class="fight_totals">
+                    <td colspan="10">FIGHTS TOTALS</td>
+                </tr>
+                                                    <tr>
+                        <td>St-Pierre</td>
+                        <td align="center">0</td>
+                        <td align="center">105 of 167</td>
+                        <td align="center">63%</td>
+                        <td align="center">210 of 285</td>
+                        <td align="center">9 of 16</td>
+                        <td align="center">56%</td>
+                        <td align="center">0</td>
+                        <td align="center">2</td>
+                        <td align="center">0</td>
+                    </tr>
+                                    <tr>
+                        <td>Diaz</td>
+                        <td align="center">0</td>
+                        <td align="center">41 of 136</td>
+                        <td align="center">30%</td>
+                        <td align="center">80 of 176</td>
+                        <td align="center">0 of 0</td>
+                        <td align="center">0%</td>
+                        <td align="center">1</td>
+                        <td align="center">0</td>
+                        <td align="center">0</td>
+                    </tr>
+                                        <tr class="fight_round">
+                            <td colspan="10">ROUND 1</td>
+                        </tr>
+                                        <tr>
+                        <td>St-Pierre</td>
+                        <td align="center">0</td>
+                        <td align="center">12 of 21</td>
+                        <td align="center">57%</td>
+                        <td align="center">54 of 68</td>
+                        <td align="center">3 of 3</td>
+                        <td align="center">100%</td>
+                        <td align="center">0</td>
+                      <td align="center">1</td>
+                        <td align="center">0</td>
+              </tr>
+                                    <tr>
+                        <td>Diaz</td>
+                        <td align="center">0</td>
+                        <td align="center">1 of 4</td>
+                        <td align="center">25%</td>
+                        <td align="center">6 of 9</td>
+                        <td align="center">0 of 0</td>
+                        <td align="center">0%</td>
+                        <td align="center">0</td>
+                      <td align="center">0</td>
+                        <td align="center">0</td>
+              </tr>
+                                        <tr class="fight_round">
+                            <td colspan="10">ROUND 2</td>
+                        </tr>
+                                        <tr>
+                        <td>St-Pierre</td>
+                        <td align="center">0</td>
+                        <td align="center">18 of 29</td>
+                        <td align="center">62%</td>
+                        <td align="center">41 of 58</td>
+                        <td align="center">1 of 1</td>
+                        <td align="center">100%</td>
+                        <td align="center">0</td>
+                      <td align="center">0</td>
+                        <td align="center">0</td>
+              </tr>
+                                    <tr>
+                        <td>Diaz</td>
+                        <td align="center">0</td>
+                        <td align="center">3 of 20</td>
+                        <td align="center">15%</td>
+                        <td align="center">18 of 35</td>
+                        <td align="center">0 of 0</td>
+                        <td align="center">0%</td>
+                        <td align="center">0</td>
+                      <td align="center">0</td>
+                        <td align="center">0</td>
+              </tr>
+                                        <tr class="fight_round">
+                            <td colspan="10">ROUND 3</td>
+                        </tr>
+                                        <tr>
+                        <td>St-Pierre</td>
+                        <td align="center">0</td>
+                        <td align="center">28 of 54</td>
+                        <td align="center">52%</td>
+                        <td align="center">40 of 67</td>
+                        <td align="center">2 of 5</td>
+                        <td align="center">40%</td>
+                        <td align="center">0</td>
+                      <td align="center">0</td>
+                        <td align="center">0</td>
+              </tr>
+                                    <tr>
+                        <td>Diaz</td>
+                        <td align="center">0</td>
+                        <td align="center">15 of 42</td>
+                        <td align="center">36%</td>
+                        <td align="center">17 of 44</td>
+                        <td align="center">0 of 0</td>
+                        <td align="center">0%</td>
+                        <td align="center">0</td>
+                      <td align="center">0</td>
+                        <td align="center">0</td>
+              </tr>
+                                        <tr class="fight_round">
+                            <td colspan="10">ROUND 4</td>
+                        </tr>
+                                        <tr>
+                        <td>St-Pierre</td>
+                        <td align="center">0</td>
+                        <td align="center">24 of 31</td>
+                        <td align="center">77%</td>
+                        <td align="center">38 of 46</td>
+                        <td align="center">2 of 5</td>
+                        <td align="center">40%</td>
+                        <td align="center">0</td>
+                      <td align="center">0</td>
+                        <td align="center">0</td>
+              </tr>
+                                    <tr>
+                        <td>Diaz</td>
+                        <td align="center">0</td>
+                        <td align="center">11 of 38</td>
+                        <td align="center">29%</td>
+                        <td align="center">17 of 44</td>
+                        <td align="center">0 of 0</td>
+                        <td align="center">0%</td>
+                        <td align="center">1</td>
+                      <td align="center">0</td>
+                        <td align="center">0</td>
+              </tr>
+                                        <tr class="fight_round">
+                            <td colspan="10">ROUND 5</td>
+                        </tr>
+                                        <tr>
+                        <td>St-Pierre</td>
+                        <td align="center">0</td>
+                        <td align="center">23 of 32</td>
+                        <td align="center">72%</td>
+                        <td align="center">37 of 46</td>
+                        <td align="center">1 of 2</td>
+                        <td align="center">50%</td>
+                        <td align="center">0</td>
+                      <td align="center">1</td>
+                        <td align="center">0</td>
+              </tr>
+                                    <tr>
+                        <td>Diaz</td>
+                        <td align="center">0</td>
+                        <td align="center">11 of 32</td>
+                        <td align="center">34%</td>
+                        <td align="center">22 of 44</td>
+                        <td align="center">0 of 0</td>
+                        <td align="center">0%</td>
+                        <td align="center">0</td>
+                      <td align="center">0</td>
+                        <td align="center">0</td>
+              </tr>
+                            </table>
+            </div>
+</div>                  </div>
+                    <p>&nbsp;</p></td>
+                  </tr>
+              </table>
+		      </td>
+			</tr>
+		</table>
+	  </div><!-- InstanceEndEditable --></div></td>
+    <td rowspan="2" valign="top"><p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <!-- InstanceBeginEditable name="AdSpace" -->
+      <div align="right">
+        <!--BEGIN BLS CODE-->
+        <script>
+document.write('<scr' + 'ipt src=http://ad.doubleclick.net/adj/fightmetric.fsv/ros;sect=ros;fantasy=no;game=no;tile=2;sz=160x600;ord=' + random_number + '?></scr' + 'ipt>');
+      </script>
+        <noscript>
+        <a href="http://ad.doubleclick.net/jump/fightmetric.fsv/ros;sect=ros;fantasy=no;game=no;tile=2;sz=160x600;ord='+random_number+'?" > <img src="http://ad.doubleclick.net/ad/fightmetric.fsv/ros;sect=ros;fantasy=no;game=no;tile=2;sz=160x600;ord='+random_number+'?" border="0" height="600" width="160" /></a>
+        </noscript>
+        <!--END BLS CODE-->
+      </div>
+    <!-- InstanceEndEditable --></td>
+  </tr>
+  <tr>
+    <td width="185" valign="top"><div align="center"><a href="http://www.fightmetric.com/aboutthecompany.html"></a></div></td>
+    <td width="15">&nbsp;</td>
+    <td><div id="footer">
+      <table width="635" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="20%" valign="top" class="sitemap"><p><a href="http://www.fightmetric.com/index.html">HOME</a><br />
+              <a href="http://hosteddb.fightmetric.com">STATISTICS</a><br />
+              <a href="http://hosteddb.fightmetric.com/events">.Events &amp; Fights</a><br />
+              <a href="http://hosteddb.fightmetric.com/fighters">.Fighters</a><br />
+              <a href="http://www.fightmetric.com/ufcrecords.html">.UFC Records</a><br />
+              <a href="http://www.fightmetric.com/aboutthestats.html">.About the Stats</a><br />
+          </p>            </td>
+          <td width="20%" valign="top" class="sitemap"><p>PRODUCTS<br />
+              <a href="http://www.fightmetric.com/datafeeds.html">.Data Feeds</a><a href="http://www.fightmetric.com/hosteddb.html"><br />
+.Hosted DB</a><span class="graytext"><br />
+</span> <a href="http://www.fightmetric.com/fantasy.html"> .Fantasy</a><br />
+            <a href="http://www.fightmetric.com/consulting.html"> .Consulting<br />
+              </a><a href="http://blog.fightmetric.com"><br />
+              </a><br />
+              </p>            </td>
+          <td width="20%" valign="top" class="sitemap"><a href="http://www.fightmetric.com/aboutthecompany.html">ABOUT THE COMPANY</a><br />
+            <a href="http://blog.fightmetric.com"> .Blog (News / Reports)</a><a href="http://www.fightmetric.com/contactus.html">              
+CONTACT US</a><br />
+<br /></td>
+          <td width="25%" valign="top" class="sitemap"><div align="right"><img src="http://www.fightmetric.com/beta/_images/FM-winner-best-pitch-blk.png" alt="fsta" width="202" height="40" /><br />
+                <img src="http://www.fightmetric.com/beta/_images/spacer.gif" alt="spacer" width="235" height="10" /></div></td>
+        </tr>
+      </table>
+      <br />
+      <br />
+        <br />
+        <div class="sitemap">          <span class="leftmenuTD"><a href="http://feeds.feedburner.com/Fightmetric"><img src="http://www.fightmetric.com/_images/rss-logo.png" alt="rss" width="16" height="16" border="0" /></a>&nbsp;<a href="http://www.twitter.com/fightmetric"><img src="http://www.fightmetric.com/_images/twitter-logo.png" alt="twitter" width="16" height="16" border="0" /></a> <a href="http://www.facebook.com/FightMetric"><img src="http://www.fightmetric.com/_images/facebook.png" alt="facebook" width="16" height="16" border="0" /></a></span><br />
+          CSS3 Browser Optimized. <em><br />
+        </em>&copy; 2011 FightMetric LLC. All Rights Reserved | <a href="http://www.fightmetric.com/termsofuse.html">Terms of Use</a> | <a href="http://www.fightmetric.com/privacypolicy.html">Privacy Policy</a></div>
+        </p>
+        
+      </div></td>
+  </tr>
+</table>
+	<script type="text/javascript">
+					// <![CDATA[
+					jQuery(function($) {
+						$('.data_table tr:gt(0)').mouseover(function() {
+							$(this).addClass('select_item');
+							if ($('.data_table .rowspan').length) {
+								if ($(this).find('.rowspan').length)
+									$(this).next('tr').addClass('select_item');
+								else
+									$(this).prev('tr').addClass('select_item');
+							}
+						});
+						$('.data_table tr:gt(0)').mouseout(function() {
+							$(this).removeClass('select_item');
+							if ($('.data_table .rowspan').length) {
+								if ($(this).find('.rowspan').length)
+									$(this).next('tr').removeClass('select_item');
+								else
+									$(this).prev('tr').removeClass('select_item');
+							}
+						});
+						$('.row_is_link tr:gt(0):not(.block_auto_link)').click(function() {
+							if ($(this).find('.rowspan').length || !$('.row_is_link .rowspan').length)
+								window.location = 'http://hosteddb.fightmetric.com'+$(this).find('a').attr('href');
+							else
+								window.location = 'http://hosteddb.fightmetric.com'+$(this).prev('tr').find('a').attr('href');
+						});
+					});
+					// ]]>
+				</script>
+				</body>
+			
+<!-- InstanceEnd --></html>

@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.Stack;
 
+import com.sun.jmx.snmp.tasks.TaskServer;
+
 import settings.Constants.AppType;
 import settings.Settings;
 import util.Logger;
@@ -15,16 +17,19 @@ import util.Logger;
 public class FMScraper implements Runnable {
 	Stack<FMScraperTask> tasks = new Stack<FMScraperTask>();
 
-	public FMScraper() throws MalformedURLException, IOException {		
+	public FMScraper() throws MalformedURLException, IOException {
+		tasks.push(new DetailsScraperTask("event-details"));	
+		tasks.push(new TableComparator("compare-events"));	
 		tasks.push(new RootScraperTask("completed-events"));
-		tasks.push(new RootScraperTask("upcoming-events"));		
+		tasks.push(new RootScraperTask("upcoming-events"));
+			
 	}
 
 	@Override
 	public void run() {
 		while (!tasks.isEmpty())
 			try {
-				System.out.println("popping stack");
+				System.out.println("popping stack element: " + tasks.peek().taskName);
 				tasks.pop().doTask();
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
@@ -70,8 +75,7 @@ public class FMScraper implements Runnable {
 }
 
 class RootScraperTask extends FMScraperTask {
-	String updateString, delimiter, htmlContent, url;
-	String[] splitContent;
+	String delimiter, url;	
 	public RootScraperTask(String taskName) throws MalformedURLException, IOException {
 		super(taskName);		
 		delimiter = Settings.getNodeText("scrapers:" + taskName + ":index-delimiter")[0];
@@ -81,8 +85,8 @@ class RootScraperTask extends FMScraperTask {
 	@Override
 	public void doTask() throws Exception {
 //		htmlContent = Scraper.textFromUrl(url); // testing from file
-		htmlContent = util.IO.fileToString(Settings.getNodeText("scrapers:" + taskName + ":source-file")[0]);		
-		splitContent = Scraper.findFirst(htmlContent, Settings.getNodeText("scrapers:" + taskName + ":table-regex")[0]).split(delimiter);
+		String htmlContent = util.IO.fileToString(Settings.getNodeText("scrapers:" + taskName + ":source-file")[0]);		
+		String[] splitContent = Scraper.findFirst(htmlContent, Settings.getNodeText("scrapers:" + taskName + ":table-regex")[0]).split(delimiter);
 		
 		db.setAutoCommit(false);
 		for (int i = 1; i < splitContent.length; i++) {
@@ -116,17 +120,46 @@ class IndexScraperTask extends FMScraperTask{
 }
 
 class DetailsScraperTask extends FMScraperTask{
-	String updateString;
-	public DetailsScraperTask(String taskName, String url, String foreignKey) {
+	String prefixUrl;
+	
+	public DetailsScraperTask(String taskName) {
 		super(taskName);
-
+		prefixUrl = Settings.getNodeText("scrapers:" + taskName + ":url-prefix")[0];
+	}
+	@Override
+	public void doTask() throws MalformedURLException, IOException, Exception {
+		Object[][] keyUrl = db.executePs("select-dirty", "rowcount");
+		
+		db.setAutoCommit(false);
+		for (int i = 0; i < keyUrl.length; i++) {
+//			String htmlContent = Scraper.textFromUrl(prefixUrl + keyUrl[i][1]);
+			String htmlContent = util.IO.fileToString(Settings.getNodeText("scrapers:" + taskName + ":source-file")[0]);	
+			String[] matches = Scraper.scrapeFirst(htmlContent, regexes);
+			Object[] converted = FMScraper.stringToObject(matches, types);
+			
+			//insert foreign key and updated flag into parameter list
+			Object[] tempParam = new Object[converted.length + 2];	
+			tempParam[tempParam.length-2] = new Integer(1);	// seccond last pos
+			tempParam[tempParam.length-1] = keyUrl[i][0];	//last pos
+			System.arraycopy(converted, 0, tempParam, 0, converted.length);
+			db.executePs("update", tempParam);
+		}
+		db.setAutoCommit(true);
 	}	
+	
+	
 }
 
-class DbComparator extends FMScraperTask{
-	// ** fult att ge den en referens till stacken, gör om, gör rätt **
-	public DbComparator(String taskName, Stack<FMScraperTask> tasks) {
+class TableComparator extends FMScraperTask{
+	public TableComparator(String taskName) {
 		super(taskName);
-		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void doTask() throws MalformedURLException, IOException, Exception {
+		db.executePs("insert-difference");
+		db.executePs("clear");
 	}	
+	
+	
 }

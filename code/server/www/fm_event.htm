@@ -1,0 +1,674 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/FMShell.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<!-- InstanceBeginEditable name="doctitle" -->
+<title>FightMetric - MMA Statistics : SQL/XML Data Feeds</title>
+<link href="http://www.fightmetric.com/Assets/saasbeta.css"  rel="stylesheet" type="text/css"> 
+<!-- InstanceEndEditable -->
+<link href="http://www.fightmetric.com/css/fightmetric.css" rel="stylesheet" type="text/css" />
+<LINK REL="SHORTCUT ICON" HREF="/images/favicon.ico">
+<style type="text/css">
+<!--
+.style1 {font-size: 0.9em}
+body,td,th {
+	font-size: 12px;
+}
+-->
+</style>
+<!-- InstanceBeginEditable name="head" -->
+<script type="text/javascript" src="http://www.fightmetric.com/js/prototype.js"></script>
+<script type="text/javascript" src="http://www.fightmetric.com/js/scriptaculous.js?load=effects,builder"></script>
+<script type="text/javascript" src="http://www.fightmetric.com/js/lightbox.js"></script>
+<link rel="stylesheet" href="http://www.fightmetric.com/css/lightbox.css" type="text/css" media="screen" />
+<!-- InstanceEndEditable -->
+<script type="text/javascript">
+ 
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-2855164-1']);
+  _gaq.push(['_setDomainName', '.fightmetric.com']);
+  _gaq.push(['_trackPageview']);
+ 
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+ 
+</script>
+<!-- BigLeadSports Ad Code -->
+<SCRIPT> 
+var a = Math.floor(Math.random()*9999999999+1) 
+var random_number = a; 
+</SCRIPT>
+<!-- Begin comScore Tag -->
+<script>
+    document.write(unescape("%3Cscript src="http://www.fightmetric.com/ + (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js' %3E%3C/script%3E"));
+</script>
+<script>
+  COMSCORE.beacon({
+    c1:2,
+    c2:"6035210",
+    c3:"",
+    c4:"www.fightmetric.com",
+    c5:"",
+    c6:"",
+    c15:""
+  });
+</script>
+<noscript>
+  <img src="http://b.scorecardresearch.com/b?c1=2&c2=6035210&c3=&c4=www.fightmetric.com&c5=&c6=&c15=&cv=1.3&cj=1" style="display:none" width="0" height="0" alt="" />
+</noscript>
+<!-- End comScore Tag -->
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">google.load("jquery", "1");</script>
+<script type='text/javascript'>$.noConflict();</script>
+<link rel="stylesheet" type="text/css" href="http://hosteddb.fightmetric.com/css/style.css" />
+<link rel="stylesheet" type="text/css" href="http://hosteddb.fightmetric.com/css/autocomplete.css" />
+<script type="text/javascript" src="http://hosteddb.fightmetric.com/js/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="http://hosteddb.fightmetric.com/js/jquery.qtip.min.js"></script>
+
+</head>
+<body>
+<table width="857" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="185"><span class="style1"></span></td>
+    <td width="15"><span class="style1"><img src="http://www.fightmetric.com/beta/_images/spacer.gif" name="spacer" width="15" height="45" id="spacer" /></span></td>
+    <td width="656" valign="bottom"><img src="http://www.fightmetric.com/beta/_images/UFC-stats-provider.png" alt="Official Stats Provider UFC" width="258" height="46" align="right" /></td>
+    <td width="656"><img src="http://www.fightmetric.com/beta/_images/spacer.gif" alt="spacer" width="135" height="20" /> </td>
+  </tr>
+  <tr>
+    <td width="185" height="725" valign="top"><a href="http://www.fightmetric.com/index.html"><img src="http://www.fightmetric.com/beta/_images/FMlogo.png" alt="fightmetric logo" width="185" height="46" border="0" /></a><br />
+      <br />
+      <table width="184" border="0" cellspacing="0" cellpadding="3">
+        <tr>
+          <td class="leftmenuTD"><a href="http://www.fightmetric.com/index.html">home</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTD"><a href="http://hosteddb.fightmetric.com">STATISTICS</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub">&nbsp;&nbsp;<a href="http://hosteddb.fightmetric.com/events">&nbsp;&nbsp;&nbsp;. Events &amp; Fights</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub">&nbsp;&nbsp;<a href="http://hosteddb.fightmetric.com/fighters">&nbsp;&nbsp;&nbsp;. Fighters</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub">&nbsp;&nbsp;<a href="http://www.fightmetric.com/ufcrecords.html">&nbsp;&nbsp;&nbsp;. UFC Records</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub"><a href="http://www.fightmetric.com/aboutthestats.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;. About The Stats</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTD"><a href="http://www.fightmetric.com/datafeeds.html"> Products</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub"><a href="http://www.fightmetric.com/datafeeds.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;. Data Feeds</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub"><a href="http://www.fightmetric.com/hosteddb.html"> </a><a href="http://www.fightmetric.com/datafeeds.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.</a> <a href="http://www.fightmetric.com/hosteddb.html">Hosted DB</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub"><a href="http://www.fightmetric.com/datafeeds.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.</a> <a href="http://www.fightmetric.com/fantasy.html">Fantasy</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub"><a href="http://www.fightmetric.com/consulting.html"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.Consulting</a></td>
+        </tr>
+        
+        <tr>
+          <td class="leftmenuTD"><a href="http://www.fightmetric.com/aboutthecompany.html">About The Company</a> </td>
+        </tr>
+        <tr>
+          <td class="leftmenuTDsub">&nbsp;&nbsp;<a href="http://blog.fightmetric.com">&nbsp;&nbsp;&nbsp;. Blog </a></td>
+        </tr>
+        
+        <tr>
+          <td class="leftmenuTD"><a href="http://www.fightmetric.com/contactus.html">contact us</a></td>
+        </tr>
+        <tr>
+          <td class="leftmenuTD"><a href="http://feeds.feedburner.com/Fightmetric"><img src="http://www.fightmetric.com/_images/rss-logo.png" alt="rss" width="16" height="16" border="0" /></a>&nbsp;<a href="http://www.twitter.com/fightmetric"><img src="http://www.fightmetric.com/_images/twitter-logo.png" alt="twitter" width="16" height="16" border="0" /></a> <a href="http://www.facebook.com/FightMetric"><img src="http://www.fightmetric.com/_images/facebook.png" alt="facebook" width="16" height="16" border="0" /></a></td>
+        </tr>
+    </table>
+    <p align="center">&nbsp;</p>
+    </td>
+    <td width="15"><p class="style1"><img src="http://www.fightmetric.com/beta/_images/spacer.gif" alt="spacer" name="spacer" width="15" height="15" id="spacer" /></p>    </td>
+    <td valign="top"><div id="main-content"><!-- InstanceBeginEditable name="CenterContent" --><div id="dataproductstab">
+        data products        </div>
+	  <div id="gradientbox">
+	    <table width="600" height="49" border="0" cellpadding="0" cellspacing="0">
+		  <tr>
+			<td height="49" valign="top">
+			  <table width="600" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td width="450"><div class="pagetitle">RESULTS &amp; STATS</div>                  </td>
+                  <td width="150"><div class="contactbox" id="contactbox"><a href="http://www.fightmetric.com/contactus.html"><img src="http://www.fightmetric.com/_images/sm-arrow.png" alt="small arrow" width="13" height="21" border="0" align="right" />Contact Us to Get <br />
+                    Your Hosted DB</a></div></td>
+                </tr>
+                <tr>
+                  <td colspan="2"><table width="400" border="1" cellpadding="5" cellspacing="0" bordercolor="#8B0303">
+                    <tr>
+                      <td width="120" align="center" bordercolor="#8B0303" bgcolor="#4A0404"><a href="http://hosteddb.fightmetric.com/events" style="color:white; text-decoration:none"><strong>Events &amp; Fights</strong></a></td>
+                      <td width="80" align="center" bordercolor="#8B0303" bgcolor="#4A0404"><a href="http://hosteddb.fightmetric.com/fighters" style="color:white; text-decoration:none"><strong>Fighters</strong></a></td>
+                      <td width="80" align="center" bordercolor="#8B0303" bgcolor="#4A0404"><a href="http://hosteddb.fightmetric.com/judges" style="color:white; text-decoration:none"><strong>Judges</strong></a></td>
+                      <td width="80" align="center" bordercolor="#8B0303" bgcolor="#4A0404"><a href="http://hosteddb.fightmetric.com/referees" style="color:white; text-decoration:none"><strong>Referees</strong></a></td>
+                    </tr>
+                  </table></td>
+                </tr>
+                
+                <tr>
+                  <td colspan="2"><br />
+				  <div id="saasbeta"> <div class="fightmetric"><div class="breadcrumbs">
+	<a href="/events/">Events</a> > UFC 158: St-Pierre vs. Diaz</div>
+<div class="event_details">
+	<div class="header">
+		<h1 class="event_header_h1">UFC 158: St-Pierre vs. Diaz</h1>
+		<hr />
+		<table class="event_info">
+			<tr>
+				<td class="title_text">DATE</td>
+				<td>Mar. 16, 2013</td>
+			</tr>
+			<tr>
+				<td class="title_text">LOCATION</td>
+								<td>Montreal, Quebec, Canada</td>
+			</tr>
+			<tr>
+				<td class="title_text">ORGANIZATION</td>
+				<td>Ultimate Fighting Championship</td>
+			</tr>
+			<tr>
+				<td class="title_text">ATTENDANCE</td>
+				<td>20,145</td>
+			</tr>
+		</table>
+	</div>
+		<div class="fight_table">
+		                        &nbsp;&nbsp;<img src="http://www.fightmetric.com/Assets/arrow2.gif" alt="" /> &nbsp;<strong>Click on a row below to see in-depth fight stats.</strong>
+			<table class="data_table row_is_link">
+				<tr>
+					<th class="left_border"></th>
+					<th align="left">W/L</th>
+					<th align="left">FIGHTER</th>
+					<th class="vertical_line">Str</th>
+					<th class="vertical_line">TD</th>
+					<th class="vertical_line">Sub</th>
+					<th class="vertical_line">Pass</th>
+					<th align="left">WEIGHT CLASS</th>
+					<th align="left">METHOD</th>
+					<th>ROUND</th>
+					<th class="right_border" align="left">TIME</th>
+				</tr>
+									<tr >
+						                            <td rowspan="2" class="rowspan">
+                                <a href="/fights/index/4220" class="arrow"></a>                            </td>
+                        						<td>
+                            Win                        </td>
+						<td>
+							<a href="/fighters/details/439">Georges St-Pierre</a>						</td>
+                                                    <td class="vertical_line">105</td>
+                            <td class="vertical_line">9</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">2</td>
+                        													<td>Welterweight</td>
+                                                            <td>U. DEC</td>
+                                <td align="center">5</td>
+                                <td>
+                                    5:00                                </td>
+                            											</tr>
+									<tr class="fight">
+												<td>
+                                                    </td>
+						<td>
+							<a href="/fighters/details/506">Nick Diaz</a>						</td>
+                                                    <td class="vertical_line">41</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">1</td>
+                            <td class="vertical_line">0</td>
+                        													<td>
+								<img src="/img/belt.gif" alt="" />							</td>
+							<td colspan="3">
+															</td>
+											</tr>
+									<tr class="dark">
+						                            <td rowspan="2" class="rowspan">
+                                <a href="/fights/index/4221" class="arrow"></a>                            </td>
+                        						<td>
+                            Win                        </td>
+						<td>
+							<a href="/fighters/details/947">Johny Hendricks</a>						</td>
+                                                    <td class="vertical_line">30</td>
+                            <td class="vertical_line">12</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">1</td>
+                        													<td>Welterweight</td>
+                                                            <td>U. DEC</td>
+                                <td align="center">3</td>
+                                <td>
+                                    5:00                                </td>
+                            											</tr>
+									<tr class="fight dark">
+												<td>
+                                                    </td>
+						<td>
+							<a href="/fighters/details/663">Carlos Condit</a>						</td>
+                                                    <td class="vertical_line">42</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">1</td>
+                        													<td>
+								<img src="/img/icon_fight_of_the_night.png" alt="" />							</td>
+							<td colspan="3">
+															</td>
+											</tr>
+									<tr >
+						                            <td rowspan="2" class="rowspan">
+                                <a href="/fights/index/4222" class="arrow"></a>                            </td>
+                        						<td>
+                            Win                        </td>
+						<td>
+							<a href="/fighters/details/965">Jake Ellenberger</a>						</td>
+                                                    <td class="vertical_line">13</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                        													<td>Welterweight</td>
+                                                            <td>KO/TKO</td>
+                                <td align="center">1</td>
+                                <td>
+                                    3:00                                </td>
+                            											</tr>
+									<tr class="fight">
+												<td>
+                                                    </td>
+						<td>
+							<a href="/fighters/details/372">Nate Marquardt</a>						</td>
+                                                    <td class="vertical_line">13</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                        													<td>
+								<img src="/img/icon_ko_of_the_night.png" alt="" />							</td>
+							<td colspan="3">
+								Punch							</td>
+											</tr>
+									<tr class="dark">
+						                            <td rowspan="2" class="rowspan">
+                                <a href="/fights/index/4247" class="arrow"></a>                            </td>
+                        						<td>
+                            Win                        </td>
+						<td>
+							<a href="/fighters/details/1550">Chris Camozzi</a>						</td>
+                                                    <td class="vertical_line">64</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                        													<td>Middleweight</td>
+                                                            <td>S. DEC</td>
+                                <td align="center">3</td>
+                                <td>
+                                    5:00                                </td>
+                            											</tr>
+									<tr class="fight dark">
+												<td>
+                                                    </td>
+						<td>
+							<a href="/fighters/details/1724">Nick Ring</a>						</td>
+                                                    <td class="vertical_line">86</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                        													<td>
+															</td>
+							<td colspan="3">
+															</td>
+											</tr>
+									<tr >
+						                            <td rowspan="2" class="rowspan">
+                                <a href="/fights/index/4258" class="arrow"></a>                            </td>
+                        						<td>
+                            Win                        </td>
+						<td>
+							<a href="/fighters/details/2040">Mike Ricci</a>						</td>
+                                                    <td class="vertical_line">47</td>
+                            <td class="vertical_line">2</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">2</td>
+                        													<td>Lightweight</td>
+                                                            <td>U. DEC</td>
+                                <td align="center">3</td>
+                                <td>
+                                    5:00                                </td>
+                            											</tr>
+									<tr class="fight">
+												<td>
+                                                    </td>
+						<td>
+							<a href="/fighters/details/2033">Colin Fletcher</a>						</td>
+                                                    <td class="vertical_line">37</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                        													<td>
+															</td>
+							<td colspan="3">
+															</td>
+											</tr>
+									<tr class="dark">
+						                            <td rowspan="2" class="rowspan">
+                                <a href="/fights/index/4223" class="arrow"></a>                            </td>
+                        						<td>
+                            Win                        </td>
+						<td>
+							<a href="/fighters/details/405">Patrick Cote</a>						</td>
+                                                    <td class="vertical_line">72</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                        													<td>Welterweight</td>
+                                                            <td>U. DEC</td>
+                                <td align="center">3</td>
+                                <td>
+                                    5:00                                </td>
+                            											</tr>
+									<tr class="fight dark">
+												<td>
+                                                    </td>
+						<td>
+							<a href="/fighters/details/1454">Bobby Voelker</a>						</td>
+                                                    <td class="vertical_line">83</td>
+                            <td class="vertical_line">4</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">1</td>
+                        													<td>
+															</td>
+							<td colspan="3">
+															</td>
+											</tr>
+									<tr >
+						                            <td rowspan="2" class="rowspan">
+                                <a href="/fights/index/4259" class="arrow"></a>                            </td>
+                        						<td>
+                            Win                        </td>
+						<td>
+							<a href="/fighters/details/1486">Darren Elkins</a>						</td>
+                                                    <td class="vertical_line">14</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                        													<td>Featherweight</td>
+                                                            <td>KO/TKO</td>
+                                <td align="center">1</td>
+                                <td>
+                                    3:06                                </td>
+                            											</tr>
+									<tr class="fight">
+												<td>
+                                                    </td>
+						<td>
+							<a href="/fighters/details/1832">Antonio Carvalho</a>						</td>
+                                                    <td class="vertical_line">9</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                        													<td>
+															</td>
+							<td colspan="3">
+								Punch							</td>
+											</tr>
+									<tr class="dark">
+						                            <td rowspan="2" class="rowspan">
+                                <a href="/fights/index/4248" class="arrow"></a>                            </td>
+                        						<td>
+                            Win                        </td>
+						<td>
+							<a href="/fighters/details/1867">Jordan Mein</a>						</td>
+                                                    <td class="vertical_line">29</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                        													<td>Welterweight</td>
+                                                            <td>KO/TKO</td>
+                                <td align="center">1</td>
+                                <td>
+                                    4:42                                </td>
+                            											</tr>
+									<tr class="fight dark">
+												<td>
+                                                    </td>
+						<td>
+							<a href="/fighters/details/445">Dan Miller</a>						</td>
+                                                    <td class="vertical_line">11</td>
+                            <td class="vertical_line">1</td>
+                            <td class="vertical_line">1</td>
+                            <td class="vertical_line">0</td>
+                        													<td>
+															</td>
+							<td colspan="3">
+								Punches							</td>
+											</tr>
+									<tr >
+						                            <td rowspan="2" class="rowspan">
+                                <a href="/fights/index/4253" class="arrow"></a>                            </td>
+                        						<td>
+                            Win                        </td>
+						<td>
+							<a href="/fighters/details/1675">John Makdessi</a>						</td>
+                                                    <td class="vertical_line">86</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                        													<td>Lightweight</td>
+                                                            <td>U. DEC</td>
+                                <td align="center">3</td>
+                                <td>
+                                    5:00                                </td>
+                            											</tr>
+									<tr class="fight">
+												<td>
+                                                    </td>
+						<td>
+							<a href="/fighters/details/1976">Daron Cruickshank</a>						</td>
+                                                    <td class="vertical_line">51</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                        													<td>
+															</td>
+							<td colspan="3">
+															</td>
+											</tr>
+									<tr class="dark">
+						                            <td rowspan="2" class="rowspan">
+                                <a href="/fights/index/4252" class="arrow"></a>                            </td>
+                        						<td>
+                            Win                        </td>
+						<td>
+							<a href="/fighters/details/669">Rick Story</a>						</td>
+                                                    <td class="vertical_line">20</td>
+                            <td class="vertical_line">1</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                        													<td>Welterweight</td>
+                                                            <td>KO/TKO</td>
+                                <td align="center">1</td>
+                                <td>
+                                    3:05                                </td>
+                            											</tr>
+									<tr class="fight dark">
+												<td>
+                                                    </td>
+						<td>
+							<a href="/fighters/details/1805">Quinn Mulhern</a>						</td>
+                                                    <td class="vertical_line">9</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                        													<td>
+															</td>
+							<td colspan="3">
+								Punch							</td>
+											</tr>
+									<tr >
+						                            <td rowspan="2" class="rowspan">
+                                <a href="/fights/index/4260" class="arrow"></a>                            </td>
+                        						<td>
+                            Win                        </td>
+						<td>
+							<a href="/fighters/details/1905">TJ Dillashaw</a>						</td>
+                                                    <td class="vertical_line">30</td>
+                            <td class="vertical_line">2</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                        													<td>Bantamweight</td>
+                                                            <td>KO/TKO</td>
+                                <td align="center">2</td>
+                                <td>
+                                    0:26                                </td>
+                            											</tr>
+									<tr class="fight">
+												<td>
+                                                    </td>
+						<td>
+							<a href="/fighters/details/1955">Issei Tamura</a>						</td>
+                                                    <td class="vertical_line">11</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">0</td>
+                        													<td>
+															</td>
+							<td colspan="3">
+								Kick							</td>
+											</tr>
+									<tr class="dark">
+						                            <td rowspan="2" class="rowspan">
+                                <a href="/fights/index/4273" class="arrow"></a>                            </td>
+                        						<td>
+                            Win                        </td>
+						<td>
+							<a href="/fighters/details/454">George Roop</a>						</td>
+                                                    <td class="vertical_line">33</td>
+                            <td class="vertical_line">2</td>
+                            <td class="vertical_line">1</td>
+                            <td class="vertical_line">0</td>
+                        													<td>Bantamweight</td>
+                                                            <td>U. DEC</td>
+                                <td align="center">3</td>
+                                <td>
+                                    5:00                                </td>
+                            											</tr>
+									<tr class="fight dark">
+												<td>
+                                                    </td>
+						<td>
+							<a href="/fighters/details/1770">Reuben Duran</a>						</td>
+                                                    <td class="vertical_line">30</td>
+                            <td class="vertical_line">1</td>
+                            <td class="vertical_line">0</td>
+                            <td class="vertical_line">1</td>
+                        													<td>
+															</td>
+							<td colspan="3">
+															</td>
+											</tr>
+							</table>
+			KEY: Title Fight -  <img src="/img/belt.gif" style="vertical-align:text-bottom" alt="" />                        Fight, KO, and Submission of the Night Bonuses -  <img src="/img/icon_fight_of_the_night.png" style="vertical-align:text-bottom" alt="" />                        <img src="/img/icon_ko_of_the_night.png" style="vertical-align:text-bottom" alt="" /> 
+                        <img src="/img/icon_sub_of_the_night.png" style="vertical-align:text-bottom" alt="" /> 
+
+			</div>
+</div>
+</div>                  </div>
+                    <p>&nbsp;</p></td>
+                  </tr>
+              </table>
+		      </td>
+			</tr>
+		</table>
+	  </div><!-- InstanceEndEditable --></div></td>
+    <td rowspan="2" valign="top"><p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <!-- InstanceBeginEditable name="AdSpace" -->
+      <div align="right">
+        <!--BEGIN BLS CODE-->
+        <script>
+document.write('<scr' + 'ipt src=http://ad.doubleclick.net/adj/fightmetric.fsv/ros;sect=ros;fantasy=no;game=no;tile=2;sz=160x600;ord=' + random_number + '?></scr' + 'ipt>');
+      </script>
+        <noscript>
+        <a href="http://ad.doubleclick.net/jump/fightmetric.fsv/ros;sect=ros;fantasy=no;game=no;tile=2;sz=160x600;ord='+random_number+'?" > <img src="http://ad.doubleclick.net/ad/fightmetric.fsv/ros;sect=ros;fantasy=no;game=no;tile=2;sz=160x600;ord='+random_number+'?" border="0" height="600" width="160" /></a>
+        </noscript>
+        <!--END BLS CODE-->
+      </div>
+    <!-- InstanceEndEditable --></td>
+  </tr>
+  <tr>
+    <td width="185" valign="top"><div align="center"><a href="http://www.fightmetric.com/aboutthecompany.html"></a></div></td>
+    <td width="15">&nbsp;</td>
+    <td><div id="footer">
+      <table width="635" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="20%" valign="top" class="sitemap"><p><a href="http://www.fightmetric.com/index.html">HOME</a><br />
+              <a href="http://hosteddb.fightmetric.com">STATISTICS</a><br />
+              <a href="http://hosteddb.fightmetric.com/events">.Events &amp; Fights</a><br />
+              <a href="http://hosteddb.fightmetric.com/fighters">.Fighters</a><br />
+              <a href="http://www.fightmetric.com/ufcrecords.html">.UFC Records</a><br />
+              <a href="http://www.fightmetric.com/aboutthestats.html">.About the Stats</a><br />
+          </p>            </td>
+          <td width="20%" valign="top" class="sitemap"><p>PRODUCTS<br />
+              <a href="http://www.fightmetric.com/datafeeds.html">.Data Feeds</a><a href="http://www.fightmetric.com/hosteddb.html"><br />
+.Hosted DB</a><span class="graytext"><br />
+</span> <a href="http://www.fightmetric.com/fantasy.html"> .Fantasy</a><br />
+            <a href="http://www.fightmetric.com/consulting.html"> .Consulting<br />
+              </a><a href="http://blog.fightmetric.com"><br />
+              </a><br />
+              </p>            </td>
+          <td width="20%" valign="top" class="sitemap"><a href="http://www.fightmetric.com/aboutthecompany.html">ABOUT THE COMPANY</a><br />
+            <a href="http://blog.fightmetric.com"> .Blog (News / Reports)</a><a href="http://www.fightmetric.com/contactus.html">              
+CONTACT US</a><br />
+<br /></td>
+          <td width="25%" valign="top" class="sitemap"><div align="right"><img src="http://www.fightmetric.com/beta/_images/FM-winner-best-pitch-blk.png" alt="fsta" width="202" height="40" /><br />
+                <img src="http://www.fightmetric.com/beta/_images/spacer.gif" alt="spacer" width="235" height="10" /></div></td>
+        </tr>
+      </table>
+      <br />
+      <br />
+        <br />
+        <div class="sitemap">          <span class="leftmenuTD"><a href="http://feeds.feedburner.com/Fightmetric"><img src="http://www.fightmetric.com/_images/rss-logo.png" alt="rss" width="16" height="16" border="0" /></a>&nbsp;<a href="http://www.twitter.com/fightmetric"><img src="http://www.fightmetric.com/_images/twitter-logo.png" alt="twitter" width="16" height="16" border="0" /></a> <a href="http://www.facebook.com/FightMetric"><img src="http://www.fightmetric.com/_images/facebook.png" alt="facebook" width="16" height="16" border="0" /></a></span><br />
+          CSS3 Browser Optimized. <em><br />
+        </em>&copy; 2011 FightMetric LLC. All Rights Reserved | <a href="http://www.fightmetric.com/termsofuse.html">Terms of Use</a> | <a href="http://www.fightmetric.com/privacypolicy.html">Privacy Policy</a></div>
+        </p>
+        
+      </div></td>
+  </tr>
+</table>
+	<script type="text/javascript">
+					// <![CDATA[
+					jQuery(function($) {
+						$('.data_table tr:gt(0)').mouseover(function() {
+							$(this).addClass('select_item');
+							if ($('.data_table .rowspan').length) {
+								if ($(this).find('.rowspan').length)
+									$(this).next('tr').addClass('select_item');
+								else
+									$(this).prev('tr').addClass('select_item');
+							}
+						});
+						$('.data_table tr:gt(0)').mouseout(function() {
+							$(this).removeClass('select_item');
+							if ($('.data_table .rowspan').length) {
+								if ($(this).find('.rowspan').length)
+									$(this).next('tr').removeClass('select_item');
+								else
+									$(this).prev('tr').removeClass('select_item');
+							}
+						});
+						$('.row_is_link tr:gt(0):not(.block_auto_link)').click(function() {
+							if ($(this).find('.rowspan').length || !$('.row_is_link .rowspan').length)
+								window.location = 'http://hosteddb.fightmetric.com'+$(this).find('a').attr('href');
+							else
+								window.location = 'http://hosteddb.fightmetric.com'+$(this).prev('tr').find('a').attr('href');
+						});
+					});
+					// ]]>
+				</script>
+				</body>
+			
+<!-- InstanceEnd --></html>

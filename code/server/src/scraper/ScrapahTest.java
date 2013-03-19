@@ -16,7 +16,7 @@ public class ScrapahTest {
 	 * @throws MalformedURLException 
 	 */
 	public static void main(String[] args) throws MalformedURLException, IOException {	
-		new Thread(new FMScraper()).run();
+//		new Thread(new FMScraper()).run();
 		
 //		String delimRegex = Settings.getNodeText("scrapers:completed-events:index-delimiter")[0];
 //		String tableRegex = Settings.getNodeText("scrapers:completed-events:table-regex")[0];

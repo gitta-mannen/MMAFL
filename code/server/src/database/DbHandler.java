@@ -7,6 +7,8 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.LinkedList;
+
 import settings.Settings;
 import util.Logger;
 import util.Pair;
@@ -96,13 +98,26 @@ public class DbHandler {
 		connection.setAutoCommit(auto);
 	}
 	
-	public void executePs (String stName, Object[] params) {
+	public Object[][] executePs (String stName, Object[] params) {
+		return executePs (stName, null, params);
+	}
+	
+	public Object[][] executePs (String stName, String stSize) {
+		return executePs (stName, stSize, null);
+	}
+	
+	public Object[][] executePs (String stName) {
+		return executePs (stName, null, null);
+	}
+
+	public Object[][] executePs (String stName, String stSize, Object[] params) {		
 		try {
 			PreparedStatement s = ps.get(stName);
+			PreparedStatement sSize = ps.get(stSize);
 			if (s == null) {
 				throw new Exception("prepared statement " + stName + " not found.");
-			}
-			
+			} 
+						
 			if (params != null) {
 				if (s.getParameterMetaData().getParameterCount() == params.length) {
 					for (int i = 1; i <= params.length; i++) {
@@ -113,13 +128,41 @@ public class DbHandler {
 				}
 			}
 			
-			s.execute();
+			if (sSize == null) {
+				s.execute();				
+			} else {
+				ResultSet rs = s.executeQuery();
+				ResultSet size = sSize.executeQuery();
+				return resultSetToArray(rs, size);
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace(System.out);
 		}
+		
+		return null;
 	}
 	
+	private Object[][] resultSetToArray (ResultSet rs, ResultSet size) throws SQLException {				
+		ResultSetMetaData meta = rs.getMetaData();			
+		int colCount = meta.getColumnCount();
+		int rowCount = size.getInt(1);
+		
+		System.out.println("rows: " + rowCount + " cols: " + colCount);
+		
+		Object[][] resultArray = new Object[rowCount][colCount];
+
+		//add data 				
+		int row = 0;
+		while (rs.next()) {
+			for(int col = 0; col < colCount; col++) {
+				resultArray[row][col] = rs.getObject(col + 1);
+			}
+			row++;
+		}		
+		
+		return resultArray;
+	}
 	/**
 	 * Takes a table name and return the tables contents, as well as column names
 	 * 
@@ -130,6 +173,7 @@ public class DbHandler {
 	 *  Return null if query return an empty record.
 	 *   
 	 */
+	
 	@Deprecated
 	public Pair<String[], Object[][]> getTable(String table) {	
 		Object[][] resultArray = null;
