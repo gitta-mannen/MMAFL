@@ -44,18 +44,13 @@ public class ScraperTask extends Task {
 		default:
 			throw new Exception("source type not recognized");
 		}
-		
-		db.setAutoCommit(false);
 	}
 
 	private void prepareStatements() throws SQLException {		
 	}
 
 	@Override
-	protected void postTask() throws SQLException {
-		db.setAutoCommit(true);
-		db.close();
-		
+	protected void postTask() throws SQLException {	
 	}
 
 	@Override

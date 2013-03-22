@@ -1,8 +1,6 @@
 package scraper;
 
 import java.sql.SQLException;
-import java.text.ParseException;
-
 import database.DbHandler;
 
 public abstract class Task {
@@ -20,8 +18,11 @@ public abstract class Task {
 	
 	protected void doTask() throws Exception {
 		preTask();
+		db.setAutoCommit(false);
 		task();
+		db.setAutoCommit(true);
 		postTask();
+		db.close();
 	}
 	
 	protected abstract void preTask() throws SQLException, Exception;
