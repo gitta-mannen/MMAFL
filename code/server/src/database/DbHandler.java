@@ -37,7 +37,7 @@ public class DbHandler {
 			// get prepared statements from settings
 			for (int i = 0; i < pStatement.length; i++) {
 				System.out.println("prepared statement added: " + pStatement[i].getA() + " = " + pStatement[i].getB());
-				ps.put(pStatement[i].getA(), connection.prepareStatement(pStatement[i].getB()) );
+				addStatement(pStatement[i]);
 			}
 					
 		} catch (Exception e) {
@@ -52,6 +52,10 @@ public class DbHandler {
 		} catch (Exception e) {
 			Logger.log(e, true);
 		}
+	}
+	
+	public void addStatement (Pair<String, String> s) throws SQLException {
+		ps.put(s.getA(), connection.prepareStatement( s.getB()) );
 	}
 	
 	public static void buildTables(boolean replace) {
@@ -98,16 +102,16 @@ public class DbHandler {
 		connection.setAutoCommit(auto);
 	}
 	
-	public Object[][] executePs (String stName, Object[] params) {
-		return executePs (stName, null, params);
+	public void executePs (String stName, Object[] params) {
+		executePs (stName, null, params);
 	}
 	
 	public Object[][] executePs (String stName, String stSize) {
 		return executePs (stName, stSize, null);
 	}
 	
-	public Object[][] executePs (String stName) {
-		return executePs (stName, null, null);
+	public void executePs (String stName) {
+		executePs (stName, null, null);
 	}
 
 	public Object[][] executePs (String stName, String stSize, Object[] params) {		

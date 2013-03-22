@@ -17,107 +17,9 @@
 -->
 <settings>
 	<database name="stats">
-		<table name="events">
-			<header name="source"><![CDATA[http://hosteddb.fightmetric.com/events/index/date/desc/1/all/]]></header>
-			<header name="source"><![CDATA[http://hosteddb.fightmetric.com/events/index/date/asc/0/all/]]></header>
-			<header name="primary-key"><![CDATA[id]]></header>
-			<header name="index"><![CDATA[linked-page]]></header>
-			<header name="index-of"><![CDATA[events, fights]]></header>
-			<header name="index-separator"><![CDATA[**regex**]]></header>
-			<header name="pass-on"><![CDATA[id]]></header>
-			<header name="sub-page-base-url"><![CDATA[http://hosteddb.fightmetric.com]]></header>
-			<column name="id">
-				<attr name="dbname">id</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="apptype">integer</attr>
-				<attr name="regex"><![CDATA[()()()]]></attr>
-			</column>
-			<column name="name">
-				<attr name="dbname">name</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<h1\s+class="event_header_h1">)(.*)(</h1>)]]></attr>
-			</column>
-			<column name="date">
-				<attr name="dbname">date</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">date</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">DATE</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
-			<column name="organization">
-				<attr name="dbname">organization</attr>
-				<attr name="dbtype">string</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">ORGANIZATION</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
-			<column name="location">
-				<attr name="dbname">location</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">LOCATION</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
-			<column name="linked-page">
-				<attr name="dbname">link</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[()()()]]></attr>
-			</column>
-		</table>
-		<table name="event">
-			<header name="type"><![CDATA[details]]></header>
-			<header name="primarykey"><![CDATA[id]]></header>
-			<header name="inherit"><![CDATA[id]]></header>
-			<column name="id">
-				<attr name="dbname">id</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint">primary key</attr>
-				<attr name="apptype">integer</attr>
-			</column>
-			<column name="name">
-				<attr name="dbname">name</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<h1\s+class="event_header_h1">)(.*)(</h1>)]]></attr>
-			</column>
-			<column name="date">
-				<attr name="dbname">date</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">date</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">DATE</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
-			<column name="location">
-				<attr name="dbname">location</attr>
-				<attr name="dbtype">text</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">LOCATION</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
-			<column name="organization">
-				<attr name="dbname">organization</attr>
-				<attr name="dbtype">string</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">string</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">ORGANIZATION</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
-			<column name="attendance">
-				<attr name="dbname">attendance</attr>
-				<attr name="dbtype">integer</attr>
-				<attr name="constraint"></attr>
-				<attr name="apptype">long</attr>
-				<attr name="regex"><![CDATA[(<td\s+class="title_text">ATTENDANCE</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
-			</column>
-		</table>
+		<type>sqlite</type>
+		<location>/stats.db</location>
 		<table name="fights">
-			<header name="type"><![CDATA[index]]></header>
-			<header name="primarykey"><![CDATA[id]]></header>
-			<header name="inherit"><![CDATA[id]]></header>
 			<column name="id">
 				<attr name="dbname">id</attr>
 				<attr name="dbtype">integer</attr>
@@ -194,6 +96,41 @@
 				<attr name="apptype">string</attr>
 				<attr name="regex"><![CDATA[(<td[\s]class="title_text">REFEREE</td>[\W\w]*?<td>)(.*)(</td>)]]></attr>
 			</column>
+			<column name="finish details">
+				<attr name="dbname">finish_details</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">string</attr>
+				<attr name="regex"><![CDATA[(class="title_text">DETAILS</td>[\W\w]*?[\s])([\S]\D*)(<br[\s]/>[\s]+</td>)]]></attr>
+			</column>
+			<column name="rounds fought">
+				<attr name="dbname">rounds_fought</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">integer</attr>
+				<attr name="regex"><![CDATA[(<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)(.*)(</td>)]]></attr>
+			</column>
+			<column name="time in last round">
+				<attr name="dbname">time_in_last_round</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">time</attr>
+				<attr name="regex"><![CDATA[(<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\d+.*\s+.*\s+)(.*\S)([\s]+</td>)]]></attr>
+			</column>
+			<column name="round format">
+				<attr name="dbname">round_format</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">string</attr>
+				<attr name="regex"><![CDATA[(<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\d+.*\s+.*\s+.*\s+\D+)(.*)(</td>*?)]]></attr>
+			</column>
+			<column name="referee name">
+				<attr name="dbname">referee_name</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">string</attr>
+				<attr name="regex"><![CDATA[(<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\d+.*\s+.*\s+.*\s+\D+)(.*)(</td>*?)]]></attr>
+			</column>
 		</table>
 		<table name="rounds">
 			<column name="id">
@@ -238,7 +175,143 @@
 				<attr name="apptype">long</attr>
 				<attr name="regex"><![CDATA[(<td\s+class="title_text">ATTENDANCE</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
 			</column>
-		</table>			
+		</table>
+		<table name="events">
+			<children><![CDATA[event, fights]]></children>
+			<primarykey><![CDATA[id]]></primarykey>
+			<source><![CDATA[http://hosteddb.fightmetric.com/events/index/date/desc/1/all]]></source>
+			<column name="id">
+				<attr name="dbname">id</attr>
+				<attr name="dbtype">integer</attr>
+				<attr name="apptype">integer</attr>
+				<attr name="regex"><![CDATA[**add**]]></attr>
+			</column>
+			<column name="name">
+				<attr name="dbname">name</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">string</attr>
+				<attr name="regex"><![CDATA[(<h1\s+class="event_header_h1">)(.*)(</h1>)]]></attr>
+			</column>
+			<column name="date">
+				<attr name="dbname">date</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">date</attr>
+				<attr name="regex"><![CDATA[(<td\s+class="title_text">DATE</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
+			</column>
+			<column name="completed">
+				<attr name="dbname">completed</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">string</attr>
+				<attr name="regex"><![CDATA[(<td\s+class="title_text">LOCATION</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
+			</column>
+			<column name="organization">
+				<attr name="dbname">organization</attr>
+				<attr name="dbtype">string</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">string</attr>
+				<attr name="regex"><![CDATA[(<td\s+class="title_text">ORGANIZATION</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
+			</column>
+			<column name="attendance">
+				<attr name="dbname">attendance</attr>
+				<attr name="dbtype">integer</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">long</attr>
+				<attr name="regex"><![CDATA[(<td\s+class="title_text">ATTENDANCE</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
+			</column>
+		</table>
+		<table name="event">
+			<children>event
+			<column name="id">
+				<attr name="dbname">id</attr>
+				<attr name="dbtype">integer</attr>
+				<attr name="constraint">primary key</attr>
+				<attr name="apptype">integer</attr>
+				<attr name="regex"><![CDATA[]]></attr>
+			</column>
+			<column name="name">
+				<attr name="dbname">name</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">string</attr>
+				<attr name="regex"><![CDATA[(<h1\s+class="event_header_h1">)(.*)(</h1>)]]></attr>
+			</column>
+			<column name="date">
+				<attr name="dbname">date</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">date</attr>
+				<attr name="regex"><![CDATA[(<td\s+class="title_text">DATE</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
+			</column>
+			<column name="location">
+				<attr name="dbname">location</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">string</attr>
+				<attr name="regex"><![CDATA[(<td\s+class="title_text">LOCATION</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
+			</column>
+			<column name="organization">
+				<attr name="dbname">organization</attr>
+				<attr name="dbtype">string</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">string</attr>
+				<attr name="regex"><![CDATA[(<td\s+class="title_text">ORGANIZATION</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
+			</column>
+			<column name="attendance">
+				<attr name="dbname">attendance</attr>
+				<attr name="dbtype">integer</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">long</attr>
+				<attr name="regex"><![CDATA[(<td\s+class="title_text">ATTENDANCE</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
+			</column>
+		</table>
+		<table name="event">
+			<children>event
+			<column name="id">
+				<attr name="dbname">id</attr>
+				<attr name="dbtype">integer</attr>
+				<attr name="constraint">primary key</attr>
+				<attr name="apptype">integer</attr>
+				<attr name="regex"><![CDATA[]]></attr>
+			</column>
+			<column name="name">
+				<attr name="dbname">name</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">string</attr>
+				<attr name="regex"><![CDATA[(<h1\s+class="event_header_h1">)(.*)(</h1>)]]></attr>
+			</column>
+			<column name="date">
+				<attr name="dbname">date</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">date</attr>
+				<attr name="regex"><![CDATA[(<td\s+class="title_text">DATE</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
+			</column>
+			<column name="location">
+				<attr name="dbname">location</attr>
+				<attr name="dbtype">text</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">string</attr>
+				<attr name="regex"><![CDATA[(<td\s+class="title_text">LOCATION</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
+			</column>
+			<column name="organization">
+				<attr name="dbname">organization</attr>
+				<attr name="dbtype">string</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">string</attr>
+				<attr name="regex"><![CDATA[(<td\s+class="title_text">ORGANIZATION</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
+			</column>
+			<column name="attendance">
+				<attr name="dbname">attendance</attr>
+				<attr name="dbtype">integer</attr>
+				<attr name="constraint"></attr>
+				<attr name="apptype">long</attr>
+				<attr name="regex"><![CDATA[(<td\s+class="title_text">ATTENDANCE</td>.*[\r\n].*<td>)(.*)(</td>)]]></attr>
+			</column>
+		</table>
 		<table name="fighters">
 			<column name="id">
 				<attr name="dbname">id</attr>

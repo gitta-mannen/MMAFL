@@ -1,5 +1,7 @@
 package util;
 
+import java.lang.reflect.Array;
+
 /**
  * @author Stugatz
  * Generic pair class that holds two objects of type K and V
@@ -30,7 +32,7 @@ public class Pair<K, V> {
 
     public static <K, V> Pair<K, V>[] merge(K[] a, V[] b) {
     	@SuppressWarnings("unchecked")
-		Pair<K, V>[] result = new Pair[a.length]; 
+		Pair<K, V>[] result = (Pair<K, V>[]) Array.newInstance(Pair.class, a.length); 
     	if (a.length != b.length) {
     		throw new IndexOutOfBoundsException();
     	}
