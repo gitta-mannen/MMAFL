@@ -8,8 +8,16 @@ public abstract class Constants {
 	public enum DbType {
 		TEXT("text"), REAL("real"), INTEGER("integer"), BLOB("blob");
 		
-		   private final String stringValue;
-		   private DbType(final String s) { stringValue = s; }
-		   public String toString() { return stringValue; }
+	   private final String stringValue;
+	   private DbType(final String s) { stringValue = s; }
+	   public String toString() { return stringValue; }
+	}
+	
+	public enum SourceType {
+	    URL("url"), FILE("file"), DB("DB");
+	    
+	   private final String stringValue;
+	   private SourceType(final String s) { stringValue = s; }
+	   public String toString() { return stringValue; }
 	}
 }

@@ -150,6 +150,7 @@
 	<scrape-tasks>
 		<completed-events>
 			<data-source>
+				<has-f-key>false</has-f-key>
 				<source-type>file</source-type>
 					<source-url><![CDATA[http://hosteddb.fightmetric.com/events/index/date/desc/1/all]]></source-url>
 					<source-file><![CDATA[E:\projekt\MMAFL\code\server\www\fm_c_events.htm]]></source-file>
@@ -161,6 +162,7 @@
 
 		<upcoming-events>
 			<data-source>
+				<has-f-key>false</has-f-key>
 				<source-type>file</source-type>
 					<source-url><![CDATA[http://hosteddb.fightmetric.com/events/index/date/asc/0/all/]]></source-url>
 					<source-file><![CDATA[E:\projekt\MMAFL\code\server\www\fm_u_events.htm]]></source-file>

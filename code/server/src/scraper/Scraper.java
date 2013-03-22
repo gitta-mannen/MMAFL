@@ -29,7 +29,11 @@ abstract class Scraper {
 			throw new IndexOutOfBoundsException("Each field has to have a type.");
 		}	
 	}		
-		
+	
+	public String getName() {
+		return name;
+	}
+	
 	Object[][] scrape (String text) throws ParseException {
 		String[] processed = preProcess(text);
 		Object[][] results = new Object[processed.length][];
