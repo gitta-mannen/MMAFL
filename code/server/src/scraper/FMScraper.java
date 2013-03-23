@@ -11,24 +11,34 @@ import util.Logger;
 
 public class FMScraper extends Scraper {
 	private final String delimiter;
-	private final String tablePattern;
+	private final String extract;
 	
 	public FMScraper (String name) {
 		super(name);
-		delimiter = Settings.getNodeText("scrapers:" + name + ":index-delimiter")[0];
-		tablePattern = Settings.getNodeText("scrapers:" + name + ":table-patter")[0];
+		
+		delimiter = Settings.getNodeText("scrapers:" + name + ":pre-process:index-delimiter")[0];
+		extract = Settings.getNodeText("scrapers:" + name + ":pre-process:extract")[0];
 	}
 	
 	@Override
 	protected String[] preProcess(String text) {
-		return Scraper.findFirst(text, tablePattern).split(delimiter);
+		if (!extract.equals("")) {
+			text = Scraper.findFirst(text, extract);
+		} 
+		
+		if (!delimiter.equals("")) {
+			return text.split(delimiter);
+		}
+		else {
+			return new String[]{text};
+		}
 	}
 		
 	/**
 	 * Parses a string and converts it to the appropriate Object.
 	 * @param s - String to be converted.
 	 * @param type - Enumerator indicating the type.
-	 * @return - Object created by parsing or null if type isn't recognized.
+	 * @return - Object created by parsing, or null if type isn't recognized.
 	 * @throws ParseException
 	 */
 	protected Object stringToObject (String s, AppType type) throws ParseException {

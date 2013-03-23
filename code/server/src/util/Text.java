@@ -11,6 +11,7 @@ public final class Text {
 	}
 
 	public static String textFromUrl (String url) throws MalformedURLException, IOException {
+		Logger.log("connecting to: " + url, true);
 		return util.IO.streamToString( (new URL(url)).openConnection().getInputStream());
 	}
 }

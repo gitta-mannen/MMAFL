@@ -152,7 +152,7 @@ public class DbHandler {
 		int colCount = meta.getColumnCount();
 		int rowCount = size.getInt(1);
 		
-		System.out.println("rows: " + rowCount + " cols: " + colCount);
+		System.out.println("Query returned, rows: " + rowCount + " ,cols: " + colCount);
 		
 		Object[][] resultArray = new Object[rowCount][colCount];
 

@@ -42,11 +42,7 @@
 				<column>
 					<name>event_updated</name>
 					<dbtype>integer</dbtype>
-				</column>		
-				<column>
-					<name>fights_updated</name>
-					<dbtype>integer</dbtype>
-				</column>		
+				</column>			
 			</events>
 
 			<table>tmp_events</table>
@@ -130,18 +126,41 @@
 					<dbtype>text</dbtype>
 				</column>
 				<column>
-					<name>fights_updated</name>
-					<dbtype>integer</dbtype>
-				</column>
-				<column>
-					<name>rounds_updated</name>
-					<dbtype>integer</dbtype>
-				</column>
-				<column>
-					<name>round_url</name>
+					<name>child_url</name>
 					<dbtype>text</dbtype>
 				</column>
+				<column>
+					<name>fight_updated</name>
+					<dbtype>integer</dbtype>
+				</column>
 			</fights>
+
+			<table>rounds</table>
+			<rounds>
+				<primary-key><![CDATA[id]]></primary-key>
+				<column>
+					<name>event_id</name>
+					<dbtype>integer</dbtype>
+				</column>
+			</rounds>
+
+			<table>fighters</table> 
+			<fighters>
+				<primary-key><![CDATA[id]]></primary-key>
+				<column>
+					<name>event_id</name>
+					<dbtype>integer</dbtype>
+				</column>
+			</fighters>
+
+			<table>tmp_fighters</table> 
+			<fighters>
+				<primary-key><![CDATA[id]]></primary-key>
+				<column>
+					<name>event_id</name>
+					<dbtype>integer</dbtype>
+				</column>
+			</fighters>
 		</tables>
 	</database>
 
@@ -150,47 +169,113 @@
 	<scrape-tasks>
 		<completed-events>
 			<data-source>
-				<has-f-key>false</has-f-key>
-				<source-type>file</source-type>
-					<source-url><![CDATA[http://hosteddb.fightmetric.com/events/index/date/desc/1/all]]></source-url>
-					<source-file><![CDATA[E:\projekt\MMAFL\code\server\www\fm_c_events.htm]]></source-file>
+				<source-type>file</source-type> <!-- const-url -->
+				<url-constant><![CDATA[http://hosteddb.fightmetric.com/events/index/date/desc/1/all]]></url-constant>
+				<url-domain><![CDATA[http://hosteddb.fightmetric.com]]></url-domain>
+				<file-uri><![CDATA[E:\projekt\MMAFL\code\server\www\fm_c_events.htm]]></file-uri>
+				<source-size-statement><![CDATA[]]></source-size-statement>
+				<source-statement><![CDATA[]]></source-statement>
+				<f-key-index>0</f-key-index>
 			</data-source>
-			<update-statements>
-				<completed-events><![CDATA[INSERT OR REPLACE INTO tmp_events (id, completed, child_url) VALUES (?, 1, ?)]]></completed-events>
-			</update-statements>
+			<scrapers>
+				<completed-events>
+						<f-key>false</f-key>
+						<f-key-insert>0</f-key-insert>
+						<statement><![CDATA[INSERT OR REPLACE INTO tmp_events (id, completed, child_url) VALUES (?, 1, ?)]]></statement>
+				</completed-events>
+			</scrapers>
 		</completed-events>
 
 		<upcoming-events>
 			<data-source>
-				<has-f-key>false</has-f-key>
-				<source-type>file</source-type>
-					<source-url><![CDATA[http://hosteddb.fightmetric.com/events/index/date/asc/0/all/]]></source-url>
-					<source-file><![CDATA[E:\projekt\MMAFL\code\server\www\fm_u_events.htm]]></source-file>
+				<source-type>file</source-type> <!-- const-url -->
+				<url-constant><![CDATA[http://hosteddb.fightmetric.com/events/index/date/asc/0/all/]]></url-constant>
+				<url-domain><![CDATA[http://hosteddb.fightmetric.com]]></url-domain>
+				<file-uri><![CDATA[E:\projekt\MMAFL\code\server\www\fm_u_events.htm]]></file-uri>
+				<source-size-statement><![CDATA[]]></source-size-statement>
+				<source-statement><![CDATA[]]></source-statement>
+				<f-key-index>0</f-key-index>
 			</data-source>
-			<update-statements>
-				<upcoming-events><![CDATA[INSERT OR REPLACE INTO tmp_events (id, completed, child_url) VALUES (?, 0, ?)]]></upcoming-events>
-			</update-statements>
+			<scrapers>
+				<upcoming-events>
+						<f-key>false</f-key>
+						<f-key-insert>0</f-key-insert>
+						<statement><![CDATA[INSERT OR REPLACE INTO tmp_events (id, completed, child_url) VALUES (?, 0, ?)]]></statement>
+				</upcoming-events>
+			</scrapers>
 		</upcoming-events>
+
+		<event-details-fights>
+			<data-source>
+				<source-type>db_debug</source-type> <!-- db_url -->
+				<url-constant></url-constant>
+				<url-domain><![CDATA[http://hosteddb.fightmetric.com]]></url-domain>
+				<file-uri><![CDATA[E:\projekt\MMAFL\code\server\www\fm_event.htm]]></file-uri>
+				<source-size-statement><![CDATA[SELECT COUNT(*) FROM events WHERE event_updated = 0]]></source-size-statement>
+				<source-statement><![CDATA[select id, child_url FROM events WHERE event_updated = 0]]></source-statement>
+				<f-key-index>0</f-key-index>
+			</data-source>
+			<scrapers>
+				<event-details>
+						<f-key>true</f-key>
+						<f-key-insert>1</f-key-insert>
+						<statement><![CDATA[UPDATE events SET name=?, date=?, organization=?, location=?, attendance=?, event_updated=1 WHERE id=?]]></statement>
+				</event-details>
+				<fights>
+						<f-key>true</f-key>
+						<f-key-insert>-1</f-key-insert>
+						<statement><![CDATA[INSERT OR REPLACE INTO fights (event_id, id, defender_name, contender_name, winner_id, loser_id, winner_name, loser_name, weight_class, finish_method, finish_details, rounds_fought, time_in_last_round, round_format, referee_name, child_url, fight_updated) VALUES (?, ?, '', '', '', '', '', '', '', '', '', '', '', '', '', ?, 0)]]></statement>
+				</fights>
+			</scrapers>
+		</event-details-fights>
+
+		<fight-details-rounds>
+			<data-source>
+				<source-type>db_debug</source-type> <!-- db_url -->
+				<url-constant></url-constant>
+				<url-domain><![CDATA[http://hosteddb.fightmetric.com]]></url-domain>
+				<file-uri><![CDATA[E:\projekt\MMAFL\code\server\www\fm_fight.htm]]></file-uri>
+				<source-size-statement><![CDATA[SELECT COUNT(*) FROM fights WHERE fight_updated = 0]]></source-size-statement>
+				<source-statement><![CDATA[select id, child_url FROM fights WHERE fight_updated = 0]]></source-statement>
+				<f-key-index>0</f-key-index>
+			</data-source>
+			<scrapers>
+				<fight-details>
+						<f-key>true</f-key>
+						<f-key-insert>1</f-key-insert>
+						<statement><![CDATA[UPDATE fights SET defender_name=?, contender_name=?, winner_id=?, loser_id=?, winner_name=?, loser_name=?, weight_class=?, finish_method=?, finish_details=?, rounds_fought=?, time_in_last_round=?, round_format=?, referee_name=?, fight_updated=1 WHERE id=?]]></statement>
+				</fight-details>
+				<rounds>
+						<f-key>true</f-key>
+						<f-key-insert>-1</f-key-insert>
+						<statement><![CDATA[]]></statement>
+				</rounds>
+			</scrapers>
+		</fight-details-rounds>
 	</scrape-tasks>
 
-	<dbtasks>
-		<compare-events>
-			<prepared-statement><![CDATA[DELETE FROM tmp_events]]></prepared-statement>
+	<data-tasks>
+		<compare-events>			
 			<prepared-statement><![CDATA[INSERT OR REPLACE INTO events 
-				SELECT tmp_events.id AS id, 'a' AS name, 1 AS date, 'a' AS organization, 'a' AS location, 'a' AS attendance, tmp_events.completed AS completed, tmp_events.child_url AS child_url, 0 AS event_updated, 0 AS fights_updated
+				SELECT tmp_events.id AS id, '' AS name, '' AS date, '' AS organization, '' AS location, '' AS attendance, tmp_events.completed AS completed, tmp_events.child_url AS child_url, 0 AS event_updated
 				FROM tmp_events
 				LEFT JOIN events
 				  ON (tmp_events.id = events.id AND tmp_events.completed = events.completed)
 				  WHERE events.id IS NULL]]>
 			</prepared-statement>
+			<prepared-statement><![CDATA[DELETE FROM tmp_events]]></prepared-statement>
 		</compare-events>
-	</dbtasks>
+	</data-tasks>
+
+	<!-- scraper settings -->
 
 	<scrapers>
 		<completed-events>
-			<table-patter><![CDATA[(<div[\s]class="events_table[\s]data_table[\s]row_is_link">[\w\W]*?<tr[\s]>)([\w\W]*?)(</div>)]]></table-patter>
-			<index-delimiter><![CDATA[</tr>[\w\W]*?<tr.+?>]]></index-delimiter>
-			
+			<pre-process>
+				<extract><![CDATA[(<div[\s]class="events_table[\s]data_table[\s]row_is_link">[\w\W]*?<tr[\s]>)([\w\W]*?)(</div>)]]></extract>
+				<index-delimiter><![CDATA[</tr>[\w\W]*?<tr.+?>]]></index-delimiter>
+			</pre-process>
+
 			<scrape-field>
 				<name>id</name>
 				<apptype>integer</apptype>
@@ -204,8 +289,10 @@
 		</completed-events>
 
 		<upcoming-events>
-			<table-patter><![CDATA[(<div[\s]class="events_table[\s]data_table[\s]row_is_link">[\w\W]*?<tr[\s]>)([\w\W]*?)(</div>)]]></table-patter>
-			<index-delimiter><![CDATA[</tr>[\w\W]*?<tr.+?>]]></index-delimiter>
+			<pre-process>
+				<extract><![CDATA[(<div[\s]class="events_table[\s]data_table[\s]row_is_link">[\w\W]*?<tr[\s]>)([\w\W]*?)(</div>)]]></extract>
+				<index-delimiter><![CDATA[</tr>[\w\W]*?<tr.+?>]]></index-delimiter>
+			</pre-process>
 
 			<scrape-field>
 				<name>id</name>
@@ -220,20 +307,11 @@
 		</upcoming-events>
 
 		<event-details>
-			<url-prefix><![CDATA[http://hosteddb.fightmetric.com]]></url-prefix>
-			<source-file><![CDATA[E:\projekt\MMAFL\code\server\www\fm_event.htm]]></source-file>
-			<prepared-statement>
-				<name>select-dirty</name>
-				<statement><![CDATA[select id, child_url FROM events WHERE event_updated = 0]]></statement>
-			</prepared-statement>
-			<prepared-statement>
-				<name>rowcount</name>
-				<statement><![CDATA[SELECT COUNT(*) FROM events]]></statement>
-			</prepared-statement>
-			<prepared-statement>
-				<name>update</name>
-				<statement><![CDATA[UPDATE events SET name=?, date=?, organization=?, location=?, attendance=?, event_updated=? WHERE id=?]]></statement>
-			</prepared-statement>
+			<pre-process>
+				<extract><![CDATA[(<div[\s]class="header">)([\w\W]*?)(</div>)]]></extract>
+				<index-delimiter><![CDATA[]]></index-delimiter>
+			</pre-process>
+
 			<scrape-field>
 				<name>name</name> 
 				<apptype>string</apptype>
@@ -262,27 +340,104 @@
 		</event-details>
 
 		<fights>
-			<url-prefix><![CDATA[http://hosteddb.fightmetric.com]]></url-prefix>
-			<source-file><![CDATA[E:\projekt\MMAFL\code\server\www\fm_event.htm]]></source-file>
-			<table-patter><![CDATA[(<td[\s]rowspan="2"[\s]class="rowspan">)([\w\W]*?)(</table>)]]></table-patter>
-			<index-delimiter><![CDATA[<td[\s]rowspan="2"[\s]class="rowspan">]]></index-delimiter>
-			<prepared-statement>
-				<name>select-dirty</name>
-				<statement><![CDATA[select id, child_url FROM events WHERE fights_updated = 0]]></statement>
-			</prepared-statement>
-			<prepared-statement>
-				<name>rowcount</name>
-				<statement><![CDATA[SELECT COUNT(*) FROM events]]></statement>
-			</prepared-statement>
-			<prepared-statement>
-				<name>insert</name>
-				<statement><![CDATA[INSERT OR REPLACE INTO fights (event_id, id, defender_name, contender_name, winner_id, loser_id, winner_name, loser_name, weight_class, finish_method, finish_details, rounds_fought, time_in_last_round, round_format, referee_name, rounds_updated) VALUES (?, ?, '', '', '', '', '', '', '', '', '', '', '', '', '', 0)]]></statement>
-			</prepared-statement>
+			<pre-process>
+				<extract><![CDATA[(<td[\s]rowspan="2"[\s]class="rowspan">)([\w\W]*?)(</table>)]]></extract>
+				<index-delimiter><![CDATA[<td[\s]rowspan="2"[\s]class="rowspan">]]></index-delimiter>
+			</pre-process>
+			
 			<scrape-field>
 				<name>id</name> 
 				<apptype>integer</apptype>
 				<regex><![CDATA[(.fights.index.)(\d+)(\D)]]></regex>
 			</scrape-field>
+			<scrape-field>
+				<name>child_url</name> 
+				<apptype>string</apptype>
+				<regex><![CDATA[(<a[\s]href=")(.fights.index.\d+)("[\s]class="arrow"></a>)]]></regex>
+			</scrape-field>
 		</fights>
+
+		<fight-details>
+			<pre-process>
+				<extract><![CDATA[]]></extract>
+				<index-delimiter><![CDATA[]]></index-delimiter>
+			</pre-process>
+			
+			<scrape-field>
+				<name>defender_name</name> 
+				<apptype>string</apptype>
+				<regex><![CDATA[(class="arrow">[\w\W]+?fighters.details.\d+">)(\D+)(</a>)]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>contender_name</name> 
+				<apptype>string</apptype>
+				<regex><![CDATA[(</tr>[\w\W]+fighters.details.\d+">)(\D+)(</a>)]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>winner_id</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[(Win[\w\W]+?fighters.details.)(\d+)(\D)]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>loser_id</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[(Win[\w\W]+?</tr>[\w\W]+?fighters.details.)(\d+)(\D)]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>winner_name</name> 
+				<apptype>string</apptype>
+				<regex><![CDATA[(Win[\w\W]+?fighters.details.\d+">)(\D+?)(</a>)]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>loser_name</name> 
+				<apptype>string</apptype>
+				<regex><![CDATA[(Win[\w\W]+?</tr>[\w\W]+?fighters.details.\d+">)(\D+?)(</a>)]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>weight_class</name> 
+				<apptype>string</apptype>
+				<regex><![CDATA[(<td>)(\w+weight)(</td>)]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>finish_method</name> 
+				<apptype>string</apptype>
+				<regex><![CDATA[(\w+weight[\w\W]+<td>)(.*?)(</td>)]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>finish_details</name> 
+				<apptype>string</apptype>
+				<regex><![CDATA[]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>rounds_fought</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[(<td[\s]align="center">)(\d)(</td>)]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>time_in_last_round</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[(<td[\s]align="center">\d</td>[\w\W]+?<td>[\w\W]+?)(\d:\d+)(\D)]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>round_format</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[(<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\d+.*\s+.*\s+.*\s+\D+)(.*)(</td>*?)]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>referee_name</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[(<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\d+.*\s+.*\s+.*\s+\D+)(.*)(</td>*?)]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>child_url</name>
+				<apptype>string</apptype>
+				<regex></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>fight_updated</name>
+				<apptype>string</apptype>
+				<regex></regex>
+			</scrape-field>
+		</fight-details>
 	</scrapers>
 </settings> 

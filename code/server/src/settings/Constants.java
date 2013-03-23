@@ -1,6 +1,7 @@
 package settings;
 
 public abstract class Constants {
+
 	public enum AppType {
 	    STRING, DOUBLE, INTEGER, LONG, DATE, OBJECT
 	}
@@ -14,7 +15,7 @@ public abstract class Constants {
 	}
 	
 	public enum SourceType {
-	    URL("url"), FILE("file"), DB("DB");
+	    CONST_URL("const_url"), DB_URL("db_url"), DB_DEBUG("db_debug"), FILE("file");
 	    
 	   private final String stringValue;
 	   private SourceType(final String s) { stringValue = s; }

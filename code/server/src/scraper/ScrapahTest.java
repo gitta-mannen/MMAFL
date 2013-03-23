@@ -1,12 +1,11 @@
 package scraper;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.Arrays;
 
 import settings.Settings;
+import util.Pair;
+
+import database.DbHandler;
 
 public class ScrapahTest {
 
@@ -16,14 +15,21 @@ public class ScrapahTest {
 
 	/**
 	 * @param args
-	 * @throws IOException 
-	 * @throws MalformedURLException 
-	 * @throws ParseException 
-	 * @throws SQLException 
+	 * @throws Exception 
 	 */
-	public static void main(String[] args) throws MalformedURLException, IOException, ParseException, SQLException {	
-		new Thread(new ScrapeChain()).run();
-
+	public static void main(String[] args) throws Exception {
+//		DbHandler db = new DbHandler();//.buildTables(true);
+		new Thread(new TaskChain()).run();
+//		
+//		String sizeStatement = Settings.getNodeText("scrape-tasks:" + "event-details-fights" + ":data-source:source-size-statement")[0];
+//		String sourceStatement = Settings.getNodeText("scrape-tasks:" + "event-details-fights" + ":data-source:source-statement")[0];
+//		db.addStatement(new Pair<String, String>("get-sources", sourceStatement));
+//		db.addStatement(new Pair<String, String>("sources-size", sizeStatement));	
+//		Object[][] dbSource = db.executePs("get-sources", "sources-size");
+//		System.out.println(dbSource.length);
+//		String[] sources = Arrays.copyOf(util.Array.GetColumnArray(dbSource, 1), dbSource.length, String[].class);
+//		System.out.println(Arrays.deepToString(sources));
+		
 //		String text = util.IO.fileToString("E:\\projekt\\MMAFL\\code\\server\\www\\fm_u_events.htm");
 //		Object[][] results = new FMScraper("upcoming-events").scrape(text);
 //		for (int i = 0; i < results.length; i++) {

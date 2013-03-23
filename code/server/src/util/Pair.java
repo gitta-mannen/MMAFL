@@ -30,6 +30,14 @@ public class Pair<K, V> {
         return b;
     }
 
+    /**
+     * Takes two generic arrays and merges them into an array of pair,
+     * 	where the element from the first array on row n shares a pair 
+     * 	with element n from the second array.
+     * @param a - First array to be merged.
+     * @param b - Second array to be merged.
+     * @return Array of pair containing the two supplied arrays.
+     */
     public static <K, V> Pair<K, V>[] merge(K[] a, V[] b) {
     	@SuppressWarnings("unchecked")
 		Pair<K, V>[] result = (Pair<K, V>[]) Array.newInstance(Pair.class, a.length); 
