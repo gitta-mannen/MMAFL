@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 public class WebDiskCache {
@@ -16,17 +18,17 @@ public class WebDiskCache {
 	public static final int CACHE_MODE_OFF = 2;
 	public static final int CACHE_MODE_INSERTONLY = 4;
 	public static final int CACHE_MODE_OFFLINE = 8;
-	private final URL domain;
+	private final URI host;
 	private final File fileRoot;
 	private final String defualtExtension = ".htm";
 	private final int flags;
 		
-	public WebDiskCache (String domain, String fileRoot) throws MalformedURLException {
-		this(domain, fileRoot, CACHE_MODE_DEBUG);		
+	public WebDiskCache (URI host, URI fileRoot) throws MalformedURLException {
+		this(host, fileRoot, CACHE_MODE_DEBUG);		
 	}
 	
-	public WebDiskCache (String domain, String fileRoot, int flags) throws MalformedURLException{
-		this.domain = new URL(domain);
+	public WebDiskCache (URI host, URI fileRoot, int flags) throws MalformedURLException{
+		this.host = host;
 		this.fileRoot = new File(fileRoot);
 		this.flags = flags;
 	}
@@ -41,10 +43,10 @@ public class WebDiskCache {
 		return (flags & flag) == flag;
 	}	
 	
-	public String getPage(String webPath) throws Exception {
-		String filePath = cleanPath(webPath);
-		File file = new File(fileRoot + filePath);
-				
+	public String getPage(URI webPath) throws Exception {
+		URI filePath = new URI(host.getHost() + addExtension(webPath).getPath() );
+		File file = new File(fileRoot.toURI().resolve(filePath.getPath()));
+		
 		boolean exists = file.exists();		
 		if(!exists) {
 			file.getParentFile().mkdirs();
@@ -63,18 +65,16 @@ public class WebDiskCache {
 		}			
 	}
 	
-	private String cleanPath(String webPath) {
-		String filePath = webPath.replace("/", "\\");
-		if(hasExtension(filePath)) {
-			return filePath;
-		} else if (filePath.endsWith("\\")) {
-			filePath = filePath.replaceAll("\\\\+$", "");
-		}		
-		return filePath + defualtExtension; 
+	private URI addExtension(URI webPath) throws URISyntaxException {
+		if(hasExtension(webPath.getPath())) {
+			return webPath;
+		} else {
+			return new URI(webPath.getPath() + defualtExtension);
+		}
 	}
 
-	private String cachePage(String webPath, File file) throws IOException {		
-		URL url = new URL(domain + webPath);
+	private String cachePage(URI webPath, File file) throws IOException, URISyntaxException {		
+		URL url = new URI(host.getScheme(), host.getHost(), host.resolve(webPath).getPath(), null).toURL();
 		Logger.log("Getting page from web", true);
 		String content = streamToString(url.openConnection().getInputStream());
 		stringTofile(content, file);
@@ -89,7 +89,7 @@ public class WebDiskCache {
 	
 	// Checks whether a file path has a file type extension
 	public boolean hasExtension(String filePath) {
-		return filePath.matches("\\.[^.\\\\/:*?\"<>|\\r\\n]+$");
+		return filePath.matches(".+[.][^.\\W]+");		
 	}
 	
 	public static String streamToString(java.io.InputStream is) {

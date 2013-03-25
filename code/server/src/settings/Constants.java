@@ -1,8 +1,17 @@
 package settings;
 
+import java.io.File;
+import java.net.URI;
+
 public final class Constants {
+	public static final URI APP_ROOT, WEB_ROOT;
 	// Can't be instantiated
 	private Constants(){}
+	
+	static {
+		APP_ROOT = new File(System.getProperty("user.dir")).toURI();
+		WEB_ROOT = new File(System.getProperty("user.dir") + "\\www").toURI();
+	}
 	
 	public enum AppType {
 	    STRING, DOUBLE, INTEGER, LONG, DATE, OBJECT, TIME, HTML

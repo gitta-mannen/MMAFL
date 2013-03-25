@@ -242,7 +242,7 @@
 			<data-source>
 				<const-source>true</const-source> <!-- const-url -->
 				<const-path><![CDATA[/events/index/date/desc/1/all]]></const-path>
-				<url-domain><![CDATA[http://hosteddb.fightmetric.com]]></url-domain>
+				<host><![CDATA[hosteddb.fightmetric.com]]></host>
 				<source-size-statement><![CDATA[]]></source-size-statement>
 				<source-statement><![CDATA[]]></source-statement>
 			</data-source>
@@ -258,7 +258,7 @@
 			<data-source>
 				<const-source>true</const-source> <!-- const-url -->
 				<const-path><![CDATA[/events/index/date/asc/0/all]]></const-path>
-				<url-domain><![CDATA[http://hosteddb.fightmetric.com]]></url-domain>
+				<host><![CDATA[hosteddb.fightmetric.com]]></host>
 				<source-size-statement><![CDATA[]]></source-size-statement>
 				<source-statement><![CDATA[]]></source-statement>
 			</data-source>
@@ -274,7 +274,7 @@
 			<data-source>
 				<const-source>false</const-source> <!-- const-url -->
 				<const-path></const-path>
-				<url-domain><![CDATA[http://hosteddb.fightmetric.com]]></url-domain>
+				<host><![CDATA[hosteddb.fightmetric.com]]></host>
 				<source-size-statement><![CDATA[SELECT COUNT(*) FROM events WHERE event_updated = 0]]></source-size-statement>
 				<source-statement><![CDATA[select child_url, id FROM events WHERE event_updated = 0]]></source-statement>
 			</data-source>
@@ -294,7 +294,7 @@
 			<data-source>
 				<const-source>false</const-source> <!-- db_url -->
 				<const-path></const-path>
-				<url-domain><![CDATA[http://hosteddb.fightmetric.com]]></url-domain>
+				<host><![CDATA[hosteddb.fightmetric.com]]></host>
 				<source-size-statement><![CDATA[SELECT COUNT(*) FROM fights WHERE fight_updated = 0]]></source-size-statement>
 				<source-statement><![CDATA[SELECT child_url, id, fighter_a_id FROM fights WHERE fight_updated = 0]]></source-statement>
 			</data-source>

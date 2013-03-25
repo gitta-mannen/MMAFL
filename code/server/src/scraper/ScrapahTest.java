@@ -1,6 +1,12 @@
 package scraper;
 
+import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Arrays;
+
+import settings.Constants;
 import settings.Settings;
 import util.Pair;
 import util.WebDiskCache;
@@ -23,11 +29,33 @@ public class ScrapahTest {
 //		testFlags();	
 //		testTask();	
 //		tesFiles();	
-
+//		testURI();
 	}
+	
+	public static void testURI() throws Exception {
+		System.out.println(new File (new URI("file:///E:/projekt/MMAFL/code/server/www/fightmetric/")).isDirectory());
+		System.out.println(new File (new URI("file","","/E:/projekt/MMAFL/code/server/www/fightmetric/", null)).getAbsolutePath());
+		System.out.println(new URI("http", "", "/events/index/date/asc/1/all", null).getPath());
+		File file = new File(new URI("http", "hosteddb.fightmetric.com", "", null).getHost());
+		System.out.println(file.getAbsolutePath());
+//		URI uri = file.toURI();
+//		System.out.println("scheme: " + uri.getScheme());
+//		System.out.println("auth: " + uri.getAuthority());
+//		System.out.println("fragment: " + uri.getFragment());
+//		System.out.println("host: " + uri.getHost());
+//		System.out.println("path: " + uri.getPath());
+//		System.out.println("userinfo: " + uri.getUserInfo());
+		
+		URI host = new URI("http", "hosteddb.fightmetric.com", "", null);
+		URI path = new URI("/events/index/date/asc/1/all");
+		URI resolved = new URI("http", host.getHost(), path.getPath(), null);
+		System.out.println(host.resolve(path.getPath()).resolve(".htm"));
+	}
+		
+	
 	public static void tesFiles() throws Exception {
-		WebDiskCache wb = new WebDiskCache("http://hosteddb.fightmetric.com/", System.getProperty("user.dir") + "\\www\\fightmetric");
-		String page = wb.getPage("/events/index/date/asc/1/all");
+		WebDiskCache wb = new WebDiskCache(new URI("http", "docs.oracle.com", "", null), Constants.WEB_ROOT);
+		String page = wb.getPage(new URI("http", "", "/javase/6/docs/api/java/net/URL.html", null));
 		System.out.println(page.length());
 	}
 	
