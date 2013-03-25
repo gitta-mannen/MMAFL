@@ -58,6 +58,11 @@ public class Settings {
 		for (int i = 0; i < temp.size(); i++) {
 			result[i] = temp.get(i).getTextContent();
 		}
+		
+		if(result.length == 0) {
+			Logger.log("Settings not found: " + qualifier, true);
+		}
+		
 		return result;
 	}
 	

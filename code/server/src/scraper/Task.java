@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import database.DbHandler;
 
 public abstract class Task {
-	protected String name;
+	protected final String name;
 	protected final DbHandler db;
 	
 	public Task (String name) throws SQLException, Exception {

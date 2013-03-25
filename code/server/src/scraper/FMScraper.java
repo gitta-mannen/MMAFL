@@ -3,7 +3,13 @@ package scraper;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
+
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.joda.time.*;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 
 import settings.Settings;
 import settings.Constants.AppType;
@@ -42,13 +48,38 @@ public class FMScraper extends Scraper {
 	 * @throws ParseException
 	 */
 	protected Object stringToObject (String s, AppType type) throws ParseException {
+//		System.out.println("string to parse: '" + s + "' has type: " + type);
+		if (s.isEmpty()) {
+			Logger.log("Empty string supplied", true);
+			return null;
+		}
+		
 		switch (type) {
 		case DATE:
-			return (new SimpleDateFormat("MMM. dd, yyyy").parse(s));
+			Date date = new SimpleDateFormat("MMM. dd, yyyy", Locale.ENGLISH).parse(s);
+			return new SimpleDateFormat("yyyy-MM-dd").format(date);
+		 case TIME:
+        	PeriodFormatter ms = new PeriodFormatterBuilder()
+        	.minimumPrintedDigits(2)
+            .printZeroAlways()            
+        	.appendMinutes()
+            .appendSeparator(":")
+            .appendSeconds()
+            .toFormatter();
+        	Period p = ms.parsePeriod(s);
+        	//use this if you want the time in seconds(long)
+	        	//Duration d = p.toStandardDuration();  
+	        	//return d.getStandardSeconds();
+        	return ms.print(p);
+
 		case LONG: case DOUBLE: case INTEGER:
 			return (NumberFormat.getInstance(Locale.US).parseObject(s));
 		case STRING:
 			return s;
+		case HTML:		
+			// replace <br /> tags with ';' except for when followed by whitespace then delete tags
+			String tagLess = s.replaceAll("(<br />)(?=\\S)", ";").replaceAll("(<[^>]+>)", "");
+			return StringEscapeUtils.unescapeHtml4(tagLess);
 		default:
 			Logger.log("Type not recognized", true);
 			return null;

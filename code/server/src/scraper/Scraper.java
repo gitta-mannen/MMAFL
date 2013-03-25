@@ -73,8 +73,8 @@ abstract class Scraper {
 	 * @return
 	 */
 	public static String findFirst(String text, String regex) {
-		Matcher matcher = Pattern.compile(regex, Pattern.MULTILINE).matcher(text);
-		
+		Matcher matcher = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL).matcher(text);
+				
 		if (matcher.find() && matcher.groupCount() == 3) {
 			return matcher.group(2);
 		} else {

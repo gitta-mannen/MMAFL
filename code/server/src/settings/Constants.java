@@ -1,9 +1,11 @@
 package settings;
 
-public abstract class Constants {
-
+public final class Constants {
+	// Can't be instantiated
+	private Constants(){}
+	
 	public enum AppType {
-	    STRING, DOUBLE, INTEGER, LONG, DATE, OBJECT
+	    STRING, DOUBLE, INTEGER, LONG, DATE, OBJECT, TIME, HTML
 	}
 	
 	public enum DbType {
@@ -15,7 +17,7 @@ public abstract class Constants {
 	}
 	
 	public enum SourceType {
-	    CONST_URL("const_url"), DB_URL("db_url"), DB_DEBUG("db_debug"), FILE("file");
+	    DB("db"), CONST("const");
 	    
 	   private final String stringValue;
 	   private SourceType(final String s) { stringValue = s; }

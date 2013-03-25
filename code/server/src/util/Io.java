@@ -2,6 +2,10 @@ package util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * Holds some simple IO functions.
@@ -16,15 +20,6 @@ public final class IO {
 	 * @param is - input stream.
 	 * @return - stream content as string.
 	 */
-	public static String streamToString(java.io.InputStream is) {
-	    @SuppressWarnings("resource")
-		java.util.Scanner s = new java.util.Scanner(is, "ISO-8859-1").useDelimiter("\\A");
-	    return s.hasNext() ? s.next() : "";
-	}
 	
-	public static String fileToString(String uri) throws FileNotFoundException {
-	    @SuppressWarnings("resource")
-		java.util.Scanner s = new java.util.Scanner(new File(uri), "ISO-8859-1").useDelimiter("\\A");
-	    return s.hasNext() ? s.next() : "";
-	}
+	
 }

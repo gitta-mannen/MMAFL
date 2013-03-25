@@ -56,6 +56,7 @@ public class DbHandler {
 	
 	public void addStatement (Pair<String, String> s) throws SQLException {
 		ps.put(s.getA(), connection.prepareStatement( s.getB()) );
+//		System.out.println("adding statement: " + s.getA() + " -> " + s.getB());
 	}
 	
 	public static void buildTables(boolean replace) {
@@ -75,14 +76,24 @@ public class DbHandler {
 					statement.execute("DROP TABLE IF EXISTS " + tables[i]);
 				}
 				
-				String primaryKey =  Settings.getNodeText("database:tables:" + tables[i] + ":primary-key")[0];
+				String[] primaryKeys =  Settings.getNodeText("database:tables:" + tables[i] + ":primary-key");
 				String[] columns =  Settings.getNodeText("database:tables:" + tables[i] + ":column:name");
 				String[] types =  Settings.getNodeText("database:tables:" + tables[i] + ":column:dbtype");
 				
 				StringBuilder sb = new StringBuilder("CREATE TABLE IF NOT EXISTS " + tables[i] + " (");
 				for (int c = 0; c < columns.length; c++) {
 					sb.append("'" + columns[c] + "' " + types[c]);
-					sb.append( c + 1 == columns.length ? ", PRIMARY KEY (" + "'" + primaryKey + "'" + "))" : ", " );
+					if(c + 1 == columns.length) {
+						if (primaryKeys.length > 0) {
+							sb.append(", PRIMARY KEY (");
+							for (int pk = 0; pk < primaryKeys.length; pk++) {
+								sb.append((pk + 1 == primaryKeys.length ?  "'" + primaryKeys[pk] + "'))" : "'" + primaryKeys[pk] + "', "));
+							}
+						}
+						
+					} else {
+						sb.append(", ");
+					}
 				}
 				
 				System.out.println("table build statement: " + sb.toString()); 
