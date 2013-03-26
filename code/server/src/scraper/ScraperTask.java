@@ -90,14 +90,16 @@ public class ScraperTask extends Task {
 	}
 	
 	private Object[] setFkeys(Object[] results, Object[] keySource, int flags) {
-		System.out.println("\tresults before f-key: " + Arrays.deepToString(results));
+//		System.out.println("\tresults before f-key: " + Arrays.deepToString(results));
 		for (int n = 1; n < 31; n++) {
 			//compare to bitmask for column n
 			if ((flags >> n & 1) == 1 ) {
 				results = util.Array.insert(results, keySource[n], 1);
+				System.out.println("inserting f-key: " + n + " : " +  keySource[n]);
+				System.out.println(Arrays.deepToString(keySource));
 			}
 		}
-		System.out.println("\tresults after f-key insertion: " + Arrays.deepToString(results));
+//		System.out.println("\tresults after f-key insertion: " + Arrays.deepToString(results));
 		return results;
 	}
 

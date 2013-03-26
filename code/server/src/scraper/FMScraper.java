@@ -77,8 +77,12 @@ public class FMScraper extends Scraper {
 		case STRING:
 			return s;
 		case HTML:		
-			// replace <br /> tags with ';' except for when followed by whitespace then delete tags
-			String tagLess = s.replaceAll("(<br />)(?=\\S)", ";").replaceAll("(<[^>]+>)", "");
+			// removes tags, whitespace and the first colon
+			String regexTags = "<br\\s/>|<(\\w*)[^>]*>(.*?)</\\1>";
+			String regexWhitespace = "^\\s?[:]\\s?|(\\s)(?=-)|(?<=-)(\\s)";
+			String tagLess = s.replaceAll(regexTags, "");
+			tagLess = tagLess.replaceAll(regexWhitespace, "");
+			// unescapes html char codes
 			return StringEscapeUtils.unescapeHtml4(tagLess);
 		default:
 			Logger.log("Type not recognized", true);

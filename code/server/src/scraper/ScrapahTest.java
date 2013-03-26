@@ -23,8 +23,8 @@ public class ScrapahTest {
 	 */
 	public static void main(String[] args) throws Exception { 
 //		new DbHandler().buildTables(true);
-		new Thread(new TaskChain()).run();
-//		testScraper();
+//		new Thread(new TaskChain()).run();
+		testScraper();
 //		testRegex();	
 //		testFlags();	
 //		testTask();	
@@ -70,10 +70,7 @@ public class ScrapahTest {
 		for (int i = 0; i < rows.length; i++) {
 			rowFlag |= 1 << (rows[i]);
 			System.out.println(rowFlag);
-		}		
-		
-		
-		
+		}							
 		for (int i = 0; i < 15; i++) {
 			if ((rowFlag >> i & 1) == 1 ) {
 				System.out.println("flag for row " + i + " set");
@@ -82,10 +79,10 @@ public class ScrapahTest {
 	}
 	
 	public static void testScraper() throws Exception {
-//		String text = util.IO.fileToString("E:\\projekt\\MMAFL\\code\\server\\www\\fm_c_fight.htm");
-//		Object[][] results = new FMScraper("fight-details").scrape(text);
-//		System.out.println("\t" + Arrays.deepToString(results));							
-
+		String text = WebDiskCache.fileToString(new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\fights\\index\\49.htm"));
+		Object[][] results = new FMScraper("rounds-looser").scrape(text);
+		System.out.println("\t" + Arrays.deepToString(results));							
+		//(?:ROUND .*?<tr>.*?</tr>)(.*?)(<tr>.*?</tr>)
 	}
 	public static void testStatement() throws Exception {
 		DbHandler db = new DbHandler();
@@ -100,15 +97,20 @@ public class ScrapahTest {
 	}
 	
 	public static void testRegex() throws Exception {		
-//		String text = util.IO.fileToString("E:\\projekt\\MMAFL\\code\\server\\www\\fm_c_fight.htm");
+		String text = WebDiskCache.fileToString(new File("E:\\projekt\\MMAFL\\code\\server\\www\\test.htm"));
 //		String delimiter = Settings.getNodeText("scrapers:fight-details:pre-process:index-delimiter")[0];
 //		String tablePattern = Settings.getNodeText("scrapers:fight-details:pre-process:extract")[0];
-////		System.out.println(tablePattern);
+//		System.out.println(tablePattern);
 //		String tableText = Scraper.findFirst(text, tablePattern);
-////		System.out.println(tableText);
+//		System.out.println(tableText);
 //		String[] split = tableText.split(delimiter);
 //		System.out.println("\t" + Arrays.deepToString(split));
-		
+		String regex = "<br\\s/>|<(\\w*)[^>]*>(.*?)</\\1>";
+		String regex2 = "^\\s+[:]|\\s";
+		text = text.replaceAll(regex, "");
+		System.out.println(text);//.replaceAll("^\\s+?[:]\\s+?|\\s+?$", replacement));
+		text = text.replaceAll(regex2, "");
+		System.out.println(text);
 	}
 }
 

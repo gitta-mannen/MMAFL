@@ -11,7 +11,7 @@ public class TaskChain implements Runnable {
 	
 	public TaskChain() throws Exception {
 		// runs bottom-up
-		tasks.push(new ScraperTask("fight-details-rounds", new Scraper[]{new FMScraper("fight-details"), new FMScraper("rounds")}));
+		tasks.push(new ScraperTask("fight-details-rounds", new Scraper[]{new FMScraper("fight-details"), new FMScraper("rounds-winner"), new FMScraper("rounds-looser")}));
 		tasks.push(new ScraperTask("event-details-fights", new Scraper[]{new FMScraper("event-details"), new FMScraper("fights")})); 
 		tasks.push(new DataTask("compare-events"));	
 		tasks.push(new ScraperTask("completed-events", new Scraper[]{new FMScraper("completed-events")}));
