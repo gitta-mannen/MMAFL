@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Random;
 
 import settings.Constants;
 import settings.Constants.SourceType;
@@ -55,7 +57,7 @@ public class ScraperTask extends Task {
 			
 			for (int j = 0; j < 15; j++) {
 				if ((scraperFlags[i] >> j & 1) == 1 ) {
-					System.out.println("flag for row " + j + " set for scraper "+ scraperName);
+					Logger.log("flag for row " + j + " set for scraper "+ scraperName, false);
 				}
 			}
 		}				
@@ -69,15 +71,28 @@ public class ScraperTask extends Task {
 	}
 
 	@Override
-	protected void task() throws Exception {
+	protected void task()   {		
+		Random r = new Random();
+		int sleep = 0;
 		setSourcPaths();
 		
 		Object[][] tempResults;
 		for (int i = 0; i < sourcePaths.length; i++) {
-			String data = wdc.getPage(new URI("http", "", sourcePaths[i], null));
+			String data = "";
+//			sleep = r.nextInt(10000);
+//			Logger.log("Sleeping for " + sleep / 1000 + "s", true);			
+//			Thread.sleep(sleep);
+			try {
+				data = wdc.getPage(new URI("http", "", sourcePaths[i], null));
+			} catch (URISyntaxException e) {
+				Logger.log(e.getMessage() + " for path '" + sourcePaths[i] + "'",true);
+			} catch (Exception e) {
+				Logger.log(e.getMessage(), true);
+			}
 			for (int j = 0; j < scrapers.length; j++) {
-				tempResults = scrapers[j].scrape(data);				
-				for (int k = 0; k < tempResults.length; k++) {
+				tempResults = scrapers[j].scrape(data);			
+				Logger.log("Scraper " + scrapers[j].getName() + " inserting " + tempResults.length + " records", false);
+				for (int k = 0; k < tempResults.length; k++) {					
 					if (isConstSource) {
 						db.executePs(scrapers[j].getName(), tempResults[k]);
 					} else {
@@ -95,8 +110,8 @@ public class ScraperTask extends Task {
 			//compare to bitmask for column n
 			if ((flags >> n & 1) == 1 ) {
 				results = util.Array.insert(results, keySource[n], 1);
-				System.out.println("inserting f-key: " + n + " : " +  keySource[n]);
-				System.out.println(Arrays.deepToString(keySource));
+//				System.out.println("inserting f-key: " + n + " : " +  keySource[n]);
+//				System.out.println(Arrays.deepToString(keySource));
 			}
 		}
 //		System.out.println("\tresults after f-key insertion: " + Arrays.deepToString(results));
@@ -111,7 +126,7 @@ public class ScraperTask extends Task {
 			sourcePaths = Arrays.copyOf(util.Array.getColumn(dbSource, 0), dbSource.length, String[].class);		
 		}
 
-		System.out.println("task source paths loaded: " + Arrays.deepToString(sourcePaths));	
+//		System.out.println("task source paths loaded: " + Arrays.deepToString(sourcePaths));	
 	}
 	
 }	

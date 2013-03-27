@@ -1,6 +1,12 @@
 package scraper;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,8 +18,6 @@ abstract class Scraper {
 	protected final String name;
 	protected final AppType[] types;
 	protected final String[] regexes;
-//	protected final int groups = 3;
-//	protected final int[] usedGroups = {2}; 
 	
 	public Scraper(String name) {
 		this.name = name;
@@ -34,32 +38,36 @@ abstract class Scraper {
 		return name;
 	}
 	
-	Object[][] scrape (String text) throws ParseException {
-		String[] processed = preProcess(text);
-		Object[][] results = new Object[processed.length][];
-		
-		for (int i = 0; i < processed.length; i++){
-			results[i] = stringToObject(parseFirst(processed[i], regexes), types);
+	public Object[][] scrape (String text) {
+		try {
+			String[] processed = preProcess(text);
+			Object[][] results = new Object[processed.length][];
+			
+			for (int i = 0; i < processed.length; i++){
+				results[i] = stringToObject(parseFirst(processed[i], regexes), types);
+			}
+			return results;
+		} catch (Exception e) {
+			Logger.log(e.getMessage(),true);
 		}
-		
-		return results; 
+		 return null;
 	}
 
-	protected abstract String[] preProcess(String text);
-	protected abstract Object stringToObject (String s, AppType type) throws ParseException;
-	protected abstract Object[] stringToObject(String[] strings, AppType[] types) throws ParseException;
+	protected abstract String[] preProcess(String text) throws Exception;
+	protected abstract Object stringToObject (String s, AppType type) throws ParseException, Exception;
+	protected abstract Object[] stringToObject(String[] strings, AppType[] types) throws ParseException, Exception;
 	
 	/**
 	 * Takes a list of regexes and returns the first matching results in the supplied string. 
 	 * @param text
 	 * @param regexes
 	 * @return
+	 * @throws Exception 
 	 */
-	public static String[] parseFirst(String text, String[] regexes) {
-		String[] results = new String[regexes.length];		
-		
+	public static String[] parseFirst(String text, String[] regexes) throws Exception {
+		String[] results = new String[regexes.length];				
 		for (int i = 0; i < regexes.length; i++) {
-			results[i] = findFirst(text, regexes[i]);					
+			results[i] = findNamedGroups(text, regexes[i]);					
 		}		
 		return results;
 	}	
@@ -72,15 +80,67 @@ abstract class Scraper {
 	 * @param group
 	 * @return
 	 */
+	@Deprecated
 	public static String findFirst(String text, String regex) {
-		Matcher matcher = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL).matcher(text);
-				
+		Matcher matcher = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL).matcher(text);				
 		if (matcher.find() && matcher.groupCount() == 3) {
 			return matcher.group(2);
 		} else {
-			Logger.log("No match found for regex: " + regex + " group count: " + matcher.groupCount(), true);
+			Logger.log("No match found for regex: " + regex + " group count: " + matcher.groupCount(), false);
 			return "";
 		}
 	}
+	
+	// Returns the connotation of all the matched named groups in the given text for the supplied regex.
+	public static String findNamedGroups(String text, String regex) throws Exception {
+		Pattern p = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL);
+		Matcher matcher = p.matcher(text);
+		StringBuilder sb = new StringBuilder();
+		
+		if (matcher.find() && matcher.groupCount() > 0) {
+			Set<String> groups = getNamedGroups(p);
+			Iterator <String> itGroups = groups.iterator();
+			
+			while (itGroups.hasNext()) {
+				sb.append(matcher.group(itGroups.next()));
+			}
+			
+			return sb.toString();
+		} else {
+			Logger.log("No match found for regex: " + regex + " group count: " + matcher.groupCount(), false);
+			return "";
+		}
+	}
+	
+	/**
+	 * Gets the named groups of a given pattern.
+	 * The method accomplishes this by using reflection to access a
+	 * 	 private method of the Pattern class.  
+	 * @param regex
+	 * @return Set of the names of the named groups in the given Pattern.
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 */
+	@SuppressWarnings("unchecked")
+	  private static Set<String> getNamedGroups(Pattern regex)
+	      throws NoSuchMethodException, SecurityException,
+	             IllegalAccessException, IllegalArgumentException,
+	             InvocationTargetException {
+
+	    Method namedGroupsMethod = Pattern.class.getDeclaredMethod("namedGroups");
+	    namedGroupsMethod.setAccessible(true);
+
+	    Map<String, Integer> namedGroups = null;
+	    namedGroups = (Map<String, Integer>) namedGroupsMethod.invoke(regex);
+
+	    if (namedGroups == null) {
+	      throw new InternalError();
+	    }
+
+	    return Collections.unmodifiableMap(namedGroups).keySet();
+	  }
 
 }

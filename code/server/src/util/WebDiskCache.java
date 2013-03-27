@@ -75,20 +75,20 @@ public class WebDiskCache {
 
 	private String cachePage(URI webPath, File file) throws IOException, URISyntaxException {		
 		URL url = new URI(host.getScheme(), host.getHost(), host.resolve(webPath).getPath(), null).toURL();
-		Logger.log("Getting page from web", true);
+		Logger.log("Getting page from web: " + url, true);
 		String content = streamToString(url.openConnection().getInputStream());
-		stringTofile(content, file);
+		stringTofile(content, file, false);
 		return content;
 	}
 	
-	public void stringTofile (String s, File file) throws IOException {
-		 BufferedWriter out = new BufferedWriter(new FileWriter(file));
+	public static void stringTofile (String s, File file, boolean append) throws IOException {
+		 BufferedWriter out = new BufferedWriter(new FileWriter(file, append));
 	        out.write(s);
 	        out.close();
 	}
 	
 	// Checks whether a file path has a file type extension
-	public boolean hasExtension(String filePath) {
+	public static boolean hasExtension(String filePath) {
 		return filePath.matches(".+[.][^.\\W]+");		
 	}
 	
@@ -99,7 +99,7 @@ public class WebDiskCache {
 	}
 	
 	public static String fileToString(File file) throws FileNotFoundException {	
-		Logger.log("Getting page from disk cache", true);
+		Logger.log("Getting page from disk cache: " + file.getPath(), true);
 	    @SuppressWarnings("resource")
 		java.util.Scanner s = new java.util.Scanner(file, "ISO-8859-1").useDelimiter("\\A");
 	    return s.hasNext() ? s.next() : "";

@@ -35,8 +35,7 @@ public class DbHandler {
 			this.connection = DriverManager.getConnection("jdbc:sqlite:stats.db");
 
 			// get prepared statements from settings
-			for (int i = 0; i < pStatement.length; i++) {
-				System.out.println("prepared statement added: " + pStatement[i].getA() + " = " + pStatement[i].getB());
+			for (int i = 0; i < pStatement.length; i++) {				
 				addStatement(pStatement[i]);
 			}
 					
@@ -56,7 +55,7 @@ public class DbHandler {
 	
 	public void addStatement (Pair<String, String> s) throws SQLException {
 		ps.put(s.getA(), connection.prepareStatement( s.getB()) );
-//		System.out.println("adding statement: " + s.getA() + " -> " + s.getB());
+		Logger.log("adding statement: " + s.getA() + " -> " + s.getB(), false);
 	}
 	
 	public static void buildTables(boolean replace) {
@@ -72,7 +71,7 @@ public class DbHandler {
 			for (int i = 0; i < tables.length; i++) {
 				
 				if (replace) {
-					System.out.println("dropping table: " + tables[i]); 
+//					System.out.println("dropping table: " + tables[i]); 
 					statement.execute("DROP TABLE IF EXISTS " + tables[i]);
 				}
 				
@@ -96,7 +95,7 @@ public class DbHandler {
 					}
 				}
 				
-				System.out.println("table build statement: " + sb.toString()); 
+				Logger.log("table build statement: " + sb.toString(), false); 
 				statement.execute(sb.toString());
 			}
 					
@@ -139,7 +138,8 @@ public class DbHandler {
 						s.setObject(i, params[i-1]);
 					}					
 				} else {
-					throw new Exception("Wrong number of params, " + params.length);
+					throw new Exception("Wrong number of params in : " + params.length + " ,should be: " 
+							+ s.getParameterMetaData().getParameterCount() + " ,in prepared statement: " + stName);
 				}
 			}
 			

@@ -5,6 +5,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import settings.Constants;
 import settings.Settings;
@@ -23,13 +25,15 @@ public class ScrapahTest {
 	 */
 	public static void main(String[] args) throws Exception { 
 //		new DbHandler().buildTables(true);
-//		new Thread(new TaskChain()).run();
-		testScraper();
+		new Thread(new TaskChain()).run();
+//		testScraper();
 //		testRegex();	
 //		testFlags();	
 //		testTask();	
 //		tesFiles();	
 //		testURI();
+		
+//		String[] regexes = Settings.getNodeText("scrapers:" + "fighters-index" + ":scrape-field:regex");
 	}
 	
 	public static void testURI() throws Exception {
@@ -60,8 +64,10 @@ public class ScrapahTest {
 	}
 	
 	public static void testTask() throws Exception {
-		ScraperTask task = new ScraperTask("completed-events", new Scraper[]{new FMScraper("completed-events")});
-
+		new ScraperTask("event-details-fights", new Scraper[]{new FMScraper("event-details"), new FMScraper("fights")}).doTask();
+//		new ScraperTask("fighters-index", new Scraper[]{new FMScraper("fighters-index")}).doTask();
+//		new DataTask("compare-fighters").doTask();
+//		new ScraperTask("fighter-details", new Scraper[]{new FMScraper("fighter-details")}).doTask();
 	}
 	
 	public static void testFlags() {
@@ -79,8 +85,8 @@ public class ScrapahTest {
 	}
 	
 	public static void testScraper() throws Exception {
-		String text = WebDiskCache.fileToString(new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\fights\\index\\49.htm"));
-		Object[][] results = new FMScraper("rounds-looser").scrape(text);
+		String text = WebDiskCache.fileToString(new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\fighters\\details\\1.htm"));
+		Object[][] results = new FMScraper("fighter-details").scrape(text);
 		System.out.println("\t" + Arrays.deepToString(results));							
 		//(?:ROUND .*?<tr>.*?</tr>)(.*?)(<tr>.*?</tr>)
 	}
@@ -97,7 +103,7 @@ public class ScrapahTest {
 	}
 	
 	public static void testRegex() throws Exception {		
-		String text = WebDiskCache.fileToString(new File("E:\\projekt\\MMAFL\\code\\server\\www\\test.htm"));
+		String text = WebDiskCache.fileToString(new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\fighters\\details\\1.htm"));
 //		String delimiter = Settings.getNodeText("scrapers:fight-details:pre-process:index-delimiter")[0];
 //		String tablePattern = Settings.getNodeText("scrapers:fight-details:pre-process:extract")[0];
 //		System.out.println(tablePattern);
@@ -105,12 +111,21 @@ public class ScrapahTest {
 //		System.out.println(tableText);
 //		String[] split = tableText.split(delimiter);
 //		System.out.println("\t" + Arrays.deepToString(split));
-		String regex = "<br\\s/>|<(\\w*)[^>]*>(.*?)</\\1>";
-		String regex2 = "^\\s+[:]|\\s";
-		text = text.replaceAll(regex, "");
-		System.out.println(text);//.replaceAll("^\\s+?[:]\\s+?|\\s+?$", replacement));
-		text = text.replaceAll(regex2, "");
-		System.out.println(text);
+		
+//		String regex = "<br\\s/>|<(\\w*)[^>]*>(.*?)</\\1>";
+//		String regex2 = "^\\s+[:]|\\s";	
+//		text = text.replaceAll(regex, "");
+//		System.out.println(text);
+//		text = text.replaceAll(regex2, "");
+//		System.out.println(text);
+		
+		String regex = Settings.getNodeText("scrapers:fighter-details:pre-process:extract")[0];
+//		Matcher matcher = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL).matcher(text);	
+//		matcher.find();
+//		System.out.println(matcher.group("data"));
+		
+		String result2 = Scraper.findNamedGroups(text, regex);
+		System.out.println(result2);
 	}
 }
 

@@ -222,6 +222,98 @@
 					<name>id</name>
 					<dbtype>integer</dbtype>
 				</column>
+				<column>
+					<name>firstname</name>
+					<dbtype>text</dbtype>
+				</column>
+				<column>
+					<name>lastname</name>
+					<dbtype>text</dbtype>
+				</column>
+				<column>
+					<name>nickname</name>
+					<dbtype>text</dbtype>
+				</column>
+				<column>
+					<name>title</name>
+					<dbtype>text</dbtype>
+				</column>
+				<column>
+					<name>height</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>weight</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>reach</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>stance</name>
+					<dbtype>text</dbtype>
+				</column>
+				<column>
+					<name>age</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>sig_strikes_landed</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>sig_strikes_accuracy</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>sig_strikes_absorbed</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>sig_strikes_defence</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>takedown_avarage</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>takedown_accuracy</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>takedown_defence</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>submission_avarage</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>wins</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>losses</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>draws</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>nc</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>fighter_updated</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>fighter_url</name>
+					<dbtype>text</dbtype>
+				</column>
 			</fighters>
 
 			<table>tmp_fighters</table> 
@@ -230,6 +322,34 @@
 				<column>
 					<name>id</name>
 					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>firstname</name>
+					<dbtype>text</dbtype>
+				</column>
+				<column>
+					<name>lastname</name>
+					<dbtype>text</dbtype>
+				</column>
+				<column>
+					<name>nickname</name>
+					<dbtype>text</dbtype>
+				</column>				
+				<column>
+					<name>wins</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>losses</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>draws</name>
+					<dbtype>integer</dbtype>
+				</column>
+				<column>
+					<name>fighter_url</name>
+					<dbtype>text</dbtype>
 				</column>
 			</tmp_fighters>
 		</tables>
@@ -296,12 +416,12 @@
 				<const-path></const-path>
 				<host><![CDATA[hosteddb.fightmetric.com]]></host>
 				<source-size-statement><![CDATA[SELECT COUNT(*) FROM fights WHERE fight_updated = 0]]></source-size-statement>
-				<source-statement><![CDATA[SELECT child_url, id, fighter_a_id FROM fights WHERE fight_updated = 0]]></source-statement>
+				<source-statement><![CDATA[SELECT child_url, id, fighter_a_id, fighter_b_id FROM fights WHERE fight_updated = 0]]></source-statement>
 			</data-source>
 			<scrapers>
 				<fight-details>
 					<f-key>1</f-key><!-- 1 up to 31  -->
-					<statement><![CDATA[UPDATE fights SET fighter_a_id=?, fighter_b_id=?, fighter_a_name=?, fighter_b_name=?, weight_class=?, finish_method=?, finish_details=?, rounds_fought=?, time_in_last_round=?, round_format=?, referee_name=? WHERE id=?]]></statement>
+					<statement><![CDATA[UPDATE fights SET fighter_a_id=?, fighter_b_id=?, fighter_a_name=?, fighter_b_name=?, weight_class=?, finish_method=?, finish_details=?, rounds_fought=?, time_in_last_round=?, round_format=?, referee_name=?, fight_updated=1 WHERE id=?]]></statement>
 				</fight-details>
 				<rounds-winner>
 					<f-key>2</f-key><!-- 0 up to 31, can have multiple fields -->
@@ -309,12 +429,44 @@
 					<statement><![CDATA[INSERT OR REPLACE INTO rounds (fighter_name, round, knockdowns, sig_strikes, sig_strikes_landed, strikes, strikes_landed, takedown_attempts, takedowns_completed, submission_attempts, guard_passes, reversals, fight_id, fighter_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]]></statement>
 				</rounds-winner>
 				<rounds-looser>
-					<f-key>2</f-key><!-- 0 up to 31, can have multiple fields -->
+					<f-key>3</f-key><!-- 0 up to 31, can have multiple fields -->
 					<f-key>1</f-key><!-- 0 up to 31, can have multiple fields -->
 					<statement><![CDATA[INSERT OR REPLACE INTO rounds (fighter_name, round, knockdowns, sig_strikes, sig_strikes_landed, strikes, strikes_landed, takedown_attempts, takedowns_completed, submission_attempts, guard_passes, reversals, fight_id, fighter_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]]></statement>
 				</rounds-looser>
 			</scrapers>
 		</fight-details-rounds>
+
+		<fighters-index>
+			<data-source>
+				<const-source>true</const-source> <!-- true means the const-path supplies the only source -->
+				<const-path><![CDATA[/fighters/index/lastname/asc/all]]></const-path>
+				<host><![CDATA[hosteddb.fightmetric.com]]></host>
+				<source-size-statement></source-size-statement>
+				<source-statement></source-statement>
+			</data-source>
+			<scrapers>
+				<fighters-index>
+					<f-key>0</f-key><!-- 1 up to 31  -->
+					<statement><![CDATA[INSERT OR REPLACE INTO tmp_fighters (id, firstname, lastname, nickname, wins, losses, draws, fighter_url) VALUES (?,?,?,?,?,?,?,?)]]></statement>
+				</fighters-index>
+			</scrapers>
+		</fighters-index>
+
+		<fighter-details>
+			<data-source>
+				<const-source>false</const-source> <!-- true means the const-path supplies the only source -->
+				<const-path></const-path>
+				<host><![CDATA[hosteddb.fightmetric.com]]></host>
+				<source-size-statement><![CDATA[SELECT COUNT(*) FROM fighters WHERE fighter_updated = 0]]></source-size-statement>
+				<source-statement><![CDATA[SELECT fighter_url, id FROM fighters WHERE fighter_updated = 0]]></source-statement>
+			</data-source>
+			<scrapers>
+				<fighter-details>
+					<f-key>1</f-key><!-- 1 up to 31  -->
+					<statement><![CDATA[UPDATE fighters SET title=?, nc=?, height=?, weight=?, reach=?, stance=?, age=?, sig_strikes_landed=?, takedown_avarage=?, sig_strikes_accuracy=?, takedown_accuracy=?, sig_strikes_absorbed=?, takedown_defence=?, sig_strikes_defence=?, submission_avarage=?, fighter_updated=1 WHERE id=?]]></statement>
+				</fighter-details>
+			</scrapers>
+		</fighter-details>
 	</scrape-tasks>
 
 	<data-tasks>
@@ -328,6 +480,17 @@
 			</prepared-statement>
 			<prepared-statement><![CDATA[DELETE FROM tmp_events]]></prepared-statement>
 		</compare-events>
+
+		<compare-fighters>			
+			<prepared-statement><![CDATA[INSERT OR REPLACE INTO fighters 
+				SELECT tmp_fighters.id AS id, tmp_fighters.firstname AS firstname, tmp_fighters.lastname AS lastname, tmp_fighters.nickname AS nickname, '' AS title, '' AS height, '' AS weight, '' AS reach, '' AS stance, '' AS age, '' AS sig_strikes_landed, '' AS sig_strikes_percentage, '' AS sig_strikes_absorbed, '' AS sig_strikes_defence, '' AS takedown_avarage, '' AS takedown_accuracy, '' AS takedown_defence, '' AS submission_avarage, tmp_fighters.wins AS wins, tmp_fighters.losses AS losses, tmp_fighters.draws AS draws, '' AS nc, 0 AS fighter_updated, tmp_fighters.fighter_url AS fighter_url
+				FROM tmp_fighters
+				LEFT JOIN fighters
+				  ON (tmp_fighters.id = fighters.id AND tmp_fighters.wins = fighters.wins AND tmp_fighters.losses = fighters.losses AND tmp_fighters.draws = fighters.draws)
+				  WHERE fighters.id IS NULL]]>
+			</prepared-statement>
+			<prepared-statement><![CDATA[DELETE FROM tmp_fighters]]></prepared-statement>
+		</compare-fighters>
 	</data-tasks>
 
 	<!-- scraper settings -->
@@ -459,7 +622,7 @@
 			<scrape-field>
 				<name>weight_class</name> 
 				<apptype>string</apptype>
-				<regex><![CDATA[(?i)()((OPEN|CATCH|FLY|BANTAM|FEATHER|LIGHT[\s]?|WELTER|MIDDLE|HEAVY|WEIGHT)+)]]></regex>
+				<regex><![CDATA[(?i)()((OPEN|CATCH[\s]?|FLY|BANTAM|FEATHER|LIGHT[\s]?|WELTER|MIDDLE|HEAVY|WEIGHT)+)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>finish_method</name> 
@@ -628,5 +791,136 @@
 				<regex><![CDATA[(<td[\s]align="center">.*?){18}([^<]+)(</td>)]]></regex>
 			</scrape-field>
 		</rounds-looser>
+
+		<fighters-index>
+			<pre-process>
+				<extract><![CDATA[<div[\s]class="fighter_list_table[\s]data_table[\s]row_is_link">.+?<tr[\s]>(?<capture>.*?)</table>]]></extract>
+				<index-delimiter><![CDATA[<tr[\s]]]></index-delimiter>
+			</pre-process>
+
+			<scrape-field>
+				<name>id</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[fighters[/]details[/](?<capture>\d+)]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>firstname</name> 
+				<apptype>string</apptype>
+				<regex><![CDATA[(fighters[/]details[/].*?){1}>(?<capture>[^<]+)]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>lastname</name> 
+				<apptype>string</apptype>
+				<regex><![CDATA[(fighters[/]details[/].*?){2}>(?<capture>[^<]+)]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>nickname</name> 
+				<apptype>string</apptype>
+				<regex><![CDATA[(fighters[/]details[/].*?){3}>(?<capture>[^<]+)]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>wins</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[(align="center">.*?){5}(?<capture>[^<]*)</td>]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>losses</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[(align="center">.*?){6}(?<capture>[^<]*)</td>]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>draws</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[(align="center">.*?){7}(?<capture>[^<]*)</td>]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>fighter_url</name> 
+				<apptype>string</apptype>
+				<regex><![CDATA[<a[\s]href="(?<capture>[^"]+)">]]></regex>
+			</scrape-field>
+		</fighters-index>
+
+		<fighter-details>
+			<pre-process>
+				<extract><![CDATA[<div[\s]class="fighter_details">.+?(?<capture>.*?)<div[\s]class="view_panel">]]></extract>
+				<index-delimiter><![CDATA[\A]]></index-delimiter>
+			</pre-process>
+
+			<scrape-field>
+				<name>title</name> 
+				<apptype>string</apptype>
+				<regex><![CDATA[<div[\s]class="header">[\s]+(?<capture>(\b\S+\b\s?)+)+\b]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>nc</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[<td[\s]class="title_text">RECORD</td>.*?(<td[\s]align="center">.*?){6}(?<capture>\d)</td>]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>height</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[<table[\s]class="bio_info">.*?>HEIGHT</td>[^(]+[(](?<capture>\d+)[\s]cm[)]]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>weight</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[<table[\s]class="bio_info">.*?>WEIGHT</td>[^(]+[(](?<capture>\d+)[\s]kg[)]]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>reach</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[<table[\s]class="bio_info">.*?>REACH</td>[^(]+[(](?<capture>\d+)[\s]cm[)]]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>stance</name> 
+				<apptype>string</apptype>
+				<regex><![CDATA[<table[\s]class="bio_info">.*?>STANCE</td>[^>]+>(?<capture>[^<]+)</td>]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>age</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[<table[\s]class="bio_info">.*?>AGE</td>[^>]+>(?<capture>[^<]+)</td>]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>sig_strikes_landed</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[<table[\s]class="career_statistic">.*?SLpM</td>[^>]+>(?<capture>[\d.]+?)</td>]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>takedown_avarage</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[<table[\s]class="career_statistic">.*?TD[\s]Avg.</td>[^>]+>(?<capture>[\d.]+)</td>]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>sig_strikes_accuracy</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[<table[\s]class="career_statistic">.*?Str.[\s]Acc.</td>[^>]+>(?<capture>\d+)%</td>]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>takedown_accuracy</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[<table[\s]class="career_statistic">.*?TD[\s]Acc.</td>[^>]+>(?<capture>\d+)%</td>]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>sig_strikes_absorbed</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[<table[\s]class="career_statistic">.*?SApM</td>[^>]+>(?<capture>[\d.]+)</td>]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>takedown_defence</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[<table[\s]class="career_statistic">.*?TD[\s]Def.</td>[^>]+>(?<capture>\d+)%</td>]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>striking_defence</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[<table[\s]class="career_statistic">.*?Str.[\s]Def.</td>[^>]+>(?<capture>\d+)%</td>]]></regex>
+			</scrape-field>
+			<scrape-field>
+				<name>submission_avarage</name> 
+				<apptype>integer</apptype>
+				<regex><![CDATA[<table[\s]class="career_statistic">.*?Sub.[\s]Avg.</td>[^>]+>(?<capture>[\d.]+)</td>]]></regex>
+			</scrape-field>
+		</fighter-details>
 	</scrapers>
-</settings> 
+</settings>

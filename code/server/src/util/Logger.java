@@ -1,8 +1,13 @@
 package util;
 
 import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import settings.Constants;
+import settings.Constants.*;
 
 public class Logger {
 	private static ArrayList<Object[]> log;
@@ -42,10 +47,20 @@ public class Logger {
     	time = sdf.format(cal.getTime());
     	
 		log.add(new Object[]{time, threadId, className, MethodName, message});
+		String logEntry = "[" + time + "]" + " [Thread: " + threadId + "][Class: " + className
+				+ "][Method: " + MethodName +  "][Line: " + line + "]>>> " + message + "\r\n";
+		
+//		File logFile = new File(Constants.APP_ROOT.resolve("log.txt"));
+//		
+//		try {
+//			util.WebDiskCache.stringTofile(logEntry, logFile, true);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		if (printToConsole) {
-			System.out.println("[" + time + "]" + "' Thread: '" + threadId +" Class: '" + className
-					+ "' Method: '" + MethodName +  "' Line: '" + line + "' message: '" + message + "'");	
+			System.out.println(logEntry);	
 		}
 		
 	}
