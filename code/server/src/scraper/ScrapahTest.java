@@ -1,18 +1,22 @@
 package scraper;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import settings.Constants;
 import settings.Settings;
 import util.Pair;
 import util.WebDiskCache;
 import database.DbHandler;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.*;
+
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
 public class ScrapahTest {
 
@@ -25,15 +29,24 @@ public class ScrapahTest {
 	 */
 	public static void main(String[] args) throws Exception { 
 //		new DbHandler().buildTables(true);
-		new Thread(new TaskChain()).run();
+//		new Thread(new TaskChain()).run();
 //		testScraper();
 //		testRegex();	
 //		testFlags();	
 //		testTask();	
 //		tesFiles();	
 //		testURI();
+		testXpath();
+//		testParser();
 		
 //		String[] regexes = Settings.getNodeText("scrapers:" + "fighters-index" + ":scrape-field:regex");
+	}
+	
+	public static void testXpath() throws Exception {
+		File file = (new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\fighters\\details\\1.htm"));
+		Document doc  = util.XML.parseXML(file);
+		String[] result = util.XML.getPathText("//table[@class='record_info']/tr[1]/td/text()", doc);
+		System.out.println(Arrays.deepToString(result));
 	}
 	
 	public static void testURI() throws Exception {
@@ -85,7 +98,7 @@ public class ScrapahTest {
 	}
 	
 	public static void testScraper() throws Exception {
-		String text = WebDiskCache.fileToString(new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\fighters\\details\\1.htm"));
+		String text = WebDiskCache.fileToString(new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\fighters\\details\\2052.htm"));
 		Object[][] results = new FMScraper("fighter-details").scrape(text);
 		System.out.println("\t" + Arrays.deepToString(results));							
 		//(?:ROUND .*?<tr>.*?</tr>)(.*?)(<tr>.*?</tr>)
@@ -126,6 +139,11 @@ public class ScrapahTest {
 		
 		String result2 = Scraper.findNamedGroups(text, regex);
 		System.out.println(result2);
+	}
+	
+	public static void testParser() throws FileNotFoundException {
+		String text = WebDiskCache.fileToString(new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\fighters\\details\\1.htm"));
+		HtmlParser.parse(text);
 	}
 }
 

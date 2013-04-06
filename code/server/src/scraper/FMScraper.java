@@ -77,12 +77,15 @@ public class FMScraper extends Scraper {
 				return StringEscapeUtils.unescapeHtml4(s);
 			case HTML:		
 				// removes tags, whitespace and the first colon	
-				String regexTags = "<br\\s/>|<(\\w*)[^>]*>(.*?)</\\1>";
-				String regexWhitespace = "^\\s?[:]\\s?|(\\s)(?=-)|(?<=-)(\\s)";
-				String tagLess = s.replaceAll(regexTags, "");
-				tagLess = tagLess.replaceAll(regexWhitespace, ""); //**<$<NAME> to reference capture groups replace**
+//				String regexTags = "<br\\s/>|<(\\w*)[^>]*>(.*?)</\\1>"; //tag piars and content
+				String regexTags = "<(/?\\w+)[^>/]*>"; // just the tag, except 'one tags' e.g <br />
+				String regexBreaks = "<(/?\\w+)[^>]*>"; // just the tag, except 'one tags' e.g <br />
+//				String regexWhitespace = "^\\s?[:]\\s?|(\\s)(?=-)|(?<=-)(\\s)";
+				String tagLess = s.replaceAll(regexTags, " ");
+				tagLess = tagLess.replaceAll(regexBreaks, "; ");
+//				tagLess = tagLess.replaceAll(regexWhitespace, ""); //**<$<NAME> to reference capture groups replace**
 				// unescapes html char codes
-				return StringEscapeUtils.unescapeHtml4(tagLess);
+				return StringEscapeUtils.unescapeHtml4(tagLess.trim());
 			default:
 				throw new Exception("App type not recognized.");
 			}

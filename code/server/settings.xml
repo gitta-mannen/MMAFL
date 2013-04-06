@@ -498,297 +498,297 @@
 	<scrapers>
 		<completed-events>
 			<pre-process>
-				<extract><![CDATA[(<div[\s]class="events_table[\s]data_table[\s]row_is_link">[\w\W]*?<tr[\s]>)([\w\W]*?)(</div>)]]></extract>
+				<extract><![CDATA[(<div[\s]class="events_table[\s]data_table[\s]row_is_link">[\w\W]*?<tr[\s]>)(?<capture>[\w\W]*?)(</div>)]]></extract>
 				<index-delimiter><![CDATA[</tr>[\w\W]*?<tr.+?>]]></index-delimiter>
 			</pre-process>
 
 			<scrape-field>
 				<name>id</name>
 				<apptype>integer</apptype>
-				<regex><![CDATA[(.events.details.)(\d+)(\D)]]></regex>
+				<regex><![CDATA[(.events.details.)(?<capture>\d+)(\D)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>child_url</name> 
 				<apptype>string</apptype>
-				<regex><![CDATA[(href=")(.*)(">)]]></regex>
+				<regex><![CDATA[(href=")(?<capture>.*)(">)]]></regex>
 			</scrape-field>
 		</completed-events>
 
 		<upcoming-events>
 			<pre-process>
-				<extract><![CDATA[(<div[\s]class="events_table[\s]data_table[\s]row_is_link">[\w\W]*?<tr[\s]>)([\w\W]*?)(</div>)]]></extract>
+				<extract><![CDATA[(<div[\s]class="events_table[\s]data_table[\s]row_is_link">[\w\W]*?<tr[\s]>)(?<capture>[\w\W]*?)(</div>)]]></extract>
 				<index-delimiter><![CDATA[</tr>[\w\W]*?<tr.+?>]]></index-delimiter>
 			</pre-process>
 
 			<scrape-field>
 				<name>id</name>
 				<apptype>integer</apptype>
-				<regex><![CDATA[(.events.details.)(\d+)(\D)]]></regex>
+				<regex><![CDATA[(.events.details.)(?<capture>\d+)(\D)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>child_url</name> 
 				<apptype>string</apptype>
-				<regex><![CDATA[(<td[\s]class="left_border"><a href=")(.*)(">)]]></regex>
+				<regex><![CDATA[(<td[\s]class="left_border"><a href=")(?<capture>.*)(">)]]></regex>
 			</scrape-field>
 		</upcoming-events>
 
 		<event-details>
 			<pre-process>
-				<extract><![CDATA[(<div[\s]class="header">)(.*?)(</div>)]]></extract>
+				<extract><![CDATA[(<div[\s]class="header">)(?<capture>.*?)(</div>)]]></extract>
 				<index-delimiter><![CDATA[]]></index-delimiter>
 			</pre-process>
 
 			<scrape-field>
 				<name>name</name> 
 				<apptype>string</apptype>
-				<regex><![CDATA[(<h1\s+class="event_header_h1">)(.*)(</h1>)]]></regex>
+				<regex><![CDATA[(<h1\s+class="event_header_h1">)(?<capture>.*)(</h1>)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>date</name> 
 				<apptype>date</apptype>
-				<regex><![CDATA[(<td[\s]+class="title_text">DATE</td>[\w\W]*?<td>)(.*?)(</td>)]]></regex>
+				<regex><![CDATA[(<td[\s]+class="title_text">DATE</td>[\w\W]*?<td>)(?<capture>.*?)(</td>)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>organization</name> 
 				<apptype>string</apptype>
-				<regex><![CDATA[(ORGANIZATION.+?<td>)([\w\s]+?)(</td>)]]></regex>
+				<regex><![CDATA[ORGANIZATION</td>\s*?<td>(?<capture>(\b\S+\b\s?)+)+\b</td>]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>location</name> 
 				<apptype>string</apptype>
-				<regex><![CDATA[(LOCATION.+?<td>)([^<]+)(</td>)]]></regex>
+				<regex><![CDATA[(LOCATION.+?<td>)(?<capture>[^<]+)(</td>)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>attendance</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(<td\s+class="title_text">ATTENDANCE</td>[\w\W]+?<td>)([0-9,]*)(</td>)]]></regex>
+				<regex><![CDATA[(<td\s+class="title_text">ATTENDANCE</td>[\w\W]+?<td>)(?<capture>[0-9,]*)(</td>)]]></regex>
 			</scrape-field>
 		</event-details>
 
 		<fights>
 			<pre-process>
-				<extract><![CDATA[(<td[\s]rowspan="2"[\s]class="rowspan">)([\w\W]*?)(</table>)]]></extract>
+				<extract><![CDATA[(<td[\s]rowspan="2"[\s]class="rowspan">)(?<capture>[\w\W]*?)(</table>)]]></extract>
 				<index-delimiter><![CDATA[<td[\s]rowspan="2"[\s]class="rowspan">]]></index-delimiter>
 			</pre-process>
 
 			<scrape-field>
 				<name>id</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(.fights.index.)(\d+)(\D)]]></regex>
+				<regex><![CDATA[(.fights.index.)(?<capture>\d+)(\D)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>fighter_a_id</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(fighters[/]details[/].*?){1}([^"]+)(")]]></regex>
+				<regex><![CDATA[(fighters[/]details[/].*?){1}(?<capture>[^"]+)(")]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>fighter_b_id</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(fighters[/]details[/].*?){2}([^"]+)(")]]></regex>
+				<regex><![CDATA[(fighters[/]details[/].*?){2}(?<capture>[^"]+)(")]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>child_url</name> 
 				<apptype>string</apptype>
-				<regex><![CDATA[(<a[\s]href=")(.fights.index.\d+)("[\s]class="arrow"></a>)]]></regex>
+				<regex><![CDATA[(<a[\s]href=")(?<capture>.fights.index.\d+)("[\s]class="arrow"></a>)]]></regex>
 			</scrape-field>
 		</fights>
 
 		<fight-details>
 			<pre-process>
-				<extract><![CDATA[(class="fight_details_h1")(.*?)(</table>)]]></extract>
+				<extract><![CDATA[(class="fight_details_h1")(?<capture>.*?)(</table>)]]></extract>
 				<index-delimiter><![CDATA[\A]]></index-delimiter>
 			</pre-process>
 
 			<scrape-field>
 				<name>fighter_a_id</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(fighters[/]details[/].*?){1}([^"]+)(")]]></regex>
+				<regex><![CDATA[(fighters[/]details[/].*?){1}(?<capture>[^"]+)(")]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>fighter_b_id</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(fighters[/]details[/].*?){2}([^"]+)(")]]></regex>
+				<regex><![CDATA[(fighters[/]details[/].*?){2}(?<capture>[^"]+)(")]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>fighter_a_name</name> 
 				<apptype>string</apptype>
-				<regex><![CDATA[(fighters[/]details[/]\d+">.*?){1}([^<]+)(<)]]></regex>
+				<regex><![CDATA[(fighters[/]details[/]\d+">.*?){1}(?<capture>[^<]+)(<)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>fighter_b_name</name> 
 				<apptype>string</apptype>
-				<regex><![CDATA[(fighters[/]details[/]\d+">.*?){2}([^<]+)(<)]]></regex>
+				<regex><![CDATA[(fighters[/]details[/]\d+">.*?){2}(?<capture>[^<]+)(<)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>weight_class</name> 
 				<apptype>string</apptype>
-				<regex><![CDATA[(?i)()((OPEN|CATCH[\s]?|FLY|BANTAM|FEATHER|LIGHT[\s]?|WELTER|MIDDLE|HEAVY|WEIGHT)+)]]></regex>
+				<regex><![CDATA[(?i)(?<capture>\b(FLY|BANTAM|FEATHER|HEAVY|LIGHT|MIDDLE|WELTER|CATCH[\s]|LIGHT[\s]HEAVY)?WEIGHT|OPEN|SUPERFIGHT\b)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>finish_method</name> 
 				<apptype>string</apptype>
-				<regex><![CDATA[fight_details_info(.)*?(?=<td>)<td>([^<]+)()]]></regex>
+				<regex><![CDATA[fight_details_info(.)*?(?=<td>)<td>(?<capture>[^<]+)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>finish_details</name> 
 				<apptype>html</apptype>
-				<regex><![CDATA[DETAILS.*?(<td\scolspan[^>]*>\s+)(.*?)\s+(</td>)]]></regex>
+				<regex><![CDATA[DETAILS.*?(<td\scolspan[^>]*>\s+)(?<capture>.*?)\s+(</td>)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>rounds_fought</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(fight_details_info.*?nbsp.)(\d)(</td>)]]></regex>
+				<regex><![CDATA[(fight_details_info.*?nbsp.)(?<capture>\d)(</td>)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>time_in_last_round</name> 
 				<apptype>time</apptype>
-				<regex><![CDATA[(fight_details_info.*?\s)(\d:\d+)(\D)]]></regex>
+				<regex><![CDATA[(fight_details_info.*?\s)(?<capture>\d+:\d+)(\D)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>round_format</name> 
 				<apptype>string</apptype>
-				<regex><![CDATA[(?i)()fight_details_info.*?(No Time Limit|([-()1-5]){3,})</td>]]></regex>
+				<regex><![CDATA[(?i)fight_details_info.*?(?<capture>No Time Limit|[(]([^)]+[)]))]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>referee_name</name> 
 				<apptype>string</apptype>
-				<regex><![CDATA[()referees[/]details[/]([^"]+)()]]></regex>
+				<regex><![CDATA[referees[/]details[/](?<capture>[^"]+)()]]></regex>
 			</scrape-field>
 		</fight-details>
 
 		<rounds-winner>
 			<pre-process>
-				<extract><![CDATA[(class="fight_round")(.*?)(</table>)]]></extract>
+				<extract><![CDATA[(class="fight_round")(?<capture>.*?)(</table>)]]></extract>
 				<index-delimiter><![CDATA[class="fight_round"]]></index-delimiter>
 			</pre-process>
 
 			<scrape-field>
 				<name>fighter_name</name> 
 				<apptype>string</apptype>
-				<regex><![CDATA[(<td>)([^<]+)(</td>)]]></regex>
+				<regex><![CDATA[(<td>)(?<capture>[^<]+)(</td>)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>round</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(ROUND[\s]+)([^<])()]]></regex>
+				<regex><![CDATA[(ROUND[\s]+)(?<capture>[^<])()]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>knockdowns</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(<td[\s]align="center">.*?){1}([^<]+)(</td>)]]></regex>
+				<regex><![CDATA[(<td[\s]align="center">.*?){1}(?<capture>[^<]+)(</td>)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>sig_strikes</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(<td[\s]align="center">.*?){2}(\d+)(</td>)]]></regex>
+				<regex><![CDATA[(<td[\s]align="center">.*?){2}(?<capture>\d+)(</td>)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>sig_strikes_landed</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(<td[\s]align="center">.*?){2}(\d+)([\s]of)]]></regex>
+				<regex><![CDATA[(<td[\s]align="center">.*?){2}(?<capture>\d+)([\s]of)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>strikes</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(<td[\s]align="center">.*?){4}(\d+)(</td>)]]></regex>
+				<regex><![CDATA[(<td[\s]align="center">.*?){4}(?<capture>\d+)(</td>)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>strikes_landed</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(<td[\s]align="center">.*?){4}(\d+)([\s]of)]]></regex>
+				<regex><![CDATA[(<td[\s]align="center">.*?){4}(?<capture>\d+)([\s]of)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>takedown_attempts</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(<td[\s]align="center">.*?){5}(\d+)(</td>)]]></regex>
+				<regex><![CDATA[(<td[\s]align="center">.*?){5}(?<capture>\d+)(</td>)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>takedowns_completed</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(<td[\s]align="center">.*?){5}(\d+)([\s]of)]]></regex>
+				<regex><![CDATA[(<td[\s]align="center">.*?){5}(?<capture>\d+)([\s]of)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>submission_attempts</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(<td[\s]align="center">.*?){7}([^<]+)(</td>)]]></regex>
+				<regex><![CDATA[(<td[\s]align="center">.*?){7}(?<capture>[^<]+)(</td>)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>guard_passes</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(<td[\s]align="center">.*?){8}([^<]+)(</td>)]]></regex>
+				<regex><![CDATA[(<td[\s]align="center">.*?){8}(?<capture>[^<]+)(</td>)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>reversals</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(<td[\s]align="center">.*?){9}([^<]+)(</td>)]]></regex>
+				<regex><![CDATA[(<td[\s]align="center">.*?){9}(?<capture>[^<]+)(</td>)]]></regex>
 			</scrape-field>
 		</rounds-winner>
 
 		<rounds-looser>
 			<pre-process>
-				<extract><![CDATA[(class="fight_round")(.*?)(</table>)]]></extract>
+				<extract><![CDATA[(class="fight_round")(?<capture>.*?)(</table>)]]></extract>
 				<index-delimiter><![CDATA[class="fight_round"]]></index-delimiter>
 			</pre-process>
 
 			<scrape-field>
 				<name>fighter_name</name> 
 				<apptype>string</apptype>
-				<regex><![CDATA[(<td>([^<]+)</td>.*?){2}()]]></regex>
+				<regex><![CDATA[(<td>(?<capture>[^<]+)</td>.*?){2}()]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>round</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(ROUND[\s]+)([^<])()]]></regex>
+				<regex><![CDATA[(ROUND[\s]+)(?<capture>[^<])()]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>knockdowns</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(<td[\s]align="center">.*?){10}([^<]+)(</td>)]]></regex>
+				<regex><![CDATA[(<td[\s]align="center">.*?){10}(?<capture>[^<]+)(</td>)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>sig_strikes</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(<td[\s]align="center">.*?){11}(\d+)(</td>)]]></regex>
+				<regex><![CDATA[(<td[\s]align="center">.*?){11}(?<capture>\d+)(</td>)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>sig_strikes_landed</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(<td[\s]align="center">.*?){11}(\d+)([\s]of)]]></regex>
+				<regex><![CDATA[(<td[\s]align="center">.*?){11}(?<capture>\d+)([\s]of)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>strikes</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(<td[\s]align="center">.*?){13}(\d+)(</td>)]]></regex>
+				<regex><![CDATA[(<td[\s]align="center">.*?){13}(?<capture>\d+)(</td>)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>strikes_landed</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(<td[\s]align="center">.*?){13}(\d+)([\s]of)]]></regex>
+				<regex><![CDATA[(<td[\s]align="center">.*?){13}(?<capture>\d+)([\s]of)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>takedown_attempts</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(<td[\s]align="center">.*?){14}(\d+)(</td>)]]></regex>
+				<regex><![CDATA[(<td[\s]align="center">.*?){14}(?<capture>\d+)(</td>)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>takedowns_completed</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(<td[\s]align="center">.*?){14}(\d+)([\s]of)]]></regex>
+				<regex><![CDATA[(<td[\s]align="center">.*?){14}(?<capture>\d+)([\s]of)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>submission_attempts</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(<td[\s]align="center">.*?){16}([^<]+)(</td>)]]></regex>
+				<regex><![CDATA[(<td[\s]align="center">.*?){16}(?<capture>[^<]+)(</td>)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>guard_passes</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(<td[\s]align="center">.*?){17}([^<]+)(</td>)]]></regex>
+				<regex><![CDATA[(<td[\s]align="center">.*?){17}(?<capture>[^<]+)(</td>)]]></regex>
 			</scrape-field>
 			<scrape-field>
 				<name>reversals</name> 
 				<apptype>integer</apptype>
-				<regex><![CDATA[(<td[\s]align="center">.*?){18}([^<]+)(</td>)]]></regex>
+				<regex><![CDATA[(<td[\s]align="center">.*?){18}(?<capture>[^<]+)(</td>)]]></regex>
 			</scrape-field>
 		</rounds-looser>
 
@@ -843,7 +843,7 @@
 		<fighter-details>
 			<pre-process>
 				<extract><![CDATA[<div[\s]class="fighter_details">.+?(?<capture>.*?)<div[\s]class="view_panel">]]></extract>
-				<index-delimiter><![CDATA[\A]]></index-delimiter>
+				<index-delimiter><![CDATA[]]></index-delimiter>
 			</pre-process>
 
 			<scrape-field>

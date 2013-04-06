@@ -1,19 +1,10 @@
 package scraper;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Arrays;
-import java.util.Random;
-
 import settings.Constants;
-import settings.Constants.SourceType;
-import settings.Constants.*;
 import settings.Settings;
-import util.IO;
 import util.Logger;
 import util.Pair;
 import util.WebDiskCache;
@@ -72,16 +63,11 @@ public class ScraperTask extends Task {
 
 	@Override
 	protected void task()   {		
-		Random r = new Random();
-		int sleep = 0;
-		setSourcPaths();
-		
+		setSourcPaths();		
 		Object[][] tempResults;
+		
 		for (int i = 0; i < sourcePaths.length; i++) {
 			String data = "";
-//			sleep = r.nextInt(10000);
-//			Logger.log("Sleeping for " + sleep / 1000 + "s", true);			
-//			Thread.sleep(sleep);
 			try {
 				data = wdc.getPage(new URI("http", "", sourcePaths[i], null));
 			} catch (URISyntaxException e) {
@@ -105,16 +91,11 @@ public class ScraperTask extends Task {
 	}
 	
 	private Object[] setFkeys(Object[] results, Object[] keySource, int flags) {
-//		System.out.println("\tresults before f-key: " + Arrays.deepToString(results));
-		for (int n = 1; n < 31; n++) {
-			//compare to bitmask for column n
-			if ((flags >> n & 1) == 1 ) {
+		for (int n = 1; n < 31; n++) {	//compare to bitmask for column n	
+			if ((flags >> n & 1) == 1 ) { 
 				results = util.Array.insert(results, keySource[n], 1);
-//				System.out.println("inserting f-key: " + n + " : " +  keySource[n]);
-//				System.out.println(Arrays.deepToString(keySource));
 			}
 		}
-//		System.out.println("\tresults after f-key insertion: " + Arrays.deepToString(results));
 		return results;
 	}
 
@@ -125,10 +106,7 @@ public class ScraperTask extends Task {
 			dbSource = db.executePs("get-sources", "sources-size");
 			sourcePaths = Arrays.copyOf(util.Array.getColumn(dbSource, 0), dbSource.length, String[].class);		
 		}
-
-//		System.out.println("task source paths loaded: " + Arrays.deepToString(sourcePaths));	
-	}
-	
+	}	
 }	
 	
 		
