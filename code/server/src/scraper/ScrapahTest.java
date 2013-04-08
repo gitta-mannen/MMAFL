@@ -1,11 +1,23 @@
 package scraper;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
+
 import settings.Constants;
 import settings.Settings;
+import sun.misc.Cleaner;
 import util.Pair;
 import util.WebDiskCache;
 import database.DbHandler;
@@ -15,8 +27,19 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.*;
 
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.htmlcleaner.CleanerProperties;
+import org.htmlcleaner.CleanerTransformations;
+import org.htmlcleaner.HtmlCleaner;
+import org.htmlcleaner.PrettyXmlSerializer;
+import org.htmlcleaner.TagNode;
+import org.htmlcleaner.TagTransformation;
+import org.htmlcleaner.XPatherException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
+import org.w3c.tidy.Tidy;
 
 public class ScrapahTest {
 
@@ -36,12 +59,102 @@ public class ScrapahTest {
 //		testTask();	
 //		tesFiles();	
 //		testURI();
-		testXpath();
+//		testXpath();
 //		testParser();
+//		testTidy();
+//		testCleaner();
+//		testJson();
+		testXscraper();
 		
 //		String[] regexes = Settings.getNodeText("scrapers:" + "fighters-index" + ":scrape-field:regex");
 	}
 	
+	private static void testXscraper() throws FileNotFoundException, Exception {
+//		File file = (new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\fighters\\details\\497.htm"));
+		File file = (new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\events\\index\\date\\asc\\1\\all.htm"));
+		HashMap<String, Object[]> hm = HtmlScraper.scrape(util.WebDiskCache.fileToString(file), new File("event-index.json"));
+		
+		if (hm != null)
+		for (Entry<String, Object[]> entry : hm.entrySet()) {
+			System.out.print(entry.getKey() + " : ");
+			System.out.println(Arrays.deepToString(entry.getValue()));
+		}
+	}
+
+	private static void testJson() {
+		User user = new User();
+		ObjectMapper mapper = new ObjectMapper();
+	 
+		try {
+	 
+			// convert user object to json string, and save to a file
+//			HashMap<String, ScrapeField> hm = new HashMap<String, ScrapeField>();
+//			
+//			hm.put("test a", new ScrapeField("a", "\\d", "//*", "String"));
+//			hm.put("test b", new ScrapeField("b", "\\d", "//*", "String"));
+//			hm.put("test c", new ScrapeField("c", "\\d", "//*", "String"));
+//			
+//			mapper.writeValue(new File("test.json"), new ScraperSetting("foo", hm));
+			ScraperSetting user2 = mapper.readValue(new File("test.json"), ScraperSetting.class);
+			
+			// display to console
+			System.out.println(mapper.writeValueAsString(user2));
+//			System.out.println(user2);
+	 
+		} catch (JsonGenerationException e) {	 
+			e.printStackTrace();
+	 
+		} catch (JsonMappingException e) {	 
+			e.printStackTrace();
+	 
+		} catch (IOException e) {	 
+			e.printStackTrace();
+	 
+		}
+		
+	}
+
+	private static void testCleaner() throws IOException, XPatherException {
+		CleanerProperties props = new CleanerProperties();
+		 
+		// set some properties to non-default values
+		props.setTranslateSpecialEntities(true);
+		props.setTransResCharsToNCR(true);
+		props.setOmitComments(true);
+		props.setOmitDoctypeDeclaration(true);
+
+		
+		HtmlCleaner cleaner = new HtmlCleaner(props);
+		
+		TagNode tagNode = cleaner.clean(new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\fighters\\details\\1.htm")
+			);
+		
+
+		Object[] myNodes = tagNode.evaluateXPath("//table[@class='record_info']/tbody/tr[2]/td[text()>0]/text()");
+		System.out.println(Arrays.deepToString(myNodes));
+		
+		//writes the xml to file
+		new PrettyXmlSerializer(props).writeToFile(
+				tagNode, "test.xml", "utf-8"
+			);
+		
+	}
+
+	private static void testTidy() throws Exception {
+		Tidy tidy = new Tidy();
+		tidy.setMakeClean(true);
+		tidy.setXmlOut( true);
+		tidy.setQuiet(true);
+		tidy.setShowWarnings(false);
+		tidy.setForceOutput(true);
+		tidy.setPrintBodyOnly(false);
+		
+		FileOutputStream fileOutputStream = new FileOutputStream("outXHTML.xml");   
+		File file = (new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\fighters\\details\\1.htm"));
+		Document doc = tidy.parseDOM( new FileInputStream(file), fileOutputStream);
+		
+	}
+
 	public static void testXpath() throws Exception {
 		File file = (new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\fighters\\details\\1.htm"));
 		Document doc  = util.XML.parseXML(file);
@@ -143,7 +256,52 @@ public class ScrapahTest {
 	
 	public static void testParser() throws FileNotFoundException {
 		String text = WebDiskCache.fileToString(new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\fighters\\details\\1.htm"));
-		HtmlParser.parse(text);
+
+	}
+}
+
+class User {
+	 
+	private int age = 29;
+	private String name = "mkyong";
+	private List<String> messages = new ArrayList<String>() {
+		{
+			add("msg 1");
+			add("msg 2");
+			add("msg 3");
+		}
+	};
+ 
+	//getter and setter methods
+ 
+	@Override
+	public String toString() {
+		return "User [age=" + age + ", name=" + name + ", " +
+				"messages=" + messages + "]";
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public List<String> getMessages() {
+		return messages;
+	}
+
+	public void setMessages(List<String> messages) {
+		this.messages = messages;
 	}
 }
 

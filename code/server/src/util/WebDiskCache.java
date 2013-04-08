@@ -99,7 +99,7 @@ public class WebDiskCache {
 	}
 	
 	public static String fileToString(File file) throws FileNotFoundException {	
-		Logger.log("Getting page from disk cache: " + file.getPath(), true);
+//		Logger.log("Getting page from disk cache: " + file.getPath(), true);
 	    @SuppressWarnings("resource")
 		java.util.Scanner s = new java.util.Scanner(file, "ISO-8859-1").useDelimiter("\\A");
 	    return s.hasNext() ? s.next() : "";

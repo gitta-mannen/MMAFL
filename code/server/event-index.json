@@ -1,0 +1,26 @@
+{
+"name":"event-index",
+	"fields":{
+		"name":{"name":"",
+			"regex":"(?<capture>.*)",
+			"xPath":"//div[@class='events_table data_table row_is_link']/table/tbody/tr[position() > 2]/td[1]/text()",
+			"type":"STRING",
+			"required":true,
+			"notEmpty":true
+		},
+		"date":{"name":"",
+			"regex":"(?<capture>\\b[\\w\\s.,\\d]+\\b)",
+			"xPath":"//div[@class='events_table data_table row_is_link']/table/tbody/tr[position() > 2]/td[2]/text()",
+			"type":"DATE",
+			"required":true,
+			"notEmpty":true
+		},
+		"organization":{"name":"",
+			"regex":"(?<capture>.*)",
+			"xPath":"//div[@class='events_table data_table row_is_link']/table/tbody/tr[position() > 2]/td[3]/text()",
+			"type":"STRING",
+			"required":true,
+			"notEmpty":true
+		}
+	}
+}

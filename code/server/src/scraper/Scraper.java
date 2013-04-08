@@ -3,6 +3,7 @@ package scraper;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
@@ -23,11 +24,12 @@ abstract class Scraper {
 		this.name = name;
 		regexes = Settings.getNodeText("scrapers:" + name + ":scrape-field:regex");
 		String[] temp = Settings.getNodeText("scrapers:" + name + ":scrape-field:apptype");
-		types = new AppType[temp.length];
+//		types = new AppType[temp.length];
+		types = Arrays.copyOf(temp, temp.length, AppType[].class);
 		
-		for (int i = 0; i < temp.length; i++) {
-			types[i] = Enum.valueOf(AppType.class, temp[i].toUpperCase());
-		}
+//		for (int i = 0; i < temp.length; i++) {
+//			types[i] = Enum.valueOf(AppType.class, temp[i].toUpperCase());
+//		}
 		
 		if (regexes.length != types.length) {
 			throw new IndexOutOfBoundsException("Each field has to have a type.");
@@ -92,23 +94,30 @@ abstract class Scraper {
 	}
 	
 	// Returns the connotation of all the matched named groups in the given text for the supplied regex.
-	public static String findNamedGroups(String text, String regex) throws Exception {
+	public static String findNamedGroups(String text, String regex) throws ScrapeException {
 		Pattern p = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL);
 		Matcher matcher = p.matcher(text);
 		StringBuilder sb = new StringBuilder();
+		Set<String> namedGroups = null;
+		try {
+			namedGroups = getNamedGroups(p);
+		} catch (Exception e) {
+			throw new ScrapeException("Error while getting named groups", e);
+		}
+
+		if (namedGroups.equals(null) || namedGroups.isEmpty()) {
+			throw new ScrapeException("No named group in regex");
+		}		
 		
 		if (matcher.find() && matcher.groupCount() > 0) {
-			Set<String> groups = getNamedGroups(p);
-			Iterator <String> itGroups = groups.iterator();
-			
-			while (itGroups.hasNext()) {
-				sb.append(matcher.group(itGroups.next()));
+			for (String namedGroup : namedGroups) {
+				sb.append(matcher.group(namedGroup));				
 			}
 			
 			return sb.toString();
 		} else {
 			Logger.log("No match found for regex: " + regex + " group count: " + matcher.groupCount(), false);
-			return "";
+			return null;
 		}
 	}
 	
@@ -137,7 +146,7 @@ abstract class Scraper {
 	    namedGroups = (Map<String, Integer>) namedGroupsMethod.invoke(regex);
 
 	    if (namedGroups == null) {
-	      throw new InternalError();
+	    	throw new InternalError();
 	    }
 
 	    return Collections.unmodifiableMap(namedGroups).keySet();
