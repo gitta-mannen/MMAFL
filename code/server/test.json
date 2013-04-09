@@ -1,0 +1,12 @@
+{
+"name":"test",
+	"fields":{
+		"someField":{"name":"someField",
+			"regex":"(?<capture>.*)",
+			"xPath":"//div[@class='events_table data_table row_is_link']/table/tbody/tr[position() mod 2 = 0]/td[@class='left_border']/following-sibling::*/text()",
+			"type":"STRING",
+			"required":true,
+			"notEmpty":true
+		}
+	}
+}

@@ -40,6 +40,21 @@ public abstract class XML {
 		}				
 	}
 	
+	public static String[] evaluate(XPathExpression expr, Document doc) throws XPathExpressionException {	
+		String[] result;
+		NodeList nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+		
+		if (nodes.getLength() < 1) {
+			return null;
+		} else {
+			result = new String[nodes.getLength()];
+			for (int i = 0; i < nodes.getLength(); i++) {
+			    result[i] = nodes.item(i).getTextContent();
+			}
+			return result;
+		}				
+	}
+	
 	public static Document parseXML (File file) throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setNamespaceAware(true);

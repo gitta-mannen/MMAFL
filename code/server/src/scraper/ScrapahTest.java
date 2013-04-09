@@ -72,12 +72,15 @@ public class ScrapahTest {
 	private static void testXscraper() throws FileNotFoundException, Exception {
 //		File file = (new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\fighters\\details\\497.htm"));
 		File file = (new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\events\\index\\date\\asc\\1\\all.htm"));
-		HashMap<String, Object[]> hm = HtmlScraper.scrape(util.WebDiskCache.fileToString(file), new File("event-index.json"));
+		DocumentScraper ds = new DocumentScraper(new File("test.json"));
+		HashMap<String, Object[]> hm = ds.scrape(util.WebDiskCache.fileToString(file));
 		
-		if (hm != null)
-		for (Entry<String, Object[]> entry : hm.entrySet()) {
-			System.out.print(entry.getKey() + " : ");
-			System.out.println(Arrays.deepToString(entry.getValue()));
+		if (hm != null) {
+			for (Entry<String, Object[]> entry : hm.entrySet()) {
+				System.out.println(entry.getKey() + " : " + entry.getValue().length + " : ");
+				for(Object o : entry.getValue())
+				System.out.println(o == null ? "-" : o.toString());
+			}
 		}
 	}
 
@@ -125,13 +128,13 @@ public class ScrapahTest {
 
 		
 		HtmlCleaner cleaner = new HtmlCleaner(props);
+		File file = (new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\events\\index\\date\\asc\\1\\all.htm"));
 		
-		TagNode tagNode = cleaner.clean(new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\fighters\\details\\1.htm")
-			);
+		TagNode tagNode = cleaner.clean(file);		
 		
 
-		Object[] myNodes = tagNode.evaluateXPath("//table[@class='record_info']/tbody/tr[2]/td[text()>0]/text()");
-		System.out.println(Arrays.deepToString(myNodes));
+//		Object[] myNodes = tagNode.evaluateXPath("//table[@class='record_info']/tbody/tr[2]/td[text()>0]/text()");
+//		System.out.println(Arrays.deepToString(myNodes));
 		
 		//writes the xml to file
 		new PrettyXmlSerializer(props).writeToFile(
@@ -190,7 +193,7 @@ public class ScrapahTest {
 	}
 	
 	public static void testTask() throws Exception {
-		new ScraperTask("event-details-fights", new Scraper[]{new FMScraper("event-details"), new FMScraper("fights")}).doTask();
+		new OldScraperTask("event-details-fights", new Scraper[]{new FMScraper("event-details"), new FMScraper("fights")}).doTask();
 //		new ScraperTask("fighters-index", new Scraper[]{new FMScraper("fighters-index")}).doTask();
 //		new DataTask("compare-fighters").doTask();
 //		new ScraperTask("fighter-details", new Scraper[]{new FMScraper("fighter-details")}).doTask();

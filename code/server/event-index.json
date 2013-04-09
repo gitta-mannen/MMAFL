@@ -3,24 +3,38 @@
 	"fields":{
 		"name":{"name":"",
 			"regex":"(?<capture>.*)",
-			"xPath":"//div[@class='events_table data_table row_is_link']/table/tbody/tr[position() > 2]/td[1]/text()",
+			"xPath":"//div[@class='events_table data_table row_is_link']/table/tbody/tr[position() > 2]/td[@class='left_border']/a[1]text()",
 			"type":"STRING",
 			"required":true,
 			"notEmpty":true
 		},
 		"date":{"name":"",
-			"regex":"(?<capture>\\b[\\w\\s.,\\d]+\\b)",
-			"xPath":"//div[@class='events_table data_table row_is_link']/table/tbody/tr[position() > 2]/td[2]/text()",
+			"regex":"(?<capture>.*)",
+			"xPath":"//div[@class='events_table data_table row_is_link']/table/tbody/tr[position() > 2]/td[2]/nobr[1]text()",
 			"type":"DATE",
 			"required":true,
 			"notEmpty":true
 		},
 		"organization":{"name":"",
 			"regex":"(?<capture>.*)",
-			"xPath":"//div[@class='events_table data_table row_is_link']/table/tbody/tr[position() > 2]/td[3]/text()",
+			"xPath":"//div[@class='events_table data_table row_is_link']/table/tbody/tr[position() > 2]/td[3]text()[1]",
+			"type":"STRING",
+			"required":true,
+			"notEmpty":false
+		},
+		"id":{"name":"",
+			"regex":"[details/](?<capture>\\d+)",
+			"xPath":"//div[@class='events_table data_table row_is_link']/table/tbody/tr[position() > 2]/td[1]/a/@href[1]",
 			"type":"STRING",
 			"required":true,
 			"notEmpty":true
+		},
+		"location":{"name":"",
+			"regex":"(?<capture>.*)",
+			"xPath":"//div[@class='events_table data_table row_is_link']/table/tbody/tr[position() > 2]/td[last()]text()",
+			"type":"STRING",
+			"required":true,
+			"notEmpty":false
 		}
 	}
 }
