@@ -21,6 +21,25 @@ public abstract class Array {
 		return result;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public static <K> K[][] transpose(K[][] inMatrix, int rows) {
+		int cols = inMatrix.length;	
+		K[][] result = (K[][]) java.lang.reflect.Array.newInstance(Object[].class, rows); 
+
+		for (int row = 0; row < rows; row++) {
+			result[row] = (K[]) java.lang.reflect.Array.newInstance(Object.class, cols); 
+			for (int col = 0; col < cols; col++) {
+				if (inMatrix[col].length != rows) {
+					throw new IndexOutOfBoundsException("the column count for the in matrix " +
+							"must match the row count for the result array on each row in the matrix." +
+							"Matrix row: " + col + " count of: " + inMatrix[col].length + " , should be: " + rows);
+				}
+				result[row][col] = (inMatrix[col][row]);
+			}
+		}
+		return result;
+	}
+	
 	/**
 	 * Inserts an element at the top or bottom of an array.
 	 * @param a - The array 

@@ -1,36 +1,30 @@
 package scraper;
 
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-
 import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 class ScrapeField {
+	public final int id;
 	public final String name, regex, type, formatString;
-	public final boolean required, notEmpty;
-	public XPathExpression xPath;
-	private String xPathString;
-	
+	public final boolean required, notEmpty, concat;
+	public final String xPath;
 	
 	@JsonCreator
 	public ScrapeField(@JsonProperty("name") String name, @JsonProperty("regex") String regex, 
 					   @JsonProperty("xPath") String xPath, @JsonProperty("type") String type,
 					   @JsonProperty("formatString") String formatString,
-					   @JsonProperty("required") boolean required, @JsonProperty("notEmpty") boolean notEmpty) throws XPathExpressionException {
+					   @JsonProperty("id") int id,
+					   @JsonProperty("required") boolean required, @JsonProperty("notEmpty") boolean notEmpty,
+					   @JsonProperty("concat") boolean concat) {
 		super();
 		this.name = name;
 		this.regex = regex;
-		this.xPathString = xPath;
+		this.xPath = xPath;
 		this.type = type;
 		this.required = required;
 		this.notEmpty = notEmpty;
 		this.formatString = formatString;		
-		
-		XPathFactory xfactory = XPathFactory.newInstance();
-		XPath xpath = xfactory.newXPath();
-		this.xPath = xpath.compile(this.xPathString);	
+		this.id = id;
+		this.concat = concat;		
 	}		
 }

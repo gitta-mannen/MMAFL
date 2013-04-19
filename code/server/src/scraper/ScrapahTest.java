@@ -9,15 +9,23 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeSet;
 import java.util.Map.Entry;
+import java.util.regex.Pattern;
 
 import settings.Constants;
 import settings.Settings;
 import sun.misc.Cleaner;
+import util.TableDataAdapter;
 import util.Pair;
 import util.WebDiskCache;
 import database.DbHandler;
@@ -65,43 +73,87 @@ public class ScrapahTest {
 //		testCleaner();
 //		testJson();
 		testXscraper();
+//		testChain();
+//		testTable();
+//		testFormat();
 		
 //		String[] regexes = Settings.getNodeText("scrapers:" + "fighters-index" + ":scrape-field:regex");
 	}
 	
+	private static void testFormat() {
+		String sql = "INSERT OR REPLACE INTO tmp_events (%s) VALUES (%s)";
+		LinkedHashMap<String, Object[]> results = new LinkedHashMap<String, Object[]>();
+		HashSet<String> fKeys = new HashSet<String>();
+		results.put("a-result", new Object[0]);
+		results.put("c-result", new Object[0]);
+		results.put("b-result", new Object[0]);
+		fKeys.add("b-fkey");
+		fKeys.add("a-fkey");
+		
+		LinkedList<String> cols = new LinkedList<String>(results.keySet());
+		cols.addAll(fKeys);
+		String colsList = cols.toString().replaceAll("[\\[\\]]", "");
+		String paramsList =  new String(new char[cols.size()]).replace("\0", "?").replaceAll("\\?(?!$)", "?, ");
+		
+		System.out.println(String.format(sql, colsList, paramsList));
+		
+	}
+
+	private static void testTable() {
+		TableDataAdapter dt = new TableDataAdapter(4);
+		dt.addRow(new Object[]{00,01,02,03});
+		dt.addRow(new Object[]{10,11,12,13});
+		dt.addRow(new Object[]{20,21,22,23});
+		dt.addRow(new Object[]{30,31,32,33});
+		dt.addRow(new Object[]{40,41,42,43});
+		
+		System.out.println("row 2: " + Arrays.deepToString(dt.getRow(2)));
+		System.out.println("col 2: " + Arrays.deepToString(dt.getCol(2)));
+		System.out.println("item 3,3 : " + dt.getItem(3, 3));
+	}
+
+	private static void testChain() {
+		new TaskChain().run();
+		
+	}
+
 	private static void testXscraper() throws FileNotFoundException, Exception {
-//		File file = (new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\fighters\\details\\497.htm"));
-		File file = (new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\events\\index\\date\\asc\\1\\all.htm"));
-		DocumentScraper ds = new DocumentScraper(new File("test.json"));
-		HashMap<String, Object[]> hm = ds.scrape(util.WebDiskCache.fileToString(file));
+		File file = (new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\fights\\index\\158.htm"));
+//		File file = (new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\events\\details\\8.htm"));
+//		File file = (new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\events\\index\\date\\asc\\1\\all.htm"));
+		ScraperSetting ss = new ObjectMapper().readValue(new File("fight-details.json"), ScraperSetting.class);					
+		Document doc = util.XML.getCleanDOM(util.WebDiskCache.fileToString(file));
+		DocumentScraper ds = new DocumentScraper(ss);
+		HashMap<String, Object[]> hm = ds.scrape(doc);
 		
 		if (hm != null) {
 			for (Entry<String, Object[]> entry : hm.entrySet()) {
-				System.out.println(entry.getKey() + " : " + entry.getValue().length + " : ");
+				System.out.print(entry.getKey() + " ");// + entry.getValue().length + " : ");
 				for(Object o : entry.getValue())
-				System.out.println(o == null ? "-" : o.toString());
+				System.out.println(o == null ? "-" : ">>> " + o.toString());
 			}
 		}
 	}
 
-	private static void testJson() {
+	private static void testJson() throws SQLException, URISyntaxException {
 		User user = new User();
 		ObjectMapper mapper = new ObjectMapper();
 	 
 		try {
-	 
-			// convert user object to json string, and save to a file
-//			HashMap<String, ScrapeField> hm = new HashMap<String, ScrapeField>();
-//			
-//			hm.put("test a", new ScrapeField("a", "\\d", "//*", "String"));
-//			hm.put("test b", new ScrapeField("b", "\\d", "//*", "String"));
-//			hm.put("test c", new ScrapeField("c", "\\d", "//*", "String"));
-//			
-//			mapper.writeValue(new File("test.json"), new ScraperSetting("foo", hm));
-			ScraperSetting user2 = mapper.readValue(new File("test.json"), ScraperSetting.class);
+			URI host = new URI ("http", "hosteddb.fightmetric.com", "", null);
+			WebDiskCache wdc = new WebDiskCache(host, Constants.WEB_ROOT, WebDiskCache.NEVER_EXPIRES);
+			ScraperSetting ss = new ObjectMapper().readValue(new File("events-index.json"), ScraperSetting.class);						
+			String sql = "INSERT OR REPLACE INTO tmp_events (%s) VALUES (%s)";			
+			LinkedHashMap<String, Object> fKeys = new LinkedHashMap<String, Object>();			
+			fKeys.put("completed", 0);			
+//			ScraperTask upcoming = new ScraperTask(ss, sql, new LinkedList<String>(fKeys.keySet()), wdc, new DbHandler());			
+			TaskSetting ts = new TaskSetting("test", ss, sql, new HashSet<String>(Arrays.asList(new String[]{"id"})));
+			
+			mapper.writeValue(new File("test.json"), ts);
+//			ScraperSetting user2 = mapper.readValue(new File("test.json"), ScraperSetting.class);
 			
 			// display to console
-			System.out.println(mapper.writeValueAsString(user2));
+//			System.out.println(mapper.writeValueAsString(user2));
 //			System.out.println(user2);
 	 
 		} catch (JsonGenerationException e) {	 
@@ -159,10 +211,11 @@ public class ScrapahTest {
 	}
 
 	public static void testXpath() throws Exception {
-		File file = (new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\fighters\\details\\1.htm"));
-		Document doc  = util.XML.parseXML(file);
-		String[] result = util.XML.getPathText("//table[@class='record_info']/tr[1]/td/text()", doc);
-		System.out.println(Arrays.deepToString(result));
+//		File file = (new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\fighters\\details\\1.htm"));
+//		Document doc  = util.XML.parseXML(file);
+		String[] sql = util.XML.getPathText("//database/prepared-statements/insert-events-index/text()", Settings.getSettings());
+		
+		System.out.println(Arrays.deepToString(sql));
 	}
 	
 	public static void testURI() throws Exception {
@@ -249,11 +302,12 @@ public class ScrapahTest {
 //		System.out.println(text);
 		
 		String regex = Settings.getNodeText("scrapers:fighter-details:pre-process:extract")[0];
+		Pattern p = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL);
 //		Matcher matcher = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL).matcher(text);	
 //		matcher.find();
 //		System.out.println(matcher.group("data"));
 		
-		String result2 = Scraper.findNamedGroups(text, regex);
+		String result2 = DocumentScraper.findNamedGroups(text, p);
 		System.out.println(result2);
 	}
 	
@@ -307,4 +361,5 @@ class User {
 		this.messages = messages;
 	}
 }
+
 

@@ -1,12 +1,1 @@
-{
-"name":"test",
-	"fields":{
-		"someField":{"name":"someField",
-			"regex":"(?<capture>.*)",
-			"xPath":"//div[@class='events_table data_table row_is_link']/table/tbody/tr[position() mod 2 = 0]/td[@class='left_border']/following-sibling::*/text()",
-			"type":"STRING",
-			"required":true,
-			"notEmpty":true
-		}
-	}
-}
+{"name":"test","sql":"INSERT OR REPLACE INTO tmp_events (%s) VALUES (%s)","fKeys":["id"],"ss":{"name":"events-index","fields":{"id":{"name":"id","regex":"(?<capture>\\d+)","xPath":"//div[@class='events_table data_table row_is_link']/table/tbody/tr/td[@class='left_border']/a/@href[1]","type":"INTEGER","formatString":null,"id":0,"required":true,"notEmpty":true,"concat":false,"compiledPath":null},"scrape_branch":{"name":"scrape_branch","regex":"","xPath":"//div[@class='events_table data_table row_is_link']/table/tbody/tr/td[@class='left_border']/a/@href[1]","type":"STRING","formatString":null,"id":0,"required":true,"notEmpty":true,"concat":false,"compiledPath":null}}}}

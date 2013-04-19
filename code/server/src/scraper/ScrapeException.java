@@ -3,9 +3,31 @@ package scraper;
 public class ScrapeException extends Exception {
 	private static final long serialVersionUID = 1L;
 	ScrapeField sf;
+
+	@Override
+	public String getMessage() {
+		if (sf != null) {
+			return "Exception while parsing field " + sf.name + ":\n" +
+					super.getMessage();
+		} else {
+			return super.getMessage();
+		}
+	}
 	
 	public ScrapeException(String message) {
 		super(message);
+	}
+
+	public ScrapeException(String message, ScrapeField sf, String[] fieldTextNodes) {
+		super(message);
+	}
+
+	public ScrapeException(Throwable cause, ScrapeField sf, String[] fieldTextNodes) {
+		super(cause);
+	}
+	
+	public ScrapeException(Throwable cause, ScrapeField sf) {
+		super(cause);
 	}
 	
 	public ScrapeException(String message, Throwable cause, ScrapeField sf) {
@@ -20,18 +42,15 @@ public class ScrapeException extends Exception {
 
 	public ScrapeException(Throwable cause) {
 		super(cause);
-		// TODO Auto-generated constructor stub
 	}
 
 	public ScrapeException(String message, Throwable cause) {
 		super(message, cause);
-		// TODO Auto-generated constructor stub
 	}
 
 	public ScrapeException(String message, Throwable cause,
 			boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
-		// TODO Auto-generated constructor stub
 	}
 
 }

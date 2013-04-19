@@ -9,7 +9,7 @@ import util.Logger;
 import util.Pair;
 import util.WebDiskCache;
 
-public class OldScraperTask extends Task {		
+public class OldScraperTask extends OldTask {		
 	private final boolean isConstSource;	
 	private final Scraper[] scrapers;		
 	private final WebDiskCache wdc;	
@@ -28,7 +28,7 @@ public class OldScraperTask extends Task {
 		constPath = Settings.getNodeText("scrape-tasks:" + name + ":data-source:const-path")[0];
 		isConstSource = Boolean.parseBoolean(Settings.getNodeText("scrape-tasks:" + name + ":data-source:const-source")[0]);
 		
-		wdc = new WebDiskCache(host, Constants.WEB_ROOT, WebDiskCache.CACHE_MODE_DEBUG);
+		wdc = new WebDiskCache(host, Constants.WEB_ROOT, WebDiskCache.NEVER_EXPIRES);
 		
 		scraperFlags = new int[scrapers.length];
 		compileStatements();

@@ -1,13 +1,8 @@
 package scraper;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -69,7 +64,7 @@ abstract class Scraper {
 	public static String[] parseFirst(String text, String[] regexes) throws Exception {
 		String[] results = new String[regexes.length];				
 		for (int i = 0; i < regexes.length; i++) {
-			results[i] = findNamedGroups(text, regexes[i]);					
+			results[i] = DocumentScraper.findNamedGroups(text, regexes[i]);					
 		}		
 		return results;
 	}	
@@ -92,64 +87,5 @@ abstract class Scraper {
 			return "";
 		}
 	}
-	
-	// Returns the connotation of all the matched named groups in the given text for the supplied regex.
-	public static String findNamedGroups(String text, String regex) throws ScrapeException {
-		Pattern p = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL);
-		Matcher matcher = p.matcher(text);
-		StringBuilder sb = new StringBuilder();
-		Set<String> namedGroups = null;
-		try {
-			namedGroups = getNamedGroups(p);
-		} catch (Exception e) {
-			throw new ScrapeException("Error while getting named groups", e);
-		}
-
-		if (namedGroups.equals(null) || namedGroups.isEmpty()) {
-			throw new ScrapeException("No named group in regex");
-		}		
-		
-		if (matcher.find() && matcher.groupCount() > 0) {
-			for (String namedGroup : namedGroups) {
-				sb.append(matcher.group(namedGroup));				
-			}
-			
-			return sb.toString();
-		} else {
-			Logger.log("No match found for regex: " + regex + " group count: " + matcher.groupCount(), false);
-			return null;
-		}
-	}
-	
-	/**
-	 * Gets the named groups of a given pattern.
-	 * The method accomplishes this by using reflection to access a
-	 * 	 private method of the Pattern class.  
-	 * @param regex
-	 * @return Set of the names of the named groups in the given Pattern.
-	 * @throws NoSuchMethodException
-	 * @throws SecurityException
-	 * @throws IllegalAccessException
-	 * @throws IllegalArgumentException
-	 * @throws InvocationTargetException
-	 */
-	@SuppressWarnings("unchecked")
-	  private static Set<String> getNamedGroups(Pattern regex)
-	      throws NoSuchMethodException, SecurityException,
-	             IllegalAccessException, IllegalArgumentException,
-	             InvocationTargetException {
-
-	    Method namedGroupsMethod = Pattern.class.getDeclaredMethod("namedGroups");
-	    namedGroupsMethod.setAccessible(true);
-
-	    Map<String, Integer> namedGroups = null;
-	    namedGroups = (Map<String, Integer>) namedGroupsMethod.invoke(regex);
-
-	    if (namedGroups == null) {
-	    	throw new InternalError();
-	    }
-
-	    return Collections.unmodifiableMap(namedGroups).keySet();
-	  }
 
 }

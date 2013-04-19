@@ -40,6 +40,10 @@ public class Settings {
 		}	
 	}
 	
+	public static Document getSettings() {
+		return Settings.settings;
+	}
+	
 	@Deprecated
 	public static String[] getNodeText(String qualifier) {
 		List<Node> temp = getNodes(qualifier);

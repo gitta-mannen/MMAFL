@@ -13,18 +13,23 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-public class WebDiskCache {
-	public static final int CACHE_MODE_DEBUG = 1;
-	public static final int CACHE_MODE_OFF = 2;
-	public static final int CACHE_MODE_INSERTONLY = 4;
-	public static final int CACHE_MODE_OFFLINE = 8;
+//@todo
+// add the missing cache options
+// the getPage method should take an URI that includes host and path. It should also take (long) maxAge.
+//flags override each other if set simultaneously so could just as well be an Enum.
+public class WebDiskCache {	
+	public static final int NEVER_EXPIRES = 1; //always fetch from cache if available, otherwise from web
+	public static final int BYPASS_CACHE = 2; // only fetch from web, don't cache
+	public static final int ALWAYS_EXPIRES = 4; //only fetch from disk web, cache to disk
+	public static final int OFFLINE = 8; //only fetch from disk
+	public static final int ONLINE = 16; //only fetch stale pages (> maxAge) from web, otherwise from disk
 	private final URI host;
 	private final File fileRoot;
 	private final String defualtExtension = ".htm";
 	private final int flags;
 		
 	public WebDiskCache (URI host, URI fileRoot) throws MalformedURLException {
-		this(host, fileRoot, CACHE_MODE_DEBUG);		
+		this(host, fileRoot, NEVER_EXPIRES);		
 	}
 	
 	public WebDiskCache (URI host, URI fileRoot, int flags) throws MalformedURLException{
@@ -43,7 +48,7 @@ public class WebDiskCache {
 		return (flags & flag) == flag;
 	}	
 	
-	public String getPage(URI webPath) throws Exception {
+	public String getPage(URI webPath) throws URISyntaxException, IOException   {
 		URI filePath = new URI(host.getHost() + addExtension(webPath).getPath() );
 		File file = new File(fileRoot.toURI().resolve(filePath.getPath()));
 		
@@ -52,16 +57,16 @@ public class WebDiskCache {
 			file.getParentFile().mkdirs();
 		}
 		
-		if (checkFlag(CACHE_MODE_DEBUG)) {
+		if (checkFlag(NEVER_EXPIRES)) {
 			if (exists) {
 				return fileToString(file);
 			} else {
 				return cachePage(webPath, file);
 			}			
-		} else if (checkFlag(CACHE_MODE_INSERTONLY)) {
+		} else if (checkFlag(ALWAYS_EXPIRES)) {
 			return cachePage(webPath, file);
 		} else {
-			throw new Exception("flag not recognized");
+			throw new IllegalArgumentException("no flag set");
 		}			
 	}
 	

@@ -28,7 +28,7 @@ public class FMScraper extends Scraper {
 	@Override
 	protected String[] preProcess(String text) throws Exception {
 		if (!extract.equals("")) {
-			text = Scraper.findNamedGroups(text, extract);
+			text = DocumentScraper.findNamedGroups(text, extract);
 		} 
 		
 		if (!delimiter.equals("")) {

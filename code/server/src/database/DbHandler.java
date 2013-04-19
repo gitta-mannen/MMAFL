@@ -52,10 +52,16 @@ public class DbHandler {
 			Logger.log(e, true);
 		}
 	}
+
+	public String addStatement (String st) throws SQLException {
+		String name =  String.valueOf(ps.size() + 1);
+		return addStatement(new Pair<String, String>(name, st));
+	}
 	
-	public void addStatement (Pair<String, String> s) throws SQLException {
+	public String addStatement (Pair<String, String> s) throws SQLException {
 		ps.put(s.getA(), connection.prepareStatement( s.getB()) );
 		Logger.log("adding statement: " + s.getA() + " -> " + s.getB(), false);
+		return s.getA();
 	}
 	
 	public static void buildTables(boolean replace) {
@@ -158,6 +164,46 @@ public class DbHandler {
 		return null;
 	}
 	
+	public Object[][] executePquery (String stName) throws SQLException {
+		return executePquery (stName, null);
+	}
+	
+	public Object[][] executePquery (String stName, Object[] params) throws SQLException {
+		PreparedStatement s = ps.get(stName);
+		if (s == null) {
+			throw new SQLException("prepared statement " + stName + " not found.");
+		} 
+		
+		int pCount = s.getParameterMetaData().getParameterCount();
+		if (pCount != 0) {
+			if (params != null && pCount == params.length) {
+				for (int i = 1; i <= params.length; i++) {
+					s.setObject(i, params[i-1]);
+				}					
+			} else {
+				throw new SQLException("Wrong number of params in : " + params.length + " ,should be: " 
+						+ s.getParameterMetaData().getParameterCount() + " ,in prepared statement: " + stName);
+			}
+		}
+		
+		ResultSet rs = s.executeQuery();
+		int colCount = rs.getMetaData().getColumnCount();
+		LinkedList<Object[]> result = new LinkedList<Object[]>();
+		int row = 0;
+				
+		while (rs.next()) {
+			Object[] curRow = new Object[colCount];
+			for(int col = 0; col < colCount; col++) {
+				curRow[col] = rs.getObject(col + 1);
+			}
+			
+			result.add(curRow);
+		}		
+		
+		return result.toArray(new Object[result.size()][]);
+	}
+	
+	
 	private Object[][] resultSetToArray (ResultSet rs, ResultSet size) throws SQLException {				
 		ResultSetMetaData meta = rs.getMetaData();			
 		int colCount = meta.getColumnCount();
@@ -173,6 +219,7 @@ public class DbHandler {
 			for(int col = 0; col < colCount; col++) {
 				resultArray[row][col] = rs.getObject(col + 1);
 			}
+			
 			row++;
 		}		
 		

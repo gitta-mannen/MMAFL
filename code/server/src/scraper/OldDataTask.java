@@ -5,10 +5,10 @@ import java.sql.SQLException;
 import settings.Settings;
 import util.Pair;
 
-public class DataTask extends Task {
+public class OldDataTask extends OldTask {
 	private int stCount;
 	
-	public DataTask(String name) throws SQLException, Exception {
+	public OldDataTask(String name) throws SQLException, Exception {
 		super(name);
 		compileStatements();
 	}

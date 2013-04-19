@@ -1,28 +1,17 @@
 package scraper;
 
-import java.sql.SQLException;
-import database.DbHandler;
+import java.util.List;
+import java.util.Map;
+import org.w3c.dom.Document;
 
-public abstract class Task {
-	protected final String name;
-	protected final DbHandler db;
+public interface Task {
+	void chainSameSource(Task task);
 	
-	public Task (String name) throws SQLException, Exception {
-		this.name = name;
-		db = new DbHandler();		
-	}
-
-	protected String getName () {
-		return name;
-	}
+	void chainLinkedSource(Task task);
 	
-	protected void doTask() throws Exception {		
-		db.setAutoCommit(false);
-		task();
-		db.setAutoCommit(true);
-		db.close();
-	}
+	void doTask(Document doc, Map<String, Object>fKeys);
 	
-	protected abstract void compileStatements() throws SQLException, Exception;	
-	protected abstract void task() throws Exception;
+	void doTask(String uri, Map<String, Object>fKeys);
+	
+	List<String> getFkeyLables();
 }

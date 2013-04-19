@@ -1,0 +1,33 @@
+{
+"name":"completed-fights-index",
+	"fields":{
+		"id":{"name":"id",
+			"regex":"(?<capture>\\d+)",
+			"xPath":"//table[@class='data_table row_is_link']/tbody/tr[position() mod 2 = 0]/td[@*]/a[@class='arrow']/@href[1]",
+			"type":"INTEGER",
+			"required":true,
+			"notEmpty":true
+		},
+		"fighter_a_id":{"name":"fighter_a_id",
+			"regex":"(?<capture>\\d+)",
+			"xPath":"//table[@class='data_table row_is_link']/tbody/tr[position() mod 2 = 0]/td[@*]/following-sibling::td[2]/a/@href[1]",
+			"type":"INTEGER",
+			"required":true,
+			"notEmpty":true
+		},
+		"fighter_b_id":{"name":"fighter_b_id",
+			"regex":"(?<capture>\\d+)",
+			"xPath":"//table[@class='data_table row_is_link']/tbody/tr[position() mod 2 = 1]/td/a/@href[1]",
+			"type":"INTEGER",
+			"required":true,
+			"notEmpty":true
+		},
+		"scrape_branch":{"name":"scrape_branch",
+			"regex":"",
+			"xPath":"//table[@class='data_table row_is_link']/tbody/tr[position() mod 2 = 0]/td[@*]/a[@class='arrow']/@href[1]",
+			"type":"STRING",
+			"required":true,
+			"notEmpty":true
+		}
+	}
+}
