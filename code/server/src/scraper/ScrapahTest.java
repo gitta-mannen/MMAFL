@@ -18,6 +18,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeSet;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
@@ -64,7 +65,7 @@ public class ScrapahTest {
 //		testScraper();
 //		testRegex();	
 //		testFlags();	
-//		testTask();	
+		testTask();	
 //		tesFiles();	
 //		testURI();
 //		testXpath();
@@ -72,10 +73,11 @@ public class ScrapahTest {
 //		testTidy();
 //		testCleaner();
 //		testJson();
-		testXscraper();
+//		testXscraper();
 //		testChain();
 //		testTable();
 //		testFormat();
+
 		
 //		String[] regexes = Settings.getNodeText("scrapers:" + "fighters-index" + ":scrape-field:regex");
 	}
@@ -121,7 +123,7 @@ public class ScrapahTest {
 		File file = (new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\fights\\index\\158.htm"));
 //		File file = (new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\events\\details\\8.htm"));
 //		File file = (new File("E:\\projekt\\MMAFL\\code\\server\\www\\hosteddb.fightmetric.com\\events\\index\\date\\asc\\1\\all.htm"));
-		ScraperSetting ss = new ObjectMapper().readValue(new File("fight-details.json"), ScraperSetting.class);					
+		ScraperSetting ss = new ObjectMapper().readValue(new File("res/scrapers/fight-rounds.json"), ScraperSetting.class);					
 		Document doc = util.XML.getCleanDOM(util.WebDiskCache.fileToString(file));
 		DocumentScraper ds = new DocumentScraper(ss);
 		HashMap<String, Object[]> hm = ds.scrape(doc);
@@ -147,9 +149,9 @@ public class ScrapahTest {
 			LinkedHashMap<String, Object> fKeys = new LinkedHashMap<String, Object>();			
 			fKeys.put("completed", 0);			
 //			ScraperTask upcoming = new ScraperTask(ss, sql, new LinkedList<String>(fKeys.keySet()), wdc, new DbHandler());			
-			TaskSetting ts = new TaskSetting("test", ss, sql, new HashSet<String>(Arrays.asList(new String[]{"id"})));
-			
-			mapper.writeValue(new File("test.json"), ts);
+//			TaskSetting ts = new TaskSetting("test", ss, sql, new HashSet<String>(Arrays.asList(new String[]{"id"})), true);
+//			
+//			mapper.writeValue(new File("res/tasks/test_task.json"), ts);
 //			ScraperSetting user2 = mapper.readValue(new File("test.json"), ScraperSetting.class);
 			
 			// display to console
@@ -246,12 +248,45 @@ public class ScrapahTest {
 	}
 	
 	public static void testTask() throws Exception {
-		new OldScraperTask("event-details-fights", new Scraper[]{new FMScraper("event-details"), new FMScraper("fights")}).doTask();
-//		new ScraperTask("fighters-index", new Scraper[]{new FMScraper("fighters-index")}).doTask();
-//		new DataTask("compare-fighters").doTask();
-//		new ScraperTask("fighter-details", new Scraper[]{new FMScraper("fighter-details")}).doTask();
+		URI host = new URI ("http", "hosteddb.fightmetric.com", "", null);
+		WebDiskCache wdc = new WebDiskCache(host, Constants.WEB_ROOT, WebDiskCache.NEVER_EXPIRES);
+		ObjectMapper mapper = new ObjectMapper();
+		DbHandler db = new DbHandler();
+		
+		TaskSetting ts = mapper.readValue(new File("res/tasks/events-index.json"), TaskSetting.class);;
+		ScraperTask st = new ScraperTask(ts, wdc, db);
+		
+		db.setAutoCommit(false);
+		Map <String, Object> fk = new HashMap<String, Object>();
+		fk.put("completed", 1);				
+		st.doTask("/events/index/date/asc/1/all.htm", fk);		
+		fk.put("completed", 0);
+		st.doTask("/events/index/date/asc/0/all.htm", fk);
+		db.commit();
+		
+		// compare events
+		String sqlCompare = util.XML.getPathText("//compare-events/prepared-statement/text()", Settings.getSettings())[0];
+		String stCompare = db.addStatement(sqlCompare);
+		db.executePs(stCompare);
+		
+		TaskSetting ts2 = mapper.readValue(new File("res/tasks/completed-events-details.json"), TaskSetting.class);
+		ScraperTask st2 = new ScraperTask(ts2, wdc, db);
+		TaskSetting ts3 = mapper.readValue(new File("res/tasks/completed-fights-index.json"), TaskSetting.class);
+		ScraperTask st3 = new ScraperTask(ts3, wdc, db);
+		TaskSetting ts4 = mapper.readValue(new File("res/tasks/completed-fights-details.json"), TaskSetting.class);
+		ScraperTask st4 = new ScraperTask(ts4, wdc, db);
+		TaskSetting ts5 = mapper.readValue(new File("res/tasks/fight-rounds-a.json"), TaskSetting.class);
+		ScraperTask st5 = new ScraperTask(ts5, wdc, db);
+		TaskSetting ts6 = mapper.readValue(new File("res/tasks/fight-rounds-b.json"), TaskSetting.class);
+		ScraperTask st6 = new ScraperTask(ts6, wdc, db);
+		st2.chainTask(st3, ScraperTask.CHAIN_SAME);
+		st3.chainTask(st4, ScraperTask.CHAIN_RESOLVED);
+		st4.chainTask(st5, ScraperTask.CHAIN_SAME);
+		st4.chainTask(st6, ScraperTask.CHAIN_SAME);
+		RootTask rt = new RootTask(st2, wdc, db);
+		rt.doTask("events", "scrape_branch", "event_id", "completed = 1 AND event_updated = 0");					
 	}
-	
+
 	public static void testFlags() {
 		int rows[] = {0};
 		int rowFlag = 0;

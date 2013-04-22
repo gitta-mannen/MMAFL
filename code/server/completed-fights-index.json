@@ -1,7 +1,7 @@
 {
 "name":"completed-fights-index",
 	"fields":{
-		"id":{"name":"id",
+		"id":{"name":"event_id",
 			"regex":"(?<capture>\\d+)",
 			"xPath":"//table[@class='data_table row_is_link']/tbody/tr[position() mod 2 = 0]/td[@*]/a[@class='arrow']/@href[1]",
 			"type":"INTEGER",

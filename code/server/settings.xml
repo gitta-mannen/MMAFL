@@ -6,9 +6,9 @@
 		<tables>
 			<table>events</table> 
 			<events>
-				<primary-key><![CDATA[id]]></primary-key>
+				<primary-key><![CDATA[event_id]]></primary-key>
 				<column>
-					<name>id</name>
+					<name>event_id</name>
 					<dbtype>integer</dbtype>
 				</column>
 				<column>
@@ -36,7 +36,7 @@
 					<dbtype>integer</dbtype>
 				</column>
 				<column>
-					<name>child_url</name>
+					<name>scrape_branch</name>
 					<dbtype>text</dbtype>
 				</column>
 				<column>
@@ -47,9 +47,9 @@
 
 			<table>tmp_events</table>
 			<tmp_events>
-				<primary-key><![CDATA[id]]></primary-key>
+				<primary-key><![CDATA[event_id]]></primary-key>
 				<column>
-					<name>id</name>
+					<name>event_id</name>
 					<dbtype>integer</dbtype>
 				</column>
 				<column>
@@ -64,13 +64,13 @@
 
 			<table>fights</table>
 			<fights>
-				<primary-key><![CDATA[id]]></primary-key>
+				<primary-key><![CDATA[fight_id]]></primary-key>
 				<column>
 					<name>event_id</name>
 					<dbtype>integer</dbtype>
 				</column>
 				<column>
-					<name>id</name>
+					<name>fight_id</name>
 					<dbtype>integer</dbtype>
 				</column>
 				<column>
@@ -480,11 +480,11 @@
 	<data-tasks>
 		<compare-events>			
 			<prepared-statement><![CDATA[INSERT OR REPLACE INTO events 
-				SELECT tmp_events.id AS id, null AS name, null AS date, null AS organization, null AS location, null AS attendance, tmp_events.completed AS completed, tmp_events.scrape_branch AS child_url, 0 AS event_updated
+				SELECT tmp_events.event_id AS event_id, null AS name, null AS date, null AS organization, null AS location, null AS attendance, tmp_events.completed AS completed, tmp_events.scrape_branch AS child_url, 0 AS event_updated
 				FROM tmp_events
 				LEFT JOIN events
-				  ON (tmp_events.id = events.id AND tmp_events.completed = events.completed)
-				  WHERE events.id IS NULL]]>
+				  ON (tmp_events.event_id = events.event_id AND tmp_events.completed = events.completed)
+				  WHERE events.event_id IS NULL]]>
 			</prepared-statement>
 			<prepared-statement><![CDATA[DELETE FROM tmp_events]]></prepared-statement>
 		</compare-events>

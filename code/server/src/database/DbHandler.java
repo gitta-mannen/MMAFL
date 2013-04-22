@@ -118,6 +118,10 @@ public class DbHandler {
 		connection.setAutoCommit(auto);
 	}
 	
+	public void commit() throws SQLException {
+		connection.commit();
+	}
+	
 	public void executePs (String stName, Object[] params) {
 		executePs (stName, null, params);
 	}

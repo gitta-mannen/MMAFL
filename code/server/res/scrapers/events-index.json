@@ -1,0 +1,19 @@
+{
+"name":"events-index",
+	"fields":{
+		"id":{"name":"id",
+			"regex":"(?<capture>\\d+)",
+			"xPath":"//div[@class='events_table data_table row_is_link']/table/tbody/tr/td[@class='left_border']/a/@href[1]",
+			"type":"INTEGER",
+			"required":true,
+			"notEmpty":true
+		},
+		"scrape_branch":{"name":"scrape_branch",
+			"regex":"",
+			"xPath":"//div[@class='events_table data_table row_is_link']/table/tbody/tr/td[@class='left_border']/a/@href[1]",
+			"type":"STRING",
+			"required":true,
+			"notEmpty":true
+		}
+	}
+}

@@ -128,15 +128,19 @@ public class DocumentScraper {
 				temp = DocumentScraper.findNamedGroups(textNodes[i], patterns.get(field.name));				
 			}
 
-			if ((temp == null || temp.isEmpty()) && field.notEmpty) {
+			if (temp == null || temp.isEmpty()) {
+				if (field.notEmpty) {
 				throw new ScrapeException("this field does not allow empty nodes.", field, textNodes);
-			} 
-
-			try {
-				serObjNodes[i] = stringToObject(temp, Enum.valueOf(AppType.class, field.type));
-			} catch (ParseException e) {
-				throw new ScrapeException(e, field, textNodes);
-			}	
+				} else {
+					serObjNodes[i] = null;
+				}
+			} else {
+				try {
+					serObjNodes[i] = stringToObject(temp, Enum.valueOf(AppType.class, field.type));
+				} catch (ParseException e) {
+					throw new ScrapeException(e, field, textNodes);
+				}
+			}
 		}
 		return serObjNodes;
 	}

@@ -1,0 +1,24 @@
+{
+	"name":"completed-fights-index",
+	"sql":"INSERT OR REPLACE INTO fights (%s) VALUES (%s)",
+	"fKeyMap":{"event_id":"event_id"},
+	"ss":{
+		"name":"completed-fights-index",
+		"fields":{
+			"fight_id":{"name":"fight_id",
+				"regex":"(?<capture>\\d+)",
+				"xPath":"//table[@class='data_table row_is_link']/tbody/tr[position() mod 2 = 0]/td[@*]/a[@class='arrow']/@href[1]",
+				"type":"INTEGER",
+				"required":true,
+				"notEmpty":true
+			},
+			"scrape_branch":{"name":"scrape_branch",
+				"regex":"",
+				"xPath":"//table[@class='data_table row_is_link']/tbody/tr[position() mod 2 = 0]/td[@*]/a[@class='arrow']/@href[1]",
+				"type":"STRING",
+				"required":true,
+				"notEmpty":true
+			}
+		}
+	}
+}

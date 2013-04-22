@@ -1,0 +1,46 @@
+{
+	"name":"completed-events-details",
+	"sql":"UPDATE events SET name=?, date=?, organization=?, location=?, attendance=?, event_updated=1 WHERE event_id=?",
+	"fKeyMap":{"event_id":"event_id"},
+	"ss":{
+		"name":"event-details",
+		"tableFormat":true,
+		"fields":{
+		"name":{"name":"name",
+			"regex":"",
+			"xPath":"//h1[@class='event_header_h1']/text()",
+			"type":"STRING",
+			"required":true,
+			"notEmpty":true
+		},
+		"date":{"name":"date",
+			"regex":"",
+			"xPath":"//table[@class='event_info']/tbody/tr/td[text()='DATE']/following-sibling::td[1]/text()",
+			"type":"DATE",
+			"required":true,
+			"notEmpty":true
+		},
+		"organization":{"name":"organization",
+			"regex":"",
+			"xPath":"//table[@class='event_info']/tbody/tr/td[text()='ORGANIZATION']/following-sibling::td[1]/text()",
+			"type":"STRING",
+			"required":true,
+			"notEmpty":false
+		},
+		"location":{"name":"location",
+			"regex":"",
+			"xPath":"//table[@class='event_info']/tbody/tr/td[text()='LOCATION']/following-sibling::td[1]",
+			"type":"STRING",
+			"required":true,
+			"notEmpty":false
+		},
+		"attendance":{"name":"attendance",
+			"regex":"(?<capture>\\d+[,]?\\d*)",
+			"xPath":"//table[@class='event_info']/tbody/tr/td[text()='ATTENDANCE']/following-sibling::td[1]/text()",
+			"type":"INTEGER",
+			"required":true,
+			"notEmpty":false
+		}
+	}
+	}
+}

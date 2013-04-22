@@ -1,0 +1,29 @@
+{
+	"name":"test",
+	"sql":"INSERT OR REPLACE INTO tmp_events (%s) VALUES (%s)",
+	"fKeyMap":{"completed":"completed"},
+	"ss":{
+		"name":"events-index",
+		"tableFormat":true,
+		"fields":{
+			"event_id":{
+				"name":"event_id",
+				"regex":"(?<capture>\\d+)",
+				"xPath":"//div[@class='events_table data_table row_is_link']/table/tbody/tr/td[@class='left_border']/a/@href[1]",
+				"type":"INTEGER",
+				"required":true,
+				"notEmpty":true,
+				"concat":false
+			},
+			"scrape_branch":{
+				"name":"scrape_branch",
+				"regex":"",
+				"xPath":"//div[@class='events_table data_table row_is_link']/table/tbody/tr/td[@class='left_border']/a/@href[1]",
+				"type":"STRING",
+				"required":true,
+				"notEmpty":true,
+				"concat":false
+			}
+		}
+	}
+}
